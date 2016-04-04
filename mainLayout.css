@@ -1,75 +1,28 @@
-#navigation{
-	width:140px
+.mainMenu {
+	color: blue;
+	height: 400px;
 }
 
-#navigation table{
-	width:100%
+.formationWindow {
+	background-color: red;
 }
 
-#navigation input{
-	width:100%
-}
-
-#content{
-	background-color:gray;
-	table-layout:fixed;
-	max-width: 400px;
-	min-width: 400px;
-	max-height: 400px;
-	min-height: 400px;
-	position: relative;
-}
-
-/*The white squares*/
-.square0{
-	background-color: white;
-	text-align: center;
-	vertical-align: middle;
-	font-size: 0;
-}
-
-/*The grey squares*/
-.square1{
-	background-color: grey;
-	text-align: center;
-	vertical-align: middle;
-	font-size: 0;
-}
-
-#checkerboard {
-	table-layout: fixed;
-	max-width: 400px;
-	min-width: 400px;
-	max-height: 400px;
-	min-height: 400px;
-}
-
-.board_row {
-	table-layout: fixed;
-}
-
-.checker_image {
-	vertical-align: middle;
-	text-align: center;
-}
-
-#myCanvas {
-	position: absolute;
-	border: none;
-}
-
-#extraCanvas {
-	position: absolute;
-	border: none;
-}
-
-tbody, tr, td, table {
-	/*font-size: 0;*/
-	border-spacing: 0px;
-	box-sizing: border-box;
-}
-
-/*#turnIndicator {
+.centerNotesWindow {
 	background-color: black;
-	color: white;
-}*/
+}
+
+.dancerWindow {
+	background-color: purple;
+}
+
+.rosterWindow {
+	background-color: green;
+}
+
+.songWindow {
+	background-color: yellow;
+}
+
+.ediv {
+	background-color: yellow;
+}

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 
 <!--
-  COLLABORATORS: Emanuele Ceccarelli
-  NOTE: I found an arrow drawing method on Stack Overflow: http://stackoverflow.com/questions/808826/draw-arrow-on-canvas-tag
-  
+  Alec Anderson, Alex Latham, Emanuele Ceccarelli, Vineel Chakradhar (listed reluctantly)
 -->
 <html>
 
 <head>
 <meta charset="UTF-8">
-<title>Checkerboard</title>
+<title>eFormations</title>
 
 <!-- Load style sheets -->
 <link rel="stylesheet" href="mainLayout.css" />
@@ -17,32 +15,34 @@
 
 <body>
 
+<!-- TODO we could do this using divs if the exact pixel spacing is an issue...-->
 <table id="mainTable">
-    <tr>
-        <td id="navigation">
-          <table>
-			  <tr><td>		
-                <!-- Your code here -->
-                <div id="turnIndicator" style='background-color: black; color: white;' align='center'> Black's turn </div>
-                </td></tr>
-              <tr><td><input id="btnNewGame" type="button" name="new" value="New Game"/></td></tr>
-              <tr><td><input id="btnAutoMove" type="button" name="new" value="Auto Move"/></td></tr>
-              <tr><td><input id="btnUndo" type="button" name="new" value="Undo" /></td></tr>
-              <tr><td><input id="btnRedo" type="button" name="new" value="Redo"/></td></tr>
-
-            </table>
-        </td>
-
-        <td id="content" width="400px" height='400px'>
-			
-			<!-- Your code here -->
-            <canvas id="myCanvas" width="400px" height="400px"> </canvas>
-            <table id="checkerboard" width="400px" height="400px">
-                <tbody>
-                </tbody>
-            </table>
-        </td>
-    </tr>
+    <table id="mainMenu">
+        <div height='400px' id="ediv" align="center">
+        Menu is here
+        </div>
+    </table>
+    <table id="middle">
+        <tr>
+            <td id="formationWindow">
+                formation sidebar here
+            </td>
+            <td id="centerWindow">
+                <tr id="dancerWindow"> 
+                    Main center window is here
+                </tr>
+                <tr id="centerNotesWindow">
+                    Notes here
+                </tr>
+            </td>
+            <td id="rosterWindow">
+                roster window here
+            </td>
+        </tr>
+    </table>
+    <table id="musicWindow">
+        Music window here
+    </table>
 
 </table>
 
