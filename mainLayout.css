@@ -1,28 +1,29 @@
-.mainMenu {
-	color: blue;
-	height: 400px;
+#mainMenu {
+	background-color: blue;
+	color: white;
+	height: 50px;
+	width: 100%;
 }
 
-.formationWindow {
+#formationWindow {
 	background-color: red;
 }
 
-.centerNotesWindow {
+#centerNotesWindow {
 	background-color: black;
+	color: white;
+	width: 350px;
 }
 
-.dancerWindow {
+#dancerWindow {
 	background-color: purple;
+	width: 350px;
 }
 
-.rosterWindow {
+#rosterWindow {
 	background-color: green;
 }
 
-.songWindow {
-	background-color: yellow;
-}
-
-.ediv {
+#musicWindow {
 	background-color: yellow;
 }

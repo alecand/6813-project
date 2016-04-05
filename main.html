@@ -18,30 +18,44 @@
 <!-- TODO we could do this using divs if the exact pixel spacing is an issue...-->
 <table id="mainTable">
     <table id="mainMenu">
-        <div height='400px' id="ediv" align="center">
-        Menu is here
-        </div>
+        <td>
+            Menu is here
+        <td>
     </table>
-    <table id="middle">
-        <tr>
-            <td id="formationWindow">
+  <!--   <table id="middle">
+        <td>
+            <tr id="formationWindow">
                 formation sidebar here
-            </td>
-            <td id="centerWindow">
-                <tr id="dancerWindow"> 
-                    Main center window is here
-                </tr>
-                <tr id="centerNotesWindow">
-                    Notes here
-                </tr>
-            </td>
-            <td id="rosterWindow">
-                roster window here
-            </td>
-        </tr>
+            </tr> -->
+<!--             <tr id="centerWindow">
+            </tr> -->
+    <table>
+            <div id = "middle" style = "width:100%">
+                <div id ="formationWindow" style = "float:left; width: 20%; height: 600px;">
+                    Formation sidebar here
+                </div>
+                <div id = "centerWindow" style = "float:left; width: 60%; height: 600px;">
+                    <div id="dancerWindow" style = "height: 85%; width: 100%;"> 
+                        Main center window is here
+                    </div>
+                    <div id="centerNotesWindow" style = "height: 15%; width: 100%;">
+                        Notes here
+                    </div>
+                </div>
+                <div id = "rosterWindow" style = "float:left; width: 20%; height: 600px;">
+                    Roster window here
+                </div>
+            </div>
     </table>
-    <table id="musicWindow">
-        Music window here
+<!--             <tr id="rosterWindow">
+                roster window here
+            </tr>
+        </td>
+    </table> -->
+    <table id="musicWindow" style="width: 100%; height: 100px">
+        <td style="clear: left;">
+            Music window here
+        </td>
     </table>
 
 </table>
