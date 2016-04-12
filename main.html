@@ -95,13 +95,19 @@
         var _startY = 0;
         var _offsetX = 0;           // current element offset
         var _offsetY = 0;
+        var _topZ = 10;
         var _dragElement;           // to store target of mousedown (what's being dragged)
+        
+        //We will need to maintain some mapping of dancer names to their associated objects. 
+        //FOR WHOEVER DOES THE DANCER SIDEBAR
+        var dancerToObject = {};
         
 
         
         document.getElementById("dancerWindow").addEventListener("mousedown", OnMouseDown);
         document.getElementById("dancerWindow").addEventListener("mouseup", OnMouseUp);
-        addDancerObject();  
+        addDancerObject('circle');
+        addDancerObject('triangle');
 
         
         //Drag function for dancer objects in center pane.
@@ -122,6 +128,8 @@
                 _offsetY = ExtractNumber(target.style.top);
 
                 _dragElement = target;
+
+                _dragElement.style.zIndex = ++_topZ;
 
                 document.onmousemove = OnMouseMove;
                 return false;
@@ -154,13 +162,24 @@
             }
         }
 
-        function addDancerObject() {
+        function addDancerObject(shape) {
             var img = document.createElement('img');
-            img.src = "./red-piece.png";    
+            if (shape == 'circle') {
+                img.src = "./circle.png";    
+            } else if (shape == 'triangle') {
+                img.src = "./triangle.png";
+            } else {
+                img.src = "./circle.png";    //default shape is circle
+            }
+
             img.className = "dancerObject";
             img.onmousedown = OnMouseDown;
 
             document.getElementById("dancerWindow").appendChild(img);
+        }
+
+        function removeDancerObject(element) {
+            element.parentNode.removeChild(element);
         }
 
         //Helper for drag stuff, gets useful number from element's style
