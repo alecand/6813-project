@@ -118,26 +118,24 @@
                 _startY = e.clientY;
                 
                 // grab the clicked element's position
-                _offsetX = parseInt(target.offsetLeft);
-                _offsetY = parseInt(target.offsetTop);
+                _offsetX = ExtractNumber(target.style.left);
+                _offsetY = ExtractNumber(target.style.top);
 
                 _dragElement = target;
 
                 document.onmousemove = OnMouseMove;
                 return false;
-                
             }
         }
 
         //Drag function for dancer objects in center pane.
         function OnMouseMove(e)
         {
-            if (e == null) 
+            if (e == null) {
                 var e = window.event; 
-            
-            _dragElement.style.left = (e.clientX - _startX) + 'px';
-            _dragElement.style.top = (e.clientY - _startY) + 'px';   
-            
+            }
+            _dragElement.style.left = (_offsetX + e.clientX - _startX) + 'px';
+            _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px';      
         }
         
 
@@ -147,11 +145,10 @@
             if (_dragElement != null)
             {
                 //Need to check that dragged dancer is within center window
-                    
-                // } else {
-                //     _dragElement.style.left = 0 + 'px';
-                //     _dragElement.style.top =  0 + 'px'; 
-                // }
+                if (!isInsideDancerWindow(_dragElement)) {
+                    _dragElement.style.left = _offsetX + 'px';
+                    _dragElement.style.top =  _offsetY + 'px'; 
+                }
                 document.onmousemove = null;
                 _dragElement = null;
             }
@@ -164,6 +161,19 @@
             img.onmousedown = OnMouseDown;
 
             document.getElementById("dancerWindow").appendChild(img);
+        }
+
+        //Helper for drag stuff, gets useful number from element's style
+        function ExtractNumber(value) {
+            var n = parseInt(value);
+            return n == null || isNaN(n) ? 0 : n;
+        }
+
+        //Returns true if supplied dancerObj is inside dancerWindow
+        function isInsideDancerWindow(dancerObject) {
+            var dancer = dancerObject.getBoundingClientRect();
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
+            return ((dancer['left'] > bounds['left']) && (dancer['right'] < bounds['right']) && (dancer['top'] > bounds['top']) && (dancer['bottom'] < bounds['bottom']))
         }
         });
 
