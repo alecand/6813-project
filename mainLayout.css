@@ -16,7 +16,6 @@
 }
 
 #dancerWindow {
-	background-color: purple;
 	width: 350px;
 }
 
@@ -26,4 +25,8 @@
 
 #musicWindow {
 	background-color: yellow;
+}
+
+.dancerObject { 
+    position: relative; 
 }
