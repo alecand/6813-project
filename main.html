@@ -161,7 +161,7 @@
         $('#form tr:last').remove();
         $('#form').append('<tr><td><input placeholder="pl"> </input></td><td><input placeholder="pl"> </input></td><td><select><option>boy</option><option>girl</option></select></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
         $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-        $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+        $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
         }
 
     $(document).ready(function() {
@@ -547,36 +547,6 @@
 
             dancers.list = [dancer1,dancer2,dancer3,dancer4,dancer5];
 
-            // For pop-up
-            // $('#rosterWindow').append('<a href="#myPopup" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all">Show Popup</a>')
-
-            // $('#rosterWindow').append('<div data-role="popup" id="myPopup"> <p>This is a simple popup.</p> </div>')
-            // var person = prompt("Please enter your name", "Harry Potter");
-            // $('.for_canvas').empty();
-            // $('#dancerWindow').append('<div class="fadeMe"></div> <p>A bunch of content here..</p>')
-            // OpenWindow=window.open("", "newwin", "height=500, width=500"); 
-            // OpenWindow.document.write("<html><head><title>Edit Dancers</title></head>");
-            // var forPopup = '<button type="button"> button here </button>';
-            // Make Table for pop-up
-            // var table = OpenWindow.document.createElement("table");
-            // table.setAttribute("id","popupTable");
-            // $('#popupTable').append('<tr><td>First Name</td><td>Last Name</td>',
-            //     '<td>Gender</td><td>Profile Picture</td><td>Notes</td>')
-            // for (i=0; i < dancers.list.length(); i++) {
-            //     $('#popupTable').append('<tr><td')
-            // }
-            // var forPopup = $('#popupTable').html();
-            // alert(forPopup)
-            // var forPopup = '<table><tr><td>First Name</td><td>Last Name</td><td>Gender</td><td>Profile Picture</td><td>Notes</td></tr></table>'
-            // table.innerHTML = '<tr><td>First Name</td><td>Last Name</td><td>Gender</td><td>Profile Picture</td><td>Notes</td></tr>';
-            // alert($('#popupTable').html())
-
-            // OpenWindow.document.write("<body>",forPopup, "</body></html>");
-            // OpenWindow.document.close();
-            // self.name="main";
-            // $("#dialog").dialog({autoOpen : false, modal : true, show : "blind", hide : "blind"});
-            // $("#dialog").dialog("open");
-
             //Function To Display Popup
 
             function populatePopupRow(dancer) {
@@ -592,10 +562,11 @@
             }
             makePopupTable();
             $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-            $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
-                            // $('#form').append('<tr><td><input placeholder="',dancer.firstName,'"> </input></td><td><input placeholder="',dancer.lastName,'"> </input></td><td><button class="dropbtn">',dancer.gender,'</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
-            // $('#form').append('<tr><td><input placeholder="pl"> </input></td><td><input placeholder="pl"> </input></td><td><button class="dropbtn">Select</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>')
-
+            // $('#popupContact').append('<div style="display: block; text-align: center; margin: auto;"> <button id="close" onclick="close_popup()"> Save </button> </div>');
+            // $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+            // $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+            // $('#form').append('<tr><td></td><td style="display: block; text-align: center; margin: auto;"> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+            $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
             }
         });
 
