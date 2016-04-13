@@ -25,13 +25,6 @@
             Menu is here
         <td>
     </table>
-  <!--   <table id="middle">
-        <td>
-            <tr id="formationWindow">
-                formation sidebar here
-            </tr> -->
-<!--             <tr id="centerWindow">
-            </tr> -->
     <table>
             <div id = "middle" style = "width:100%">
                 <div id ="formationWindow" style = "float:left; width: 19%; height: 600px;">
@@ -47,15 +40,10 @@
                     </div>
                 </div>
                 <div id = "rosterWindow" style = "float:left; width: 20%; height: 600px;">
-                    Roster window here
+                    <!-- Roster window here -->
                 </div>
             </div>
     </table>
-<!--             <tr id="rosterWindow">
-                roster window here
-            </tr>
-        </td>
-    </table> -->
     <table id="musicWindow" style="width: 100%; height: 100px">
         <td style="clear: left;">
             Music window here
@@ -67,6 +55,7 @@
 
 <!-- Load any supplemental Javascript libraries here -->
 <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="backend.js"></script>
 
 <script type="text/javascript">
 //This script extracts parameters from the URL
@@ -93,6 +82,13 @@
     
     $(document).ready(function() {
         // Loads on page load
+
+        /// Alec messing around with back end
+        // var newDancer = new Dancer("Alec", "Anderson", "src", "total scrub", "circle")
+        // console.log(newDancer)
+        // addDancerObject(newDancer.shapeOf)
+        loadRosterWindow();
+        // End Alec messing around with back end
 
         //Varaibles for dragging
         var _startX = 0;            // mouse starting positions
@@ -139,19 +135,29 @@
             
     
         }
-        listOfDancers = [['circle', 20, 80], ['triangle', 22, 60]];
+        listOfDancers = [['circle', 165, 212], ['triangle', 314, 350]];
         addFormation(listOfDancers);
+        formationFromList(listOfDancers);
 
-
-        //FOR WHOEVER DOES THE DANCER SIDEBAR
-        var dancerToObject = {};
         
+        //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
+        function formationFromList(dancerList) {
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
+            for (i = 0; i< listOfDancers.length;i++){
+                x = listOfDancers[i];
+                obj = addDancerObject(x[0]);
 
+                obj.style.left = x[1] + 'px';
+                
+                obj.style.top = x[2] + 'px';
+                
+            }
+        }
         
         document.getElementById("dancerWindow").addEventListener("mousedown", OnMouseDown);
         document.getElementById("dancerWindow").addEventListener("mouseup", OnMouseUp);
-        addDancerObject('circle');
-        addDancerObject('triangle');
+        // addDancerObject('circle');
+        // addDancerObject('triangle');
 
         
         //Drag function for dancer objects in center pane.
@@ -187,7 +193,9 @@
                 var e = window.event; 
             }
             _dragElement.style.left = (_offsetX + e.clientX - _startX) + 'px';
-            _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px';      
+            _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px'; 
+            // _dragElement.style.left = (_offsetX + e.clientX) + 'px';
+            // _dragElement.style.top = (_offsetY + e.clientY) + 'px';      
         }
         
 
@@ -201,12 +209,14 @@
                     _dragElement.style.left = _offsetX + 'px';
                     _dragElement.style.top =  _offsetY + 'px'; 
                 }
+
                 document.onmousemove = null;
                 _dragElement = null;
             }
         }
 
         function addDancerObject(shape) {
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var img = document.createElement('img');
             if (shape == 'circle') {
                 img.src = "./circle.png";    
@@ -215,11 +225,12 @@
             } else {
                 img.src = "./circle.png";    //default shape is circle
             }
-
             img.className = "dancerObject";
             img.onmousedown = OnMouseDown;
-
+            img.style.left = bounds['left'] + 'px';
+            img.style.top = bounds['top'] + 'px';
             document.getElementById("dancerWindow").appendChild(img);
+            return img;
         }
 
         function removeDancerObject(element) {
@@ -238,6 +249,49 @@
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             return ((dancer['left'] > bounds['left']) && (dancer['right'] < bounds['right']) && (dancer['top'] > bounds['top']) && (dancer['bottom'] < bounds['bottom']))
         }
+
+
+        /////////////////// DANCER WINDOW ////////////////
+        function addDancerToRosterWindow(dancer, buttonNumber) {
+            // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 45%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat(dancer.profilePicture).concat('</div> <div style="float: left; width: 20%;"> <button type="button" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>');
+            // var forDiv = "<div id=dancer1>
+            //     </div>"
+            $('#rosterWindow').append(forDiv);
+
+        }
+        function loadRosterWindow() {
+            // Make Dancers
+            var dancer1 = new Dancer("Alec", "Anderson", "boy", "src", "total scrub", "circle", "")
+            addDancerToRosterWindow(dancer1, 1);
+            $('#button1').click(function() {
+                dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
+            })
+            //
+            var dancer2 = new Dancer("Alex", "Latham", "boy", "src", "total scrub", "triangle", "")
+            addDancerToRosterWindow(dancer2, 2);
+            $('#button2').click(function() {
+                dancer2.shapeObject = addDancerObject(dancer2.shapeOf)
+            })
+            // 
+            var dancer3 = new Dancer("Uele", "Italian", "boy", "src", "total scrub", "circle", "")
+            addDancerToRosterWindow(dancer3, 3);
+            $('#button3').click(function() {
+                dancer3.shapeObject = addDancerObject(dancer3.shapeOf)
+            })
+            //
+            var dancer4 = new Dancer("Vineel", "Chakra", "boy", "src", "total scrub", "triangle", "")
+            addDancerToRosterWindow(dancer4, 4);
+            $('#button4').click(function() {
+                dancer4.shapeObject = addDancerObject(dancer4.shapeOf)
+            })
+            //
+            var dancer5 = new Dancer("Another", "One", "boy", "src", "total scrub", "circle", "")
+            addDancerToRosterWindow(dancer5, 5);
+            $('#button5').click(function() {
+                dancer5.shapeObject = addDancerObject(dancer5.shapeOf)
+            })
+            }
         });
 
 

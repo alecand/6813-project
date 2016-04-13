@@ -41,7 +41,23 @@
 }
 
 .dancerObject { 
-    position: relative; 
+    position: absolute; 
+}
+
+#dancer1 {
+	background-color: white;
+	border: 2px solid green;
+	padding: 15px;
+	border-radius: 25px;
+	height: 13%;
+}
+
+#editInfoButton {
+	/*margin: auto;*/
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	padding-top: 20px;
 }
 
 .formation {
@@ -59,5 +75,4 @@
 	border-style: solid;
 	width: 95%;
 	height: 96%;
-
 }
