@@ -440,8 +440,8 @@
             img.style.left = bounds['left'] + 'px';
             img.style.top = bounds['top'] + 'px';
             document.getElementById("dancerWindow").appendChild(img);
+
             return img;
-            update();
 
         }
 
@@ -479,30 +479,35 @@
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
                 dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
+                update();
             })
             //
             var dancer2 = new Dancer("Alex", "Latham", "boy", "src", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer2, 2);
             $('#button2').click(function() {
                 dancer2.shapeObject = addDancerObject(dancer2.shapeOf)
+                update();
             })
             // 
             var dancer3 = new Dancer("Uele", "Italian", "boy", "src", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer3, 3);
             $('#button3').click(function() {
                 dancer3.shapeObject = addDancerObject(dancer3.shapeOf)
+                update();
             })
             //
             var dancer4 = new Dancer("Vineel", "Chakra", "boy", "src", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer4, 4);
             $('#button4').click(function() {
                 dancer4.shapeObject = addDancerObject(dancer4.shapeOf)
+                update();
             })
             //
             var dancer5 = new Dancer("Another", "One", "boy", "src", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer5, 5);
             $('#button5').click(function() {
                 dancer5.shapeObject = addDancerObject(dancer5.shapeOf)
+                update();
             })
 
             dancers.list = [dancer1,dancer2,dancer3,dancer4,dancer5];
