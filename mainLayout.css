@@ -82,8 +82,24 @@ body {
 	height: 109px;
 }
 
+/* THE BELOW IS TO TAKE UP THE WHOLE SCREEN*/
+html, body{
+    margin:0;
+    padding:0;
+    /*min-width: 1140px;*/ /* this is the important part*/
+}
+#grid-container{
+    background:#f8f8f8 url(../images/grid-container-bg.gif) repeat-x top left;
+}
+#grid{
+    width:1140px;
+    margin:0px auto;
+}
+
+/*END TAKE UP WHOLE SCREEN*/
+
 /* For the pop-up*/
-div.fadeMe {
+/*div.fadeMe {
   opacity:    0.5; 
   background: #000; 
   width:      100%;
@@ -92,7 +108,7 @@ div.fadeMe {
   top:        0; 
   left:       0; 
   position:   fixed; 
-}
+}*/
 
 /* Menu CSS adapted from CSSTerm.com Simple Horizontal DropDown CSS menu */
 
