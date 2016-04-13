@@ -25,21 +25,21 @@
             <ul class="drop_menu">
             <li><a href='#'>Roster</a>
                 <ul>
-                <li><a href='#'>View Roster</a></li>
-                <li><a href='#'>Edit Roster</a></li>
+                <li><a href='#' onClick="div_show()">View Roster</a></li>
+                <li><a href='#' onClick="div_show()">Edit Roster</a></li>
                 </ul>
             </li>
             <li><a href='#'>Formations</a>
                 <ul>
-                <li><a href='#'>Add New Formation</a></li>
-                <li><a href='#'>Delete Selected Formation</a></li>
-                <li><a href='#'>Formations Library</a></li>
+                <li><a href='#' onClick="$('#btnAdd').click()">Add New Formation</a></li>
+                <li><a href='#' onClick="$('#btnDelete').click()">Delete Selected Formation</a></li>
+                <li><a href='#' onClick="alert('coming soon!')">Formations Library</a></li>
                 </ul>
             </li>
             <li><a href='#'>Transitions</a>
                 <ul>
-                <li><a href='#'>Add New Transition</a></li>
-                <li><a href='#'>Visualize Current Transition</a></li>
+                <li><a href='#' onClick="alert('coming soon!')">Add New Transition</a></li>
+                <li><a href='#' onClick="alert('coming soon!')">Visualize Current Transition</a></li>
                 </ul>
             </li>
             </ul>
@@ -59,7 +59,8 @@
                 <div id ="formationWindow" style = "float:left; width: 120px; height: 598px;">
                     <div id="formations">
                     </div>
-                    <input id="btnAdd" type="button" name="new" value="Add"/>
+                    <input id="btnAdd" type="button" name="new" value="Add"/><br>
+                    <input id="btnDelete" type="button" name="delete" value="Delete"/>
 
                 </div>
                 <div id = "centerWindow" style = "float:left; width: 64%; height: 600px;">
@@ -159,6 +160,9 @@
     
     var overall_dancer_list = new DancerList()
 
+    function menu_add_formation() {
+
+    }
     //Function To Display Popup
     function div_show() {
     document.getElementById('abc').style.display = "block";
@@ -220,6 +224,9 @@
         var audio = new Audio('19ManOfTheYear.mp3');
         $("#btnAdd").click(function(evt) {
             addFormation([]);
+        });
+        $("#btnDelete").click(function(evt) {
+            deleteFormation(selected);
         });
         $("#btnPlay").click(function(evt) {
             audio.play();
