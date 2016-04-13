@@ -192,10 +192,12 @@
         formations = [];
         canvases = [];
         directory = [];
+        selected = 0;
 
         //Formation sidebar code:
 
         function editFormation(index, listOfDancers){
+            console.log(listOfDancers)
             directory[index] = listOfDancers;
             var formation = formations[index];
             formation.removeChild(formation.childNodes[0]);
@@ -259,6 +261,7 @@
                 $(new_formation).addClass("selected");
                 var index = parseInt($(new_formation).attr("id"));
                 formationFromList(directory[index]);
+                selected = index;
 
             });
             var new_canvas = document.createElement("CANVAS");
@@ -323,6 +326,25 @@
         editFormation(0,listOfDancers2);
 
                 addFormation(listOfDancers);
+
+
+
+
+        function getCurrentDancers(){
+            var windoww = document.getElementById('dancerWindow');
+            var currentDancers = windoww.childNodes;
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
+            var listr = [];
+            for (i = 0; i< currentDancers.length;i++){
+                danceritem = [$(currentDancers[i]).attr("shape"),100/bounds.width*(parseFloat(currentDancers[i].style.left) - bounds.left), 100/bounds.height*(parseFloat(currentDancers[i].style.top) - bounds.top)];
+                listr.push(danceritem);
+            }
+            return listr;
+        }
+
+        function update() {
+            editFormation(selected, getCurrentDancers());
+        }
 
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
@@ -396,6 +418,7 @@
 
                 document.onmousemove = null;
                 _dragElement = null;
+                update();
             }
         }
 
@@ -410,11 +433,14 @@
                 img.src = "./circle.png";    //default shape is circle
             }
             img.className = "dancerObject";
+            $(img).attr("shape", shape);
             img.onmousedown = OnMouseDown;
             img.style.left = bounds['left'] + 'px';
             img.style.top = bounds['top'] + 'px';
             document.getElementById("dancerWindow").appendChild(img);
             return img;
+            update();
+
         }
 
         function removeDancerObject(element) {
