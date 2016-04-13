@@ -32,6 +32,7 @@
             <li><a href='#'>Formations</a>
                 <ul>
                 <li><a href='#'>Add New Formation</a></li>
+                <li><a href='#'>Delete Selected Formation</a></li>
                 <li><a href='#'>Formations Library</a></li>
                 </ul>
             </li>
@@ -216,6 +217,28 @@
         selected = 0;
 
         //Formation sidebar code:
+
+        function deleteFormation(index){
+            var del = formations[index];
+            $(del).remove();
+            formations.splice(index,1);
+            canvases.splice(index, 1);
+            directory.splice(index, 1);
+            console.log(index);
+            console.log(formations);
+            if (index <= selected) {
+                selected = Math.min(selected, formations.length - 1);
+            } else {
+                selected = selected - 1;
+            }
+            console.log(selected);
+            var new_sel = formations[selected];
+            formationFromList(directory[selected]);
+            $(new_sel).addClass("selected");
+            }
+
+
+        
 
         function editFormation(index, listOfDancers){
             console.log(listOfDancers)
