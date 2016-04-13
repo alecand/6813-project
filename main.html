@@ -137,6 +137,8 @@
     // This allows the Javascript code inside this block to only run when the page
     // has finished loading in the browser.
     
+    var overall_dancer_list = new DancerList()
+
     //Function To Display Popup
     function div_show() {
     document.getElementById('abc').style.display = "block";
@@ -147,6 +149,34 @@
     }
 
     function close_popup() {
+        // var table = document.getElementById('form');
+        // for (var i=1;i<(table.rows.length-5);i++) {
+        //     var cur_uid = table.rows[i].id
+        //     alert(cur_uid)
+        //     var cur_fname = table.rows[i].cells[0].innerHTML.text
+        //     alert(cur_fname)
+        // }
+
+
+        // overall_dancer_list.list = []
+        // $("#form tr.tabledancer").each(function() {
+        //     var fName = $(this).find("input.firstname").val()
+        //     alert(fName)
+        //     var lName = $(this).find("input.lastname").val()
+        //     alert(lName)
+        //     var newGender = $(this).find("input.selectgender option:selected").text()
+        //     alert(newGender)
+        //     var profPic = $(this).find("input.profilepic").val()
+        //     alert(profPic)
+        //     var newNotes = $(this).find("input.dancernotes").val()
+        //     alert(newNotes)
+        //     var shape = -1
+        //     if (newGender == 'girl') { shape = 'triangle'}
+        //     else { shape = 'circle'}
+        //     alert(shape)
+        //     overall_dancer_list.list.push(new Dancer(fName,lName,newGender,profPic,newNotes,shape,null))
+        //     });
+        // alert(overall_dancer_list.list)
         div_hide();
         // TODO get the information and save to dancerlist
     }
@@ -580,7 +610,7 @@
             //Function To Display Popup
 
             function populatePopupRow(dancer) {
-                $('#form').append('<tr><td><input type="text" value="'.concat(dancer.firstName).concat('"</div></input></td><td><input type="text" value="',dancer.lastName,'"> </input></td><td><select><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>'));
+                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>')));
             }
 
             function makePopupTable() {
