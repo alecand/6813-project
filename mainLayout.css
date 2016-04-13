@@ -6,7 +6,10 @@
 }
 
 #formationWindow {
-	background-color: red;
+	background-color: white;
+	border-color: black;
+	border-style: solid;
+
 }
 
 #centerNotesWindow {
@@ -29,4 +32,22 @@
 
 .dancerObject { 
     position: relative; 
+}
+
+.formation {
+	/*background-color: white;*/
+	border-style: dotted;
+	width: 95%;
+	height: 120px;
+}
+
+.selected{
+	background-color: yellow;
+}
+
+.forcanvas{
+	border-style: solid;
+	width: 95%;
+	height: 96%;
+
 }
