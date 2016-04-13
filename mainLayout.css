@@ -115,6 +115,7 @@ div.fadeMe {
 	left:-9999px;
 	top:-9999px;
 	list-style-type:none;
+	z-index: 1000000;
 }
 .drop_menu li:hover { position:relative; background:#5FD367; }
 
