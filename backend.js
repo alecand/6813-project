@@ -2,7 +2,7 @@
  * This file contains all of the backend javascript for the project
  */
  
-var Dancer = function(firstName, lastName, gender, picture, notes, shape) {
+var Dancer = function(firstName, lastName, gender, picture, notes, shape, shapeObject) {
     ////////////////////////////////////////////////
     // Representation
     //
@@ -12,6 +12,7 @@ var Dancer = function(firstName, lastName, gender, picture, notes, shape) {
 	this.profilePicture = picture
 	this.notes = notes
 	this.shapeOf = shape
+	this.shapeObject = shapeObject
 
 	////////////////////////////////////////////////
 	// Public methods
@@ -20,29 +21,5 @@ var Dancer = function(firstName, lastName, gender, picture, notes, shape) {
 	this.toString = function(){			
 		return "first name", this.firstName, "last name", this.lastName, "gender", 
 		this.gender, "profile pic", this.profilePicture, "notes", this.notes
-	}
-}
-
-var Checker = function(color, isKing) {
-    ////////////////////////////////////////////////
-    // Representation
-    //
-	if (color != "red" && color != "black") {
-		alert('color must be one of "red" or "black"');
-	}
-
-	this.color = color;			
-	this.isKing = isKing;			
-	this.row;
-	this.col;
-
-	////////////////////////////////////////////////
-	// Public methods
-	//
-
-	this.toString = function(){			
-		var name = this.color;
-		if (this.isKing) name = name.toUpperCase();
-		return name;
 	}
 }
