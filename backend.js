@@ -23,3 +23,7 @@ var Dancer = function(firstName, lastName, gender, picture, notes, shape, shapeO
 		this.gender, "profile pic", this.profilePicture, "notes", this.notes
 	}
 }
+
+var DancerList = function() {
+	this.list = []
+}
