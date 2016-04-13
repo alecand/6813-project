@@ -1,3 +1,7 @@
+body {
+    font: normal 14px "Trebuchet MS", Helvetica, sans-serif
+}
+
 #mainMenu {
 	background-color: #561420;
 	color: white;
@@ -124,7 +128,7 @@ html, body{
 	display:block;
 	color:#fff;
 	text-decoration:none;
-	font:12px arial, verdana, sans-serif;
+	font:14px "Trebuchet MS", Helvetica, sans-serif;
 }
 
 /* Submenu */
@@ -135,6 +139,7 @@ html, body{
 	list-style-type:none;
 	z-index: 1000000;
 }
+
 .drop_menu li:hover { position:relative; background:#2D3956; }
 
 .drop_menu li:hover ul {
@@ -153,6 +158,8 @@ html, body{
 }
 
 .drop_menu li:hover ul li a:hover { background:#2D3956; }
+
+
 
 /*For pop-up form*/
 
