@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <!--
-  Alec Anderson, Alex Latham, Emanuele Ceccarelli, Vineel Chakradhar (listed reluctantly)
+  Alec Anderson, Alex Latham, Emanuele Ceccarelli, Vineel Chakradhar
 
 
-  gfy - vinny
+  Sources Cited: For help with our pop-up (used some elements from this, mostly our own): http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/
 -->
 <html>
 
@@ -32,6 +32,7 @@
             <li><a href='#'>Formations</a>
                 <ul>
                 <li><a href='#'>Add New Formation</a></li>
+                <li><a href='#'>Delete Selected Formation</a></li>
                 <li><a href='#'>Formations Library</a></li>
                 </ul>
             </li>
@@ -43,10 +44,19 @@
             </li>
             </ul>
         <td>
+        <td align="right">
+            <ul class="drop_menu" style="float:right;">
+            <li><a href='#'>Welcome, User!</a>
+               <!--  <ul style="float: left;">
+                <li><span>Logout</span></li>
+                </ul>
+            </li> -->
+        </ul>
+        </td>
     </table>
     <table>
             <div id = "middle" style = "width:100%">
-                <div id ="formationWindow" style = "float:left; width: 120px; height: 600px;">
+                <div id ="formationWindow" style = "float:left; width: 120px; height: 598px;">
                     <div id="formations">
                     </div>
                     <input id="btnAdd" type="button" name="new" value="Add"/>
@@ -60,24 +70,34 @@
                         <textarea id="notes_text" name="notesText" placeholder="Enter notes here..."></textarea>
                     </div>
                 </div>
-                <div id = "rosterWindow" style = "float:left; width: 20%; height: 600px;">
+                <div id = "rosterWindow" style = "overflow: hidden; height: 604px;">
                     <!-- Roster window here -->
                 </div>
             </div>
     </table>
     <table id="musicWindow" style="width: 100%; height: 150px">
-        <td style="clear: left;">
-                          <tr><td><input id="btnUpload" type="button" name="new" value="Upload"/></td></tr>
-              <tr><td><input id="btnPlay" disabled type="button" name="new" value="Play"/></td><td><input id="btnPause" disabled type="button" name="new" value="Pause"/></td><td><input id="btnRewind" disabled type="button" name="new" value="Rewind"/></td></tr>
+    <tr>
+        <td>
+          <table>
+
+              <tr><td><input id="btnUpload" type="button" name="new" value="Upload Music File"/></td></tr>
+              <tr><td><input id="btnPlay" disabled type="button" name="new" value="Play"/></td></tr>
+                <tr><td><input id="btnPause" disabled type="button" name="new" value="Pause"/></td></tr>
+                <tr><td><input id="btnRewind" disabled type="button" name="new" value="Rewind"/></td></tr>
+
+
+            </table>
         </td>
-        <td style="clear: right;">
+
+        <td id="content">
             <img width="100%" src="wave.png" hidden id="wave">
         </td>
+    </tr>
     </table>
 
 </table>
 
-<div id="abc">
+<div id="abc" style="z-index: 99999999;">
 <!-- Popup Div Starts Here -->
 <div id="popupContact">
 <!-- Contact Us Form -->
@@ -191,7 +211,7 @@
         $('#form tr:last').remove();
         $('#form').append('<tr><td><input placeholder="pl"> </input></td><td><input placeholder="pl"> </input></td><td><select><option>boy</option><option>girl</option></select></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
         $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-        $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+        $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
         }
 
     $(document).ready(function() {
@@ -246,6 +266,28 @@
         selected = 0;
 
         //Formation sidebar code:
+
+        function deleteFormation(index){
+            var del = formations[index];
+            $(del).remove();
+            formations.splice(index,1);
+            canvases.splice(index, 1);
+            directory.splice(index, 1);
+            console.log(index);
+            console.log(formations);
+            if (index <= selected) {
+                selected = Math.min(selected, formations.length - 1);
+            } else {
+                selected = selected - 1;
+            }
+            console.log(selected);
+            var new_sel = formations[selected];
+            formationFromList(directory[selected]);
+            $(new_sel).addClass("selected");
+            }
+
+
+        
 
         function editFormation(index, listOfDancers){
             console.log(listOfDancers)
@@ -392,9 +434,10 @@
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var listr = [];
             for (i = 0; i< currentDancers.length;i++){
-                danceritem = [$(currentDancers[i]).attr("shape"),100/bounds.width*(parseFloat(currentDancers[i].style.left) - bounds.left), 100/bounds.height*(parseFloat(currentDancers[i].style.top) - bounds.top)];
+                danceritem = [$(currentDancers[i]).attr("shape"),100/bounds.width*(parseFloat(currentDancers[i].style.left) - bounds.left), 100/bounds.height*(parseFloat(currentDancers[i].style.top) - bounds.top),$(currentDancers[i]).attr("initials")];
                 listr.push(danceritem);
             }
+            console.log(currentDancers)
             return listr;
         }
 
@@ -409,9 +452,11 @@
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             for (i = 0; i< dancerList.length;i++){
                 x = dancerList[i];
-                obj = addDancerObject(x[0]);
+                obj = addDancerObject(x[0], x[3]);
+
                 obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
                 obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
+                console.log(obj.style.left);
                 
             }
         }
@@ -428,9 +473,13 @@
             var target = e.target;
             
             if ((e.button == 0) && 
-                (target.className == 'dancerObject'))  
+                (target.className == 'dancerObject' || target.parentNode.className == 'dancerObject'))  
             {
                 
+                if (target.parentNode.className == 'dancerObject') {
+
+                    target = target.parentNode;
+                }
                 // grab the mouse position
                 _startX = e.clientX;
                 _startY = e.clientY;
@@ -478,7 +527,7 @@
             }
         }
 
-        function addDancerObject(shape) {
+        function addDancerObject(shape, initials) {
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var img = document.createElement('img');
             if (shape == 'circle') {
@@ -488,14 +537,35 @@
             } else {
                 img.src = "./circle.png";    //default shape is circle
             }
-            img.className = "dancerObject";
+            //img.className = "dancerObject";
             $(img).attr("shape", shape);
             img.onmousedown = OnMouseDown;
-            img.style.left = bounds['left'] + 'px';
-            img.style.top = bounds['top'] + 'px';
-            document.getElementById("dancerWindow").appendChild(img);
+            // img.style.left = bounds['left'] + 'px';
+            // img.style.top = bounds['top'] + 'px';
+            
+            var div = document.createElement('div');
+            div.className = "dancerObject";
+            div.appendChild(img);
+            var text = document.createTextNode(initials);
+            var span = document.createElement('span');
+            span.appendChild(text);
+            span.style.position = 'absolute';
+            if (shape == 'circle') {
+                span.style.left = '20px';
+                span.style.top = '20px';    
+            } else {
+                span.style.left = '32px';
+                span.style.top = '30px';    
+            }
+            div.appendChild(span);
+            div.onmousedown = OnMouseDown;
+            div.style.left = bounds['left'] + 'px';
+            div.style.top = bounds['top'] + 'px';
+            $(div).attr("shape", shape);
+            $(div).attr("initials", initials);
+            document.getElementById("dancerWindow").appendChild(div);
 
-            return img;
+            return div;
 
         }
 
@@ -520,7 +590,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 45%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:30px;height:30px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton onclick=div_show()> <button type="button"> Edit Info </button> </div>');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:40px;height:40px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:25px; height: 25px; font-size: 100%;" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton > <button type="button" onclick=div_show()> Edit Info </button> </div>');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
@@ -532,80 +602,54 @@
             var dancer1 = new Dancer("Alec", "Andie", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
-                if (dancer1.added == 0) {
-                    dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
-                    dancer1.added = 1
+                // if (dancer1.added == 0) {
+                    dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA")
+                    // dancer1.added = 1
                     update();
-                }
+                // }
             })
             //
             var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer2, 2);
             $('#button2').click(function() {
-                if (dancer2.added == 0) {
-                    dancer2.shapeObject = addDancerObject(dancer2.shapeOf)
+                // if (dancer2.added == 0) {
+                    dancer2.shapeObject = addDancerObject(dancer2.shapeOf, "AL")
+                    // dancer2.added = 1
                     update();
-                }
+                // }
             })
             // 
             var dancer3 = new Dancer("Uele", "Italian", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer3, 3);
             $('#button3').click(function() {
-                if (dancer3.added == 0) {
-                    dancer3.shapeObject = addDancerObject(dancer3.shapeOf)
+                // if (dancer3.added == 0) {
+                    dancer3.shapeObject = addDancerObject(dancer3.shapeOf, "UI")
+                    // dancer3.added = 1
                     update();
-                }
+                // }
             })
             //
-            var dancer4 = new Dancer("Vineel", "Chakra", "boy", "./profile.png", "total scrub", "triangle", "")
+            var dancer4 = new Dancer("Vineel", "C.", "boy", "./profile.png", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer4, 4);
             $('#button4').click(function() {
-                if (dancer4.added == 0) {
-                    dancer4.shapeObject = addDancerObject(dancer4.shapeOf)
+                // if (dancer4.added == 0) {
+                    dancer4.shapeObject = addDancerObject(dancer4.shapeOf, "VC")
+                    // dancer4.added = 1
                     update();
-                }
+                // }
             })
             //
             var dancer5 = new Dancer("Another", "One", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer5, 5);
             $('#button5').click(function() {
-                if (dancer5.added == 0) {
-                    dancer5.shapeObject = addDancerObject(dancer5.shapeOf)
+                // if (dancer5.added == 0) {
+                    dancer5.shapeObject = addDancerObject(dancer5.shapeOf, "AO")
+                    // dancer5.added = 1
                     update();
-                }
+                // }
             })
 
             dancers.list = [dancer1,dancer2,dancer3,dancer4,dancer5];
-
-            // For pop-up
-            // $('#rosterWindow').append('<a href="#myPopup" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all">Show Popup</a>')
-
-            // $('#rosterWindow').append('<div data-role="popup" id="myPopup"> <p>This is a simple popup.</p> </div>')
-            // var person = prompt("Please enter your name", "Harry Potter");
-            // $('.for_canvas').empty();
-            // $('#dancerWindow').append('<div class="fadeMe"></div> <p>A bunch of content here..</p>')
-            // OpenWindow=window.open("", "newwin", "height=500, width=500"); 
-            // OpenWindow.document.write("<html><head><title>Edit Dancers</title></head>");
-            // var forPopup = '<button type="button"> button here </button>';
-            // Make Table for pop-up
-            // var table = OpenWindow.document.createElement("table");
-            // table.setAttribute("id","popupTable");
-            // $('#popupTable').append('<tr><td>First Name</td><td>Last Name</td>',
-            //     '<td>Gender</td><td>Profile Picture</td><td>Notes</td>')
-            // for (i=0; i < dancers.list.length(); i++) {
-            //     $('#popupTable').append('<tr><td')
-            // }
-            // var forPopup = $('#popupTable').html();
-            // alert(forPopup)
-            // var forPopup = '<table><tr><td>First Name</td><td>Last Name</td><td>Gender</td><td>Profile Picture</td><td>Notes</td></tr></table>'
-            // table.innerHTML = '<tr><td>First Name</td><td>Last Name</td><td>Gender</td><td>Profile Picture</td><td>Notes</td></tr>';
-            // alert($('#popupTable').html())
-
-            // OpenWindow.document.write("<body>",forPopup, "</body></html>");
-            // OpenWindow.document.close();
-            // self.name="main";
-            // $("#dialog").dialog({autoOpen : false, modal : true, show : "blind", hide : "blind"});
-            // $("#dialog").dialog("open");
 
             //Function To Display Popup
 
@@ -622,10 +666,11 @@
             }
             makePopupTable();
             $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-            $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
-                            // $('#form').append('<tr><td><input placeholder="',dancer.firstName,'"> </input></td><td><input placeholder="',dancer.lastName,'"> </input></td><td><button class="dropbtn">',dancer.gender,'</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
-            // $('#form').append('<tr><td><input placeholder="pl"> </input></td><td><input placeholder="pl"> </input></td><td><button class="dropbtn">Select</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>')
-
+            // $('#popupContact').append('<div style="display: block; text-align: center; margin: auto;"> <button id="close" onclick="close_popup()"> Save </button> </div>');
+            // $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+            // $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+            // $('#form').append('<tr><td></td><td style="display: block; text-align: center; margin: auto;"> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+            $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
             }
         });
 
