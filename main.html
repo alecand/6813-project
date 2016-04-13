@@ -159,6 +159,16 @@
         div_hide();
     }
 
+    function makeEmptyPopupRow() {
+        $('#form tr:last').remove();
+        $('#form tr:last').remove();
+        $('#form').append('<tr><td><input placeholder="pl"> </input></td><td></td><td><input placeholder="pl"> </input></td><td><button class="dropbtn">Select</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
+        $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+        $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+        }
+
+
+
     $(document).ready(function() {
         div_hide();
 
@@ -561,16 +571,17 @@
             function populatePopupRow(dancer) {
                 $('#form').append('<tr><td><input type="text" value="',dancer.firstName,'"> </input></td><td><input type="text" value="',dancer.lastName,'"> </input></td><td><button class="dropbtn">',dancer.gender,'</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
             }
+
             function makePopupTable() {
                 $('#form').append('<tr><td> First Name </td><td> </td><td> Last Name </td> <td></td><td> Gender </td><td> Profile Picture </td><td> Notes </td></tr>');
                 for (i=0; i<dancers.list.length; i++) {
                     // alert("goign")
                     populatePopupRow(dancers.list[i]);
                 }
-            $('#form').append('<tr> <td> <button type="button"> + </button> </td> </tr>');
-            $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
             }
             makePopupTable();
+            $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+            $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
                             // $('#form').append('<tr><td><input placeholder="',dancer.firstName,'"> </input></td><td><input placeholder="',dancer.lastName,'"> </input></td><td><button class="dropbtn">',dancer.gender,'</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
             // $('#form').append('<tr><td><input placeholder="pl"> </input></td><td><input placeholder="pl"> </input></td><td><button class="dropbtn">Select</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>')
 
