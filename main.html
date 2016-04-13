@@ -440,9 +440,13 @@
             var target = e.target;
             
             if ((e.button == 0) && 
-                (target.className == 'dancerObject'))  
+                (target.className == 'dancerObject' || target.parentNode.className == 'dancerObject'))  
             {
                 
+                if (target.parentNode.className == 'dancerObject') {
+
+                    target = target.parentNode;
+                }
                 // grab the mouse position
                 _startX = e.clientX;
                 _startY = e.clientY;
@@ -500,12 +504,31 @@
             } else {
                 img.src = "./circle.png";    //default shape is circle
             }
-            img.className = "dancerObject";
+            //img.className = "dancerObject";
             $(img).attr("shape", shape);
             img.onmousedown = OnMouseDown;
-            img.style.left = bounds['left'] + 'px';
-            img.style.top = bounds['top'] + 'px';
-            document.getElementById("dancerWindow").appendChild(img);
+            // img.style.left = bounds['left'] + 'px';
+            // img.style.top = bounds['top'] + 'px';
+            
+            var div = document.createElement('div');
+            div.className = "dancerObject";
+            div.appendChild(img);
+            var text = document.createTextNode(initials);
+            var span = document.createElement('span');
+            span.appendChild(text);
+            span.style.position = 'absolute';
+            if (shape == 'circle') {
+                span.style.left = '20px';
+                span.style.top = '20px';    
+            } else {
+                span.style.left = '32px';
+                span.style.top = '30px';    
+            }
+            div.appendChild(span);
+            div.onmousedown = OnMouseDown;
+            div.style.left = bounds['left'] + 'px';
+            div.style.top = bounds['top'] + 'px';
+            document.getElementById("dancerWindow").appendChild(div);
 
             return img;
 
