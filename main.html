@@ -102,8 +102,7 @@
         //We will need to maintain some mapping of dancer names to their associated objects. 
         formations = [];
         canvases = [];
-        sizex = 100;
-        sizey = 100;
+
         //Formation sidebar code:
         function addFormation(listOfDancers) {
             var new_formation = document.createElement("div");
@@ -116,23 +115,72 @@
             $("#formations").append(new_formation);
             canvases.push(new_canvas);
             formations.push(new_formation);
-            var ctx=new_canvas.getContext("2d");
-            var imgs = [];
-            for (i = 0; i< listOfDancers.length;i++){
-                x = listOfDancers[i];
-                console.log(x[0])
-                var imageObj = new Image();
-                imgs.push(imageObj);
+            var brect = new_canvas.getBoundingClientRect();
+            sizex = brect.width;
+            sizey = brect.height;
 
-                imageObj.onload = function() {
-                    ctx.drawImage(this, x[1], x[2],sizex/5, sizey/5);
-                };
-                if (x[0] == 'circle'){
-                    imageObj.src = './circle.png';
-                } else {
-                    imageObj.src = './triangle.png'; 
+
+            function loadImages(listOfDancers, callback) {
+                var images = {};
+                var loadedImages = 0;
+                var numImages = 0;
+                // get num of sources
+                for(i = 0; i< listOfDancers.length;i++) {
+                    numImages++;
+                }
+                for(i = 0; i< listOfDancers.length;i++) {
+                    var dancer = listOfDancers[i];
+                    images[dancer] = new Image();
+                    images[dancer].onload = function() {
+                    if(++loadedImages >= numImages) {
+                      callback(images);
+                    }
+                  };
+                  images[dancer].src = sources[dancer[0]];
                 }
             }
+            var context = new_canvas.getContext('2d');
+
+            var sources = {
+                'circle': './circle.png',
+                'triangle': './triangle.png'
+            };
+
+            loadImages(listOfDancers, function(images) {
+                for(i = 0; i< listOfDancers.length;i++){
+                    image = listOfDancers[i]
+                    console.log(image[1])
+                    context.drawImage(images[image], image[1]*sizex/100, image[2]*sizey/100, sizex/4, sizey/7);
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+            // var ctx=new_canvas.getContext("2d");
+            // var imgs = [];
+            // for (i = 0; i< listOfDancers.length;i++){
+            //     x = listOfDancers[i];
+            //     console.log(x[0])
+            //     var imageObj = new Image();
+            //     imgs.push(imageObj);
+
+            //     imageObj.onload = function() {
+            //         ctx.drawImage(this, x[1], x[2],sizex/5, sizey/5);
+            //     };
+            //     if (x[0] == 'circle'){
+            //         imageObj.src = './circle.png';
+            //     } else {
+            //         imageObj.src = './triangle.png'; 
+            //     }
+            // }
             
     
         }
