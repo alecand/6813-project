@@ -31,7 +31,7 @@
 }
 
 .dancerObject { 
-    position: relative; 
+    position: absolute; 
 }
 
 .formation {

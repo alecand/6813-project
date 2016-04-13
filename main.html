@@ -136,19 +136,29 @@
             
     
         }
-        listOfDancers = [['circle', 20, 80], ['triangle', 22, 60]];
+        listOfDancers = [['circle', 165, 212], ['triangle', 314, 350]];
         addFormation(listOfDancers);
+        formationFromList(listOfDancers);
 
-
-        //FOR WHOEVER DOES THE DANCER SIDEBAR
-        var dancerToObject = {};
         
+        //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
+        function formationFromList(dancerList) {
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
+            for (i = 0; i< listOfDancers.length;i++){
+                x = listOfDancers[i];
+                obj = addDancerObject(x[0]);
 
+                obj.style.left = x[1] + 'px';
+                
+                obj.style.top = x[2] + 'px';
+                
+            }
+        }
         
         document.getElementById("dancerWindow").addEventListener("mousedown", OnMouseDown);
         document.getElementById("dancerWindow").addEventListener("mouseup", OnMouseUp);
-        addDancerObject('circle');
-        addDancerObject('triangle');
+        // addDancerObject('circle');
+        // addDancerObject('triangle');
 
         
         //Drag function for dancer objects in center pane.
@@ -184,7 +194,9 @@
                 var e = window.event; 
             }
             _dragElement.style.left = (_offsetX + e.clientX - _startX) + 'px';
-            _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px';      
+            _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px'; 
+            // _dragElement.style.left = (_offsetX + e.clientX) + 'px';
+            // _dragElement.style.top = (_offsetY + e.clientY) + 'px';      
         }
         
 
@@ -198,12 +210,14 @@
                     _dragElement.style.left = _offsetX + 'px';
                     _dragElement.style.top =  _offsetY + 'px'; 
                 }
+
                 document.onmousemove = null;
                 _dragElement = null;
             }
         }
 
         function addDancerObject(shape) {
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var img = document.createElement('img');
             if (shape == 'circle') {
                 img.src = "./circle.png";    
@@ -212,11 +226,12 @@
             } else {
                 img.src = "./circle.png";    //default shape is circle
             }
-
             img.className = "dancerObject";
             img.onmousedown = OnMouseDown;
-
+            img.style.left = bounds['left'] + 'px';
+            img.style.top = bounds['top'] + 'px';
             document.getElementById("dancerWindow").appendChild(img);
+            return img;
         }
 
         function removeDancerObject(element) {
