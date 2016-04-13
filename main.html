@@ -264,6 +264,14 @@
                 selected = index;
 
             });
+                var rec = document.getElementsByClassName("formation");
+                for (r in rec){
+                    $(rec[r]).removeClass("selected");
+                }
+                $(new_formation).addClass("selected");
+                var index = parseInt($(new_formation).attr("id"));
+                formationFromList(directory[index]);
+                selected = index;
             var new_canvas = document.createElement("CANVAS");
             var existingForms = $(".formation").length;
             $(new_formation).attr("id", (existingForms).toString());
