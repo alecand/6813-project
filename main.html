@@ -24,8 +24,9 @@
     </table>
     <table>
             <div id = "middle" style = "width:100%">
-                <div id ="formationWindow" style = "float:left; width: 20%; height: 600px;">
-                    Formation sidebar here
+                <div id ="formationWindow" style = "float:left; width: 19%; height: 600px;">
+                    <div id="formations">
+                    </div>
                 </div>
                 <div id = "centerWindow" style = "float:left; width: 60%; height: 600px;">
                     <div id="dancerWindow" style = "height: 85%; width: 100%;"> 
@@ -111,6 +112,46 @@
         var _dragElement;           // to store target of mousedown (what's being dragged)
         
         //We will need to maintain some mapping of dancer names to their associated objects. 
+        formations = [];
+        canvases = [];
+        sizex = 100;
+        sizey = 100;
+        //Formation sidebar code:
+        function addFormation(listOfDancers) {
+            var new_formation = document.createElement("div");
+            var new_canvas = document.createElement("CANVAS");
+            // var existingForms = $(".formation").length;
+            // $(new_formation).attr("id", );
+            $(new_canvas).addClass("forcanvas");
+            $(new_formation).addClass("formation");
+            new_formation.appendChild(new_canvas);
+            $("#formations").append(new_formation);
+            canvases.push(new_canvas);
+            formations.push(new_formation);
+            var ctx=new_canvas.getContext("2d");
+            var imgs = [];
+            for (i = 0; i< listOfDancers.length;i++){
+                x = listOfDancers[i];
+                console.log(x[0])
+                var imageObj = new Image();
+                imgs.push(imageObj);
+
+                imageObj.onload = function() {
+                    ctx.drawImage(this, x[1], x[2],sizex/5, sizey/5);
+                };
+                if (x[0] == 'circle'){
+                    imageObj.src = './circle.png';
+                } else {
+                    imageObj.src = './triangle.png'; 
+                }
+            }
+            
+    
+        }
+        listOfDancers = [['circle', 20, 80], ['triangle', 22, 60]];
+        addFormation(listOfDancers);
+
+
         //FOR WHOEVER DOES THE DANCER SIDEBAR
         var dancerToObject = {};
         
