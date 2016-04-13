@@ -1,12 +1,12 @@
 #mainMenu {
-	background-color: #990000;
+	background-color: #561420;
 	color: white;
 	height: 30px;
 	width: 100%;
 }
 
 #formationWindow {
-	background-color: white;
+	background-color: #616A7F;
 	border-style: solid;
 
 }
@@ -32,11 +32,11 @@
 }
 
 #rosterWindow {
-	background-color: dimgray;
+	background-color: #616A7F;
 }
 
 #musicWindow {
-	background-color: dimgray;
+	background-color: #455372;
 	border: 1px solid black;
 }
 
@@ -63,12 +63,14 @@
 .formation {
 	/*background-color: white;*/
 	border-style: dotted;
+	/*border-color: #FF1A00;*/
 	width: 115px;
 	height: 115px;
 }
 
 .selected{
-	background-color: orange;
+	background-color: #E0E9E9;
+	border-color: #FF1A00;
 }
 
 .forcanvas{
@@ -109,7 +111,7 @@ html, body{
 /* Menu CSS adapted from CSSTerm.com Simple Horizontal DropDown CSS menu */
 
 .drop_menu {
-	background:#990000;
+	background:#821122;
 	padding:0;
 	margin:0;
 	list-style-type:none;
@@ -133,12 +135,12 @@ html, body{
 	list-style-type:none;
 	z-index: 1000000;
 }
-.drop_menu li:hover { position:relative; background:#5FD367; }
+.drop_menu li:hover { position:relative; background:#2D3956; }
 
 .drop_menu li:hover ul {
 	left:0px;
 	top:30px;
-	background:#5FD367;
+	background:#455372;
 	padding:0px;
 }
 
@@ -147,10 +149,10 @@ html, body{
 	display:block;
 	width:168px;
 	text-indent:15px;
-	background-color:#5FD367;
+	background-color:#455372;
 }
 
-.drop_menu li:hover ul li a:hover { background:#005555; }
+.drop_menu li:hover ul li a:hover { background:#2D3956; }
 
 /*For pop-up form*/
 
@@ -166,7 +168,7 @@ top:0;
 left:0;
 display:none;
 position:fixed;
-background-color:#313131;
+background-color:#333333;
 overflow:auto
 }
 img#close {
