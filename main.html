@@ -290,6 +290,9 @@
                 selected = index;
 
             });
+
+
+
             var new_canvas = document.createElement("CANVAS");
             var existingForms = $(".formation").length;
             $(new_formation).attr("id", (existingForms).toString());
@@ -302,6 +305,14 @@
             var brect = new_canvas.getBoundingClientRect();
             sizex = brect.width;
             sizey = brect.height;
+                            var rec = document.getElementsByClassName("formation");
+                for (r in rec){
+                    $(rec[r]).removeClass("selected");
+                }
+                $(new_formation).addClass("selected");
+                var index = parseInt($(new_formation).attr("id"));
+                formationFromList(directory[index]);
+                selected = index;
 
 
             function loadImages(listOfDancers, callback) {
@@ -344,14 +355,8 @@
             
     
         }
-        var listOfDancers = [['circle', 50, 12], ['triangle', 34, 35]];
-        formationFromList(listOfDancers);
-        listOfDancers = [['circle', 50, 50], ['triangle', 30, 35]];
-        addFormation(listOfDancers);
-        var listOfDancers2 = [['circle', 8, 80], ['triangle', 30, 35]];
-        editFormation(0,listOfDancers2);
+        addFormation([]);
 
-                addFormation(listOfDancers);
 
 
 
@@ -490,7 +495,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 45%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat(dancer.profilePicture).concat('</div> <div style="float: left; width: 20%;"> <button type="button" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 45%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:30px;height:30px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
@@ -499,35 +504,35 @@
         function loadRosterWindow() {
             // Make Dancers
             var dancers = new DancerList();
-            var dancer1 = new Dancer("Alec", "Anderson", "boy", "src", "total scrub", "circle", "")
+            var dancer1 = new Dancer("Alec", "Andie", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
                 dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
                 update();
             })
             //
-            var dancer2 = new Dancer("Alex", "Latham", "boy", "src", "total scrub", "triangle", "")
+            var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer2, 2);
             $('#button2').click(function() {
                 dancer2.shapeObject = addDancerObject(dancer2.shapeOf)
                 update();
             })
             // 
-            var dancer3 = new Dancer("Uele", "Italian", "boy", "src", "total scrub", "circle", "")
+            var dancer3 = new Dancer("Uele", "Italian", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer3, 3);
             $('#button3').click(function() {
                 dancer3.shapeObject = addDancerObject(dancer3.shapeOf)
                 update();
             })
             //
-            var dancer4 = new Dancer("Vineel", "Chakra", "boy", "src", "total scrub", "triangle", "")
+            var dancer4 = new Dancer("Vineel", "Chakra", "boy", "./profile.png", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer4, 4);
             $('#button4').click(function() {
                 dancer4.shapeObject = addDancerObject(dancer4.shapeOf)
                 update();
             })
             //
-            var dancer5 = new Dancer("Another", "One", "boy", "src", "total scrub", "circle", "")
+            var dancer5 = new Dancer("Another", "One", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer5, 5);
             $('#button5').click(function() {
                 dancer5.shapeObject = addDancerObject(dancer5.shapeOf)
