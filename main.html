@@ -208,10 +208,12 @@
         formations = [];
         canvases = [];
         directory = [];
+        selected = 0;
 
         //Formation sidebar code:
 
         function editFormation(index, listOfDancers){
+            console.log(listOfDancers)
             directory[index] = listOfDancers;
             var formation = formations[index];
             formation.removeChild(formation.childNodes[0]);
@@ -275,6 +277,7 @@
                 $(new_formation).addClass("selected");
                 var index = parseInt($(new_formation).attr("id"));
                 formationFromList(directory[index]);
+                selected = index;
 
             });
             var new_canvas = document.createElement("CANVAS");
@@ -340,6 +343,25 @@
 
                 addFormation(listOfDancers);
 
+
+
+
+        function getCurrentDancers(){
+            var windoww = document.getElementById('dancerWindow');
+            var currentDancers = windoww.childNodes;
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
+            var listr = [];
+            for (i = 0; i< currentDancers.length;i++){
+                danceritem = [$(currentDancers[i]).attr("shape"),100/bounds.width*(parseFloat(currentDancers[i].style.left) - bounds.left), 100/bounds.height*(parseFloat(currentDancers[i].style.top) - bounds.top)];
+                listr.push(danceritem);
+            }
+            return listr;
+        }
+
+        function update() {
+            editFormation(selected, getCurrentDancers());
+        }
+
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
             console.log(dancerList);
@@ -348,9 +370,7 @@
             for (i = 0; i< dancerList.length;i++){
                 x = dancerList[i];
                 obj = addDancerObject(x[0]);
-                console.log(x[1]);
                 obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
-                
                 obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
                 
             }
@@ -414,6 +434,7 @@
 
                 document.onmousemove = null;
                 _dragElement = null;
+                update();
             }
         }
 
@@ -428,11 +449,14 @@
                 img.src = "./circle.png";    //default shape is circle
             }
             img.className = "dancerObject";
+            $(img).attr("shape", shape);
             img.onmousedown = OnMouseDown;
             img.style.left = bounds['left'] + 'px';
             img.style.top = bounds['top'] + 'px';
             document.getElementById("dancerWindow").appendChild(img);
+
             return img;
+
         }
 
         function removeDancerObject(element) {
@@ -469,30 +493,35 @@
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
                 dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
+                update();
             })
             //
             var dancer2 = new Dancer("Alex", "Latham", "boy", "src", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer2, 2);
             $('#button2').click(function() {
                 dancer2.shapeObject = addDancerObject(dancer2.shapeOf)
+                update();
             })
             // 
             var dancer3 = new Dancer("Uele", "Italian", "boy", "src", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer3, 3);
             $('#button3').click(function() {
                 dancer3.shapeObject = addDancerObject(dancer3.shapeOf)
+                update();
             })
             //
             var dancer4 = new Dancer("Vineel", "Chakra", "boy", "src", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer4, 4);
             $('#button4').click(function() {
                 dancer4.shapeObject = addDancerObject(dancer4.shapeOf)
+                update();
             })
             //
             var dancer5 = new Dancer("Another", "One", "boy", "src", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer5, 5);
             $('#button5').click(function() {
                 dancer5.shapeObject = addDancerObject(dancer5.shapeOf)
+                update();
             })
 
             dancers.list = [dancer1,dancer2,dancer3,dancer4,dancer5];
