@@ -284,6 +284,7 @@
 
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
+            document.getElementById("dancerWindow").innerHTML = "";
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             for (i = 0; i< listOfDancers.length;i++){
                 x = listOfDancers[i];
