@@ -48,7 +48,7 @@
             <div id = "middle" style = "width:100%">
                 <div id ="formationWindow" style = "float:left; width: 19%; height: 600px;">
                     <div id="formations">
-                    </div
+                    </div>
                     <input id="btnAdd" type="button" name="new" value="Add"/>
 
                 </div>
@@ -211,17 +211,21 @@
         function addFormation(listOfDancers) {
             directory.push(listOfDancers);
             var new_formation = document.createElement("div");
-            new_formation.addEventListener("click", function(){
+            new_formation.addEventListener("click", function(e){
                 var rec = document.getElementsByClassName("formation");
                 for (r in rec){
                     $(rec[r]).removeClass("selected");
                 }
                 $(new_formation).addClass("selected");
+                var index = parseInt($(new_formation).attr("id"));
+                formationFromList(directory[index]);
+                console.log(index);
+                console.log(directory[index]);
 
             });
             var new_canvas = document.createElement("CANVAS");
-            // var existingForms = $(".formation").length;
-            // $(new_formation).attr("id", );
+            var existingForms = $(".formation").length;
+            $(new_formation).attr("id", (existingForms).toString());
             $(new_canvas).addClass("forcanvas");
             $(new_formation).addClass("formation");
             new_formation.appendChild(new_canvas);
