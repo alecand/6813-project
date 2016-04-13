@@ -106,8 +106,8 @@
 <!-- Popup Div Ends Here -->
 </div>
 <!-- Display Popup Button -->
-<h1>Click Button To Popup Form Using Javascript</h1>
-<button id="popup" onclick="div_show()">Popup</button>
+<!-- <h1>Click Button To Popup Form Using Javascript</h1>
+<button id="popup" onclick="div_show()">Popup</button> -->
 
 
 <!-- Load any supplemental Javascript libraries here -->
@@ -487,7 +487,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 45%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:30px;height:30px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 45%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:30px;height:30px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton onclick=div_show()> <button type="button"> Edit Info </button> </div>');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
