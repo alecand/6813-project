@@ -404,9 +404,10 @@
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var listr = [];
             for (i = 0; i< currentDancers.length;i++){
-                danceritem = [$(currentDancers[i]).attr("shape"),100/bounds.width*(parseFloat(currentDancers[i].style.left) - bounds.left), 100/bounds.height*(parseFloat(currentDancers[i].style.top) - bounds.top)];
+                danceritem = [$(currentDancers[i]).attr("shape"),100/bounds.width*(parseFloat(currentDancers[i].style.left) - bounds.left), 100/bounds.height*(parseFloat(currentDancers[i].style.top) - bounds.top),$(currentDancers[i]).attr("initials")];
                 listr.push(danceritem);
             }
+            console.log(currentDancers)
             return listr;
         }
 
@@ -421,9 +422,11 @@
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             for (i = 0; i< dancerList.length;i++){
                 x = dancerList[i];
-                obj = addDancerObject(x[0], "");
+                obj = addDancerObject(x[0], x[3]);
+
                 obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
                 obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
+                console.log(obj.style.left);
                 
             }
         }
@@ -528,9 +531,11 @@
             div.onmousedown = OnMouseDown;
             div.style.left = bounds['left'] + 'px';
             div.style.top = bounds['top'] + 'px';
+            $(div).attr("shape", shape);
+            $(div).attr("initials", initials);
             document.getElementById("dancerWindow").appendChild(div);
 
-            return img;
+            return div;
 
         }
 
