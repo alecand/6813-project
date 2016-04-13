@@ -1,13 +1,12 @@
 #mainMenu {
-	background-color: black;
+	background-color: #990000;
 	color: white;
-	height: 50px;
+	height: 30px;
 	width: 100%;
 }
 
 #formationWindow {
 	background-color: white;
-	border-color: black;
 	border-style: solid;
 
 }
@@ -33,11 +32,12 @@
 }
 
 #rosterWindow {
-	background-color: green;
+	background-color: dimgray;
 }
 
 #musicWindow {
-	background-color: #1C1C1C;
+	background-color: dimgray;
+	border: 1px solid black;
 }
 
 .dancerObject { 
@@ -46,7 +46,7 @@
 
 #dancer1 {
 	background-color: white;
-	border: 2px solid green;
+	border: 2px solid dimgray;
 	padding: 15px;
 	border-radius: 25px;
 	height: 13%;
@@ -109,7 +109,7 @@ html, body{
 /* Menu CSS adapted from CSSTerm.com Simple Horizontal DropDown CSS menu */
 
 .drop_menu {
-	background:#005555;
+	background:#990000;
 	padding:0;
 	margin:0;
 	list-style-type:none;
