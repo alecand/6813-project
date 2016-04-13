@@ -63,8 +63,8 @@
 .formation {
 	/*background-color: white;*/
 	border-style: dotted;
-	width: 95%;
-	height: 120px;
+	width: 115px;
+	height: 115px;
 }
 
 .selected{
@@ -74,8 +74,8 @@
 .forcanvas{
 	background-color: white;
 	border-style: solid;
-	width: 95%;
-	height: 96%;
+	width: 109px;
+	height: 109px;
 }
 
 /* For the pop-up*/

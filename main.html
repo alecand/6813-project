@@ -46,7 +46,7 @@
     </table>
     <table>
             <div id = "middle" style = "width:100%">
-                <div id ="formationWindow" style = "float:left; width: 19%; height: 600px;">
+                <div id ="formationWindow" style = "float:left; width: 120px; height: 600px;">
                     <div id="formations">
                     </div>
                     <input id="btnAdd" type="button" name="new" value="Add"/>
@@ -226,8 +226,8 @@
             formation.appendChild(new_canvas);
             canvases[index] = new_canvas;
             var brect = new_canvas.getBoundingClientRect();
-            sizex = brect.width;
-            sizey = brect.height;
+            sizex = 283;
+            sizey = 139;
 
 
             function loadImages(listOfDancers, callback) {
@@ -260,7 +260,7 @@
                 for(i = 0; i< listOfDancers.length;i++){
                     image = listOfDancers[i]
                     console.log(image[1])
-                    context.drawImage(images[image], image[1]*sizex/100, image[2]*sizey/100, sizex/4, sizey/7);
+                    context.drawImage(images[image], image[1]*sizex/100, image[2]*sizey/100, sizex/5, sizey/5);
                 }
             });
 
@@ -295,8 +295,8 @@
             canvases.push(new_canvas);
             formations.push(new_formation);
             var brect = new_canvas.getBoundingClientRect();
-            sizex = brect.width;
-            sizey = brect.height;
+            sizex = 109;
+            sizey = 109;
                             var rec = document.getElementsByClassName("formation");
                 for (r in rec){
                     $(rec[r]).removeClass("selected");
