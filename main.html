@@ -219,8 +219,6 @@
                 $(new_formation).addClass("selected");
                 var index = parseInt($(new_formation).attr("id"));
                 formationFromList(directory[index]);
-                console.log(index);
-                console.log(directory[index]);
 
             });
             var new_canvas = document.createElement("CANVAS");
@@ -277,26 +275,27 @@
             
     
         }
-        listOfDancers = [['circle', 250, 212], ['triangle', 314, 350]];
+        var listOfDancers = [['circle', 50, 12], ['triangle', 34, 35]];
         formationFromList(listOfDancers);
         listOfDancers = [['circle', 50, 50], ['triangle', 30, 35]];
         addFormation(listOfDancers);
-        listOfDancers2 = [['circle', 8, 80], ['triangle', 30, 35]];
+        var listOfDancers2 = [['circle', 8, 80], ['triangle', 30, 35]];
         editFormation(0,listOfDancers2);
 
                 addFormation(listOfDancers);
 
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
+            console.log(dancerList);
             document.getElementById("dancerWindow").innerHTML = "";
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
-            for (i = 0; i< listOfDancers.length;i++){
-                x = listOfDancers[i];
+            for (i = 0; i< dancerList.length;i++){
+                x = dancerList[i];
                 obj = addDancerObject(x[0]);
-
-                obj.style.left = x[1] + 'px';
+                console.log(x[1]);
+                obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
                 
-                obj.style.top = x[2] + 'px';
+                obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
                 
             }
         }
