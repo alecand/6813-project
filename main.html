@@ -332,9 +332,7 @@
             for (i = 0; i< dancerList.length;i++){
                 x = dancerList[i];
                 obj = addDancerObject(x[0]);
-                console.log(x[1]);
                 obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
-                
                 obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
                 
             }
