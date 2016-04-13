@@ -48,7 +48,9 @@
             <div id = "middle" style = "width:100%">
                 <div id ="formationWindow" style = "float:left; width: 19%; height: 600px;">
                     <div id="formations">
-                    </div>
+                    </div
+                    <input id="btnAdd" type="button" name="new" value="Add"/>
+
                 </div>
                 <div id = "centerWindow" style = "float:left; width: 60%; height: 600px;">
                     <div id="dancerWindow" style = "height: 85%; width: 100%;"> 
@@ -105,7 +107,9 @@
     
     $(document).ready(function() {
         var audio = new Audio('19ManOfTheYear.mp3');
-
+        $("#btnAdd").click(function(evt) {
+            addFormation([]);
+        });
         $("#btnPlay").click(function(evt) {
             audio.play();
         });
@@ -280,6 +284,7 @@
 
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
+            document.getElementById("dancerWindow").innerHTML = "";
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             for (i = 0; i< listOfDancers.length;i++){
                 x = listOfDancers[i];
