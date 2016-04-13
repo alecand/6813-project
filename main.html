@@ -31,14 +31,14 @@
             </li>
             <li><a href='#'>Formations</a>
                 <ul>
+                <li><a href='#'>Add New Formation</a></li>
                 <li><a href='#'>Formations Library</a></li>
-                <li><a href='#'>blah</a></li>
-                <li><a href='#'>blah</a></li>
                 </ul>
             </li>
             <li><a href='#'>Transitions</a>
                 <ul>
-                <li><a href='#'>View All</a></li>
+                <li><a href='#'>Add New Transition</a></li>
+                <li><a href='#'>Visualize Current Transition</a></li>
                 </ul>
             </li>
             </ul>
@@ -49,6 +49,8 @@
                 <div id ="formationWindow" style = "float:left; width: 19%; height: 600px;">
                     <div id="formations">
                     </div>
+                    <input id="btnAdd" type="button" name="new" value="Add"/>
+
                 </div>
                 <div id = "centerWindow" style = "float:left; width: 60%; height: 600px;">
                     <div id="dancerWindow" style = "height: 85%; width: 100%;"> 
@@ -145,7 +147,9 @@
         div_hide();
 
         var audio = new Audio('19ManOfTheYear.mp3');
-
+        $("#btnAdd").click(function(evt) {
+            addFormation([]);
+        });
         $("#btnPlay").click(function(evt) {
             audio.play();
         });
@@ -247,17 +251,19 @@
         function addFormation(listOfDancers) {
             directory.push(listOfDancers);
             var new_formation = document.createElement("div");
-            new_formation.addEventListener("click", function(){
+            new_formation.addEventListener("click", function(e){
                 var rec = document.getElementsByClassName("formation");
                 for (r in rec){
                     $(rec[r]).removeClass("selected");
                 }
                 $(new_formation).addClass("selected");
+                var index = parseInt($(new_formation).attr("id"));
+                formationFromList(directory[index]);
 
             });
             var new_canvas = document.createElement("CANVAS");
-            // var existingForms = $(".formation").length;
-            // $(new_formation).attr("id", );
+            var existingForms = $(".formation").length;
+            $(new_formation).attr("id", (existingForms).toString());
             $(new_canvas).addClass("forcanvas");
             $(new_formation).addClass("formation");
             new_formation.appendChild(new_canvas);
@@ -309,25 +315,27 @@
             
     
         }
-        listOfDancers = [['circle', 165, 212], ['triangle', 314, 350]];
+        var listOfDancers = [['circle', 50, 12], ['triangle', 34, 35]];
         formationFromList(listOfDancers);
         listOfDancers = [['circle', 50, 50], ['triangle', 30, 35]];
         addFormation(listOfDancers);
-        listOfDancers2 = [['circle', 8, 80], ['triangle', 30, 35]];
+        var listOfDancers2 = [['circle', 8, 80], ['triangle', 30, 35]];
         editFormation(0,listOfDancers2);
 
                 addFormation(listOfDancers);
 
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
+            console.log(dancerList);
+            document.getElementById("dancerWindow").innerHTML = "";
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
-            for (i = 0; i< listOfDancers.length;i++){
-                x = listOfDancers[i];
+            for (i = 0; i< dancerList.length;i++){
+                x = dancerList[i];
                 obj = addDancerObject(x[0]);
-
-                obj.style.left = x[1] + 'px';
+                console.log(x[1]);
+                obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
                 
-                obj.style.top = x[2] + 'px';
+                obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
                 
             }
         }
