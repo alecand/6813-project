@@ -1,3 +1,7 @@
+body {
+    font: normal 14px "Trebuchet MS", Helvetica, sans-serif
+}
+
 #mainMenu {
 	background-color: #990000;
 	color: white;
@@ -106,7 +110,7 @@ div.fadeMe {
 	display:block;
 	color:#fff;
 	text-decoration:none;
-	font:12px arial, verdana, sans-serif;
+	font:14px "Trebuchet MS", Helvetica, sans-serif;
 }
 
 /* Submenu */
@@ -117,12 +121,12 @@ div.fadeMe {
 	list-style-type:none;
 	z-index: 1000000;
 }
-.drop_menu li:hover { position:relative; background:#5FD367; }
+.drop_menu li:hover { position:relative; background:dimgrey; }
 
 .drop_menu li:hover ul {
 	left:0px;
 	top:30px;
-	background:#5FD367;
+	background:dimgrey;
 	padding:0px;
 }
 
@@ -131,10 +135,10 @@ div.fadeMe {
 	display:block;
 	width:168px;
 	text-indent:15px;
-	background-color:#5FD367;
+	background-color:dimgrey;
 }
 
-.drop_menu li:hover ul li a:hover { background:#005555; }
+.drop_menu li:hover ul li a:hover { background:grey; }
 
 /*For pop-up form*/
 
