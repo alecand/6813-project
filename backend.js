@@ -13,6 +13,7 @@ var Dancer = function(firstName, lastName, gender, picture, notes, shape, shapeO
 	this.notes = notes
 	this.shapeOf = shape
 	this.shapeObject = shapeObject
+	this.added = 0
 
 	////////////////////////////////////////////////
 	// Public methods
