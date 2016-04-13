@@ -412,7 +412,7 @@
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             for (i = 0; i< dancerList.length;i++){
                 x = dancerList[i];
-                obj = addDancerObject(x[0]);
+                obj = addDancerObject(x[0], "");
                 obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
                 obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
                 
@@ -481,7 +481,7 @@
             }
         }
 
-        function addDancerObject(shape) {
+        function addDancerObject(shape, initials) {
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var img = document.createElement('img');
             if (shape == 'circle') {
@@ -536,7 +536,7 @@
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
                 // if (dancer1.added == 0) {
-                    dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
+                    dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA")
                     // dancer1.added = 1
                     update();
                 // }
@@ -546,7 +546,7 @@
             addDancerToRosterWindow(dancer2, 2);
             $('#button2').click(function() {
                 // if (dancer2.added == 0) {
-                    dancer2.shapeObject = addDancerObject(dancer2.shapeOf)
+                    dancer2.shapeObject = addDancerObject(dancer2.shapeOf, "AL")
                     // dancer2.added = 1
                     update();
                 // }
@@ -556,7 +556,7 @@
             addDancerToRosterWindow(dancer3, 3);
             $('#button3').click(function() {
                 // if (dancer3.added == 0) {
-                    dancer3.shapeObject = addDancerObject(dancer3.shapeOf)
+                    dancer3.shapeObject = addDancerObject(dancer3.shapeOf, "UI")
                     // dancer3.added = 1
                     update();
                 // }
@@ -566,7 +566,7 @@
             addDancerToRosterWindow(dancer4, 4);
             $('#button4').click(function() {
                 // if (dancer4.added == 0) {
-                    dancer4.shapeObject = addDancerObject(dancer4.shapeOf)
+                    dancer4.shapeObject = addDancerObject(dancer4.shapeOf, "VC")
                     // dancer4.added = 1
                     update();
                 // }
@@ -576,7 +576,7 @@
             addDancerToRosterWindow(dancer5, 5);
             $('#button5').click(function() {
                 // if (dancer5.added == 0) {
-                    dancer5.shapeObject = addDancerObject(dancer5.shapeOf)
+                    dancer5.shapeObject = addDancerObject(dancer5.shapeOf, "AO")
                     // dancer5.added = 1
                     update();
                 // }
