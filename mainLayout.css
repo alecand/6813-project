@@ -1,9 +1,9 @@
 body {
-    font: normal 14px "Trebuchet MS", Helvetica, sans-serif
+    font: normal 14px "Trebuchet MS", Helvetica, sans-serif;
 }
 
 #mainMenu {
-	background-color: #561420;
+	background-color: #821122;
 	color: white;
 	height: 30px;
 	width: 100%;
@@ -37,7 +37,6 @@ body {
 }
 
 #rosterWindow {
-<<<<<<< HEAD
 	background-color: #616a7f;
 }
 
