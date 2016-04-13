@@ -81,7 +81,7 @@
 <!-- Popup Div Starts Here -->
 <div id="popupContact">
 <!-- Contact Us Form -->
-<form action="#" id="form" method="post" name="form">
+<!-- <form action="#" id="form" method="post" name="form">
 <img id="close" src="images/3.png" onclick ="div_hide()">
 <h2>Contact Us</h2>
 <hr>
@@ -89,7 +89,19 @@
 <input id="email" name="email" placeholder="Email" type="text">
 <textarea id="msg" name="message" placeholder="Message"></textarea>
 <a href="javascript:%20check_empty()" id="submit">Send</a>
-</form>
+</form> -->
+<table id="form">
+    <!-- <tr>
+        <td> First Name </td>
+        <td> Last Name </td>
+        <td> Gender </td>
+        <td> Profile Picture </td>
+        <td> Notes </td>
+    </tr>
+    <tr>
+        <button id="close" onclick="close_popup()"> Save </button>
+    </tr> -->
+</table>
 </div>
 <!-- Popup Div Ends Here -->
 </div>
@@ -141,6 +153,10 @@
     //Function to Hide Popup
     function div_hide(){
     document.getElementById('abc').style.display = "none";
+    }
+
+    function close_popup() {
+        div_hide();
     }
 
     $(document).ready(function() {
@@ -510,7 +526,24 @@
             // self.name="main";
             // $("#dialog").dialog({autoOpen : false, modal : true, show : "blind", hide : "blind"});
             // $("#dialog").dialog("open");
+
             //Function To Display Popup
+
+            function populatePopupRow(dancer) {
+                $('#form').append('<tr><td><input type="text" value="',dancer.firstName,'"> </input></td><td><input type="text" value="',dancer.lastName,'"> </input></td><td><button class="dropbtn">',dancer.gender,'</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
+            }
+            function makePopupTable() {
+                $('#form').append('<tr><td> First Name </td><td> </td><td> Last Name </td> <td></td><td> Gender </td><td> Profile Picture </td><td> Notes </td></tr>');
+                for (i=0; i<dancers.list.length; i++) {
+                    // alert("goign")
+                    populatePopupRow(dancers.list[i]);
+                }
+            $('#form').append('<tr> <td> <button type="button"> + </button> </td> </tr>');
+            $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+            }
+            makePopupTable();
+                            // $('#form').append('<tr><td><input placeholder="',dancer.firstName,'"> </input></td><td><input placeholder="',dancer.lastName,'"> </input></td><td><button class="dropbtn">',dancer.gender,'</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
+            // $('#form').append('<tr><td><input placeholder="pl"> </input></td><td><input placeholder="pl"> </input></td><td><button class="dropbtn">Select</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>')
 
             }
         });
