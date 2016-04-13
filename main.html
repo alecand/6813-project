@@ -159,6 +159,11 @@
         div_hide();
     }
 
+    function other_gender(dancer) {
+        if (dancer.gender == "boy") {return "girl"}
+        else {return "boy"}
+    }
+
     $(document).ready(function() {
         div_hide();
 
@@ -489,7 +494,7 @@
         function loadRosterWindow() {
             // Make Dancers
             var dancers = new DancerList();
-            var dancer1 = new Dancer("Alec", "Anderson", "boy", "src", "total scrub", "circle", "")
+            var dancer1 = new Dancer("Alec", "Anderson", "girl", "src", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
                 dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
@@ -559,12 +564,12 @@
             //Function To Display Popup
 
             function populatePopupRow(dancer) {
-                $('#form').append('<tr><td><input type="text" value="',dancer.firstName,'"> </input></td><td><input type="text" value="',dancer.lastName,'"> </input></td><td><button class="dropbtn">',dancer.gender,'</button></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
+                $('#form').append('<tr><td><input type="text" value="'.concat(dancer.firstName).concat('"</div></input></td><td><input type="text" value="',dancer.lastName,'"> </input></td><td><select><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>'));
             }
             function makePopupTable() {
-                $('#form').append('<tr><td> First Name </td><td> </td><td> Last Name </td> <td></td><td> Gender </td><td> Profile Picture </td><td> Notes </td></tr>');
+                $('#form').append('<tr><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Profile Picture </td><td> Notes </td></tr>');
                 for (i=0; i<dancers.list.length; i++) {
-                    // alert("goign")
+                    // alert("going")
                     populatePopupRow(dancers.list[i]);
                 }
             $('#form').append('<tr> <td> <button type="button"> + </button> </td> </tr>');
