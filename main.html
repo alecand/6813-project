@@ -47,7 +47,7 @@
     </table>
     <table>
             <div id = "middle" style = "width:100%">
-                <div id ="formationWindow" style = "float:left; width: 120px; height: 600px;">
+                <div id ="formationWindow" style = "float:left; width: 120px; height: 598px;">
                     <div id="formations">
                     </div>
                     <input id="btnAdd" type="button" name="new" value="Add"/>
@@ -61,7 +61,7 @@
                         <textarea id="notes_text" name="notesText" placeholder="Enter notes here..."></textarea>
                     </div>
                 </div>
-                <div id = "rosterWindow" style = "overflow: hidden; height: 600px;">
+                <div id = "rosterWindow" style = "overflow: hidden; height: 604px;">
                     <!-- Roster window here -->
                 </div>
             </div>
@@ -535,21 +535,21 @@
             var dancer1 = new Dancer("Alec", "Andie", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
-                if (dancer1.added == 0) {
+                // if (dancer1.added == 0) {
                     dancer1.shapeObject = addDancerObject(dancer1.shapeOf)
-                    dancer1.added = 1
+                    // dancer1.added = 1
                     update();
-                }
+                // }
             })
             //
             var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer2, 2);
             $('#button2').click(function() {
-                if (dancer2.added == 0) {
+                // if (dancer2.added == 0) {
                     dancer2.shapeObject = addDancerObject(dancer2.shapeOf)
-                    dancer2.added = 1
+                    // dancer2.added = 1
                     update();
-                }
+                // }
             })
             // 
             var dancer3 = new Dancer("Uele", "Italian", "boy", "./profile.png", "total scrub", "circle", "")
@@ -565,21 +565,21 @@
             var dancer4 = new Dancer("Vineel", "Chakra", "boy", "./profile.png", "total scrub", "triangle", "")
             addDancerToRosterWindow(dancer4, 4);
             $('#button4').click(function() {
-                if (dancer4.added == 0) {
+                // if (dancer4.added == 0) {
                     dancer4.shapeObject = addDancerObject(dancer4.shapeOf)
-                    dancer4.added = 1
+                    // dancer4.added = 1
                     update();
-                }
+                // }
             })
             //
             var dancer5 = new Dancer("Another", "One", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer5, 5);
             $('#button5').click(function() {
-                if (dancer5.added == 0) {
+                // if (dancer5.added == 0) {
                     dancer5.shapeObject = addDancerObject(dancer5.shapeOf)
-                    dancer5.added = 1
+                    // dancer5.added = 1
                     update();
-                }
+                // }
             })
 
             dancers.list = [dancer1,dancer2,dancer3,dancer4,dancer5];
