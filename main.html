@@ -280,6 +280,9 @@
                 selected = index;
 
             });
+
+
+
             var new_canvas = document.createElement("CANVAS");
             var existingForms = $(".formation").length;
             $(new_formation).attr("id", (existingForms).toString());
@@ -292,6 +295,14 @@
             var brect = new_canvas.getBoundingClientRect();
             sizex = brect.width;
             sizey = brect.height;
+                            var rec = document.getElementsByClassName("formation");
+                for (r in rec){
+                    $(rec[r]).removeClass("selected");
+                }
+                $(new_formation).addClass("selected");
+                var index = parseInt($(new_formation).attr("id"));
+                formationFromList(directory[index]);
+                selected = index;
 
 
             function loadImages(listOfDancers, callback) {
@@ -334,14 +345,8 @@
             
     
         }
-        var listOfDancers = [['circle', 50, 12], ['triangle', 34, 35]];
-        formationFromList(listOfDancers);
-        listOfDancers = [['circle', 50, 50], ['triangle', 30, 35]];
-        addFormation(listOfDancers);
-        var listOfDancers2 = [['circle', 8, 80], ['triangle', 30, 35]];
-        editFormation(0,listOfDancers2);
+        addFormation([]);
 
-                addFormation(listOfDancers);
 
 
 
