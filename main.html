@@ -132,6 +132,7 @@
 
 
 <!-- Load any supplemental Javascript libraries here -->
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 <script type="text/javascript" src="external_js/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="backend.js"></script>
 
@@ -271,6 +272,236 @@
         canvases = [];
         directory = [];
         selected = 0;
+        topDID = 1;
+        topFID = 1;
+        var refOriginal;
+        var ref;
+        var dancersRef;
+        var formationsRef;
+        var existingFormations = 0;
+        var indexToID = {};
+        var mydancers = [];
+
+        function FBinit(){
+            indexToID[0] = "1";
+            refOriginal = new Firebase("https://amber-fire-7704.firebaseio.com");
+            sessionNumber = (Math.floor(100000000*Math.random())).toString();
+
+            sessionNumber = "testingSession";
+            ref = refOriginal.child(sessionNumber);
+
+            dancersRef = ref.child("dancers");
+            mydancers.push("vineelc");
+            dancersRef.set({
+                vineelc: {
+                    first_name: "Vineel",
+                    last_name: "C",
+                    initials: "VC",
+                    formations: {},
+                    picture: null,
+                    dancerID: 1,
+                    gender: "boy",
+                    notes: ""
+                }
+            });     
+        
+            formationsRef = ref.child("formations");
+            formationsRef.child("1").set({
+                dancers: {},
+                index: 0,
+                formationID: 1,
+                notes: ""
+            });
+        }
+        FBinit();
+
+        function urlify(first, last){
+
+            return first.concat(last).toLowerCase();
+        }
+
+        function FBnewDancer(first, last, gender, notes, picture){
+            topDID += 1;
+            var url = urlify(first, last);
+            mydancers.push(url);
+            dancersRef.child(url).set({
+                
+                first_name: first,
+                last_name: last,
+                initials: first[0].concat(last[0]).toUpperCase(),
+                formations: {},
+                picture: picture,
+                dancerID: topDID,
+                gender: gender,
+                notes: notes   
+            })
+        }
+        FBnewDancer("Alec", "Andie", "boy", "", null);
+
+        function FBappendFormation(){
+            topFID += 1;
+            existingFormations += 1;
+            indexToID[existingFormations] = topFID.toString();
+
+            formationsRef.child(topFID.toString()).set({
+                dancers: {},
+                index: existingFormations,
+                formationID: topFID,
+                notes: ""
+            });
+        }
+
+        function FBaddDancerToFormation(dancerUrl, formationIndex, x, y){
+            dancersRef.child(dancerUrl).child("formations").child(indexToID[formationIndex]).set({
+                x: x,
+                y: y
+            });
+            formationsRef.child(indexToID[formationIndex]).child("dancers").child(dancerUrl).set({
+                url: dancerUrl,
+                x: x,
+                y: y
+            });
+        }
+        function FBaddDancerToFormationID(dancerUrl, formationID, x, y){
+            dancersRef.child(dancerUrl).child("formations").child(formationID).set({
+                x: x,
+                y: y
+            });
+            formationsRef.child(formationID).child("dancers").child(dancerUrl).set({
+                url: dancerUrl,
+                x: x,
+                y: y
+            });
+        }
+        FBaddDancerToFormation("vineelc",0, 50, 50);
+
+        //functions: addNotesToFormation, retrieveNotes, indexChange, reposition, getPositionsAtFormation
+
+        function FBupdateDancerSpecific(first, last, target, newvalue) {
+            var url = urlify(first, last);
+            dancersRef.once("value", function(snapshot) {
+                if (snapshot.child(url).exists()){
+                    dancersRef.child(url).child(target).set(newvalue);
+                }
+            });
+        }
+        function FBupdateDancer(first, last, gender, notes, picture) {
+            FBupdateDancerSpecific(first, last, "gender", gender);
+            FBupdateDancerSpecific(first, last, "notes", notes);
+            FBupdateDancerSpecific(first, last, "picture", picture);
+        }
+        function FBremoveFromFormation(dancerUrl, formationIndex){
+            formationsRef.child(indexToID[formationIndex]).child("dancers").child(dancerUrl).remove();
+            dancersRef.child(dancerUrl).child("formations").child(indexToID[formationIndex]).remove();
+        }
+        function FBremoveFromRoster(dancerUrl){
+            mydancers.splice(mydancers.indexOf(dancerUrl),1);
+            dancersRef.child(dancerUrl).remove();
+            for (i = 0; i < existingFormations + 1; i++){
+                formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
+                        if (snapshot.child(dancerUrl).exists()){
+                            formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).remove();
+                        }
+                });
+            }
+        }
+
+        function FBreplaceDancer(oldDancerUrl, first, last, gender, notes, picture){
+            var presences;
+            dancersRef.child(oldDancerUrl).once("value", function(snapshot){
+                presences = snapshot.val().formations;
+            });
+            FBremoveFromRoster(oldDancerUrl);
+            var newUrl = urlify(first, last);
+            FBnewDancer(first, last, gender, notes, picture);
+            for (i in presences){
+                FBaddDancerToFormationID(newUrl, i, presences[i].x, presences[i].y);
+            };
+        }
+        FBreplaceDancer("vineelc", "Dicks", "McGee", "shit", "shit", null);
+
+        function FBdeleteFormation(index){
+            var ID = indexToID[index];
+            formationsRef.child(ID).remove();
+            for (dancerUrl in mydancers){
+                dancersRef.child(dancerUrl).once("value", function(snapshot) {
+                    // alert();
+                    // if (snapshot.child("formations").exists()){
+                        dancersRef.child(mydancers[dancerUrl]).child("formations").once("value", function(snapshot) {
+                            if (snapshot.child(ID).exists()){
+                                dancersRef.child(mydancers[dancerUrl]).child("formations").child(ID).remove();
+                            // }
+                        }
+                    });
+                });
+            }
+        }
+        
+        function FBaddNotesToFormation(notes, index){
+
+            formationsRef.child(indexToID[index]).child("notes").set(notes);
+        }
+
+        function FBretrieveNotesFromFormation(index){
+            formationsRef.child(indexToID[index]).child("notes").once("value", function(snapshot){
+                console.log(snapshot.val());
+            })
+
+        }
+
+        function FBreposition(dancerUrl, formationIndex, newx, newy){
+            dancersRef.child(dancerUrl).child("formations").child(indexToID[formationIndex]).set({
+                x: newx,
+                y: newy
+            });
+            formationsRef.child(indexToID[formationID]).child("dancers").child(dancerUrl).set({
+                url: dancerUrl,
+                x: newx,
+                y: newy
+            });
+        }
+        function FBindexchange(oldindex, newindex){
+            if (oldindex > newindex){
+                var ID = indexToID[oldindex];
+                for (i=oldindex; i> newindex; i--){
+                    indexToID[i] = indexToID[i-1];
+                }
+                indexToID[newindex] = ID;
+            }
+            else if (newindex > oldindex) {
+                var ID = indexToID[oldindex];
+                for (i=oldindex; i < newindex; i++){
+                    indexToID[i] = indexToID[i+1];
+                }
+                indexToID[newindex] = ID;
+            }
+            for (p in indexToID){
+                formationsRef.child(indexToID[p]).child("index").set(p);
+
+            }
+        }
+
+        FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        console.log(indexToID);
+        FBindexchange(6,3);
+
+        function FBgetStateAtFormation(index){
+            var s;
+            formationsRef.child(indexToID[index]).child("dancers").once("value", function(snapshot){
+                console.log(snapshot.val())
+                s = (snapshot.val());
+            });
+            return s
+        }
+        console.log(FBgetStateAtFormation(0));
+
+        
 
         //Formation sidebar code:
 
