@@ -758,14 +758,13 @@
                 var img = document.createElement('img');
                 img.src = './vert_grid.png';
                 var left = (window.offsetWidth/divs)*i;
-                console.log(window.offsetWidth/divs);
                 img.style.left = (100*i)/divs +"%";
                 img.style.top = '0%';
                 img.style.position = 'relative';
                 img.height = window.offsetHeight;
                 img.className = "gridLine";
-                img.zIndex = 'auto';
-                //img.style.unselectable = "on"; make this work
+                img.style.zIndex = 1;
+                img.style.opacity = "0.3";
                 //Horiz line
 
                 document.getElementById('dancerWindow').appendChild(img);
@@ -773,19 +772,22 @@
                 
             }
 
-        //     for (i=1; i< divs; i++) {
-        //         var img_h = document.createElement('img');
-        //         img_h.src = './horiz_grid.png';
-        //         var left_h = (window.offsetHeight/divs)*i;
-        //         img_h.style.top = style.height*(100*i)/divs +"%";
-        //         img_h.style.left = '0%';
-        //         img_h.style.position = 'relative';
-        //         img_h.width = 1.5*window.offsetWidth;
-        //         img_h.zIndex = 'auto';
-        //         img_h.className = "gridLine";
+            for (j=1; j< divs; j++) {
+                console.log("HORIZ");
+                var img_h = document.createElement('img');
+                img_h.src = './horiz_grid.png';
+                console.log(window.offsetHeight);
+                var top_h = ((window.offsetHeight+bounds['top'])/divs)*j;
+                //img_h.style.top = (-100*j)/divs +"%";
+                img_h.style.top = -top_h+'px';
+                img_h.style.left = '0%';
+                img_h.style.position = 'relative';
+                img_h.style.width = '100%';
+                img.style.zIndex = 2;
+                img_h.className = "gridLine";
 
-        //         document.getElementById('dancerWindow').appendChild(img_h);
-        // }
+                document.getElementById('dancerWindow').appendChild(img_h);
+        }
     }
 
         function removeGridLines(){
