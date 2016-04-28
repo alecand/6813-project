@@ -61,6 +61,7 @@
                     </div>
                     <input id="btnAdd" type="button" name="new" value="Add"/><br>
                     <input id="btnDelete" type="button" name="delete" value="Delete"/>
+                    <input id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/>
 
                 </div>
                 <div id = "centerWindow" style = "float:left; width: 64%; height: 600px;">
@@ -229,6 +230,16 @@
         $("#btnDelete").click(function(evt) {
             deleteFormation(selected);
         });
+        $("#btnGrid").click(function(evt) {
+            if (gridLines == false) {
+                addGridLines();
+                gridLines = true;
+            } else {
+                removeGridLines();
+                gridLines = false;
+            }
+        });
+
         $("#btnPlay").click(function(evt) {
             audio.play();
         });
@@ -258,8 +269,11 @@
         // addDancerObject(newDancer.shapeOf)
         loadRosterWindow();
         // End Alec messing around with back end
+        
+        gridLines = false;
+        
 
-        //Varaibles for dragging
+        //Variables for dragging
         var _startX = 0;            // mouse starting positions
         var _startY = 0;
         var _offsetX = 0;           // current element offset
@@ -448,7 +462,7 @@
 
 
         FBappendFormation();
-                FBappendFormation();
+        FBappendFormation();
         FBappendFormation();
         FBappendFormation();
         FBappendFormation();
@@ -707,10 +721,14 @@
             editFormation(selected, getCurrentDancers());
         }
 
+
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
             console.log(dancerList);
             document.getElementById("dancerWindow").innerHTML = "";
+            if (gridLines) {
+                addGridLines();
+            }
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             for (i = 0; i< dancerList.length;i++){
                 x = dancerList[i];
@@ -729,6 +747,62 @@
         // addDancerObject('triangle');
 
         
+
+        function addGridLines(){
+            var divs = 4;
+            var window = document.getElementById('dancerWindow');
+            var bounds = window.getBoundingClientRect();
+            grids = []
+            for (i=1; i< divs; i++) {
+                //vert lines
+                var img = document.createElement('img');
+                img.src = './vert_grid.png';
+                var left = (window.offsetWidth/divs)*i;
+                console.log(window.offsetWidth/divs);
+                img.style.left = (100*i)/divs +"%";
+                img.style.top = '0%';
+                img.style.position = 'relative';
+                img.height = window.offsetHeight;
+                img.className = "gridLine";
+                img.zIndex = 'auto';
+                //img.style.unselectable = "on"; make this work
+                //Horiz line
+
+                document.getElementById('dancerWindow').appendChild(img);
+               
+                
+            }
+
+        //     for (i=1; i< divs; i++) {
+        //         var img_h = document.createElement('img');
+        //         img_h.src = './horiz_grid.png';
+        //         var left_h = (window.offsetHeight/divs)*i;
+        //         img_h.style.top = style.height*(100*i)/divs +"%";
+        //         img_h.style.left = '0%';
+        //         img_h.style.position = 'relative';
+        //         img_h.width = 1.5*window.offsetWidth;
+        //         img_h.zIndex = 'auto';
+        //         img_h.className = "gridLine";
+
+        //         document.getElementById('dancerWindow').appendChild(img_h);
+        // }
+    }
+
+        function removeGridLines(){
+
+            var container = document.getElementById("dancerWindow");
+            var elements = container.getElementsByClassName("gridLine");
+
+            while (elements[0]) {
+                elements[0].parentNode.removeChild(elements[0]);
+            }
+        }
+
+
+
+
+
+
         //Drag function for dancer objects in center pane.
         function OnMouseDown(e)
         {
@@ -755,6 +829,7 @@
                 _dragElement.style.zIndex = ++_topZ;
 
                 document.onmousemove = OnMouseMove;
+                document.onmouseup = OnMouseUp;
                 return false;
             }
         }
@@ -765,8 +840,10 @@
             if (e == null) {
                 var e = window.event; 
             }
+            
             _dragElement.style.left = (_offsetX + e.clientX - _startX) + 'px';
             _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px'; 
+            
             // _dragElement.style.left = (_offsetX + e.clientX) + 'px';
             // _dragElement.style.top = (_offsetY + e.clientY) + 'px';      
         }
@@ -799,11 +876,9 @@
             } else {
                 img.src = "./circle.png";    //default shape is circle
             }
-            //img.className = "dancerObject";
+            
             $(img).attr("shape", shape);
             img.onmousedown = OnMouseDown;
-            // img.style.left = bounds['left'] + 'px';
-            // img.style.top = bounds['top'] + 'px';
             
             var div = document.createElement('div');
             div.className = "dancerObject";
@@ -845,9 +920,10 @@
         function isInsideDancerWindow(dancerObject) {
             var dancer = dancerObject.getBoundingClientRect();
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
-            return ((dancer['left'] > bounds['left']) && (dancer['right'] < bounds['right']) && (dancer['top'] > bounds['top']) && (dancer['bottom'] < bounds['bottom']))
+            return ((dancer['left'] >= bounds['left']) && (dancer['right'] <= bounds['right']) && (dancer['top'] >= bounds['top']) && (dancer['bottom'] <= bounds['bottom']))
         }
 
+        
 
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
