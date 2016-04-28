@@ -435,7 +435,28 @@
                     });
                 });
             }
+            for (i=index;i<existingFormations;i++){
+                indexToID[i] = indexToID[i+1];
+            }
+            delete indexToID[existingFormations];
+            existingFormations -= 1;
+            for (p in indexToID){
+                formationsRef.child(indexToID[p]).child("index").set(p);
+
+            }
         }
+
+
+        FBappendFormation();
+                FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        FBappendFormation();
+        console.log(indexToID);
+        FBdeleteFormation(3);
+        console.log(indexToID);
+
         
         function FBaddNotesToFormation(notes, index){
 
@@ -497,9 +518,12 @@
                 console.log(snapshot.val())
                 s = (snapshot.val());
             });
-            return s
+            return s;
         }
+
         console.log(FBgetStateAtFormation(0));
+
+        
 
         
 
