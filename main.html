@@ -722,7 +722,7 @@
 
         function getCurrentDancers(){
             var windoww = document.getElementById('dancerWindow');
-            var currentDancers = windoww.childNodes;
+            var currentDancers = windoww.getElementsByClassName("dancerObject");
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var listr = [];
             for (i = 0; i< currentDancers.length;i++){
