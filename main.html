@@ -282,29 +282,34 @@
         var _dragElement;           // to store target of mousedown (what's being dragged)
         
         //We will need to maintain some mapping of dancer names to their associated objects. 
-        formations = [];
+        formationsList = [];
         canvases = [];
         directory = [];
         selected = 0;
-        topDID = 1;
-        topFID = 1;
+        var topDID = 1;
+        var topFID = 0;
         var refOriginal;
         var ref;
         var dancersRef;
         var formationsRef;
+        var selectorRef;
         var existingFormations = 0;
         var indexToID = {};
         var mydancers = [];
 
         function FBinit(){
-            indexToID[0] = "1";
             refOriginal = new Firebase("https://amber-fire-7704.firebaseio.com");
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
 
-            sessionNumber = "testingSession";
+            sessionNumber = "ueleTestingSession";
             ref = refOriginal.child(sessionNumber);
 
+            selectorRef = ref.child("selector");
+            selectorRef.set(0);
+
             dancersRef = ref.child("dancers");
+            dancersRef.set({});
+
             mydancers.push("vineelc");
             dancersRef.set({
                 vineelc: {
@@ -320,14 +325,18 @@
             });     
         
             formationsRef = ref.child("formations");
-            formationsRef.child("1").set({
-                dancers: {},
-                index: 0,
-                formationID: 1,
-                notes: ""
-            });
+            formationsRef.set({});
+            // formationsRef.child("1").set({
+            //     dancers: {},
+            //     index: 0,
+            //     formationID: 1,
+            //     notes: ""
+            // });
+            console.log("init");
         }
         FBinit();
+
+
 
         function urlify(first, last){
 
@@ -353,41 +362,74 @@
         FBnewDancer("Alec", "Andie", "boy", "", null);
 
         function FBappendFormation(){
+
             topFID += 1;
+            console.log(topFID);
             existingFormations += 1;
-            indexToID[existingFormations] = topFID.toString();
+            indexToID[existingFormations - 1] = topFID.toString();
 
             formationsRef.child(topFID.toString()).set({
                 dancers: {},
-                index: existingFormations,
+                index: existingFormations - 1,
                 formationID: topFID,
                 notes: ""
             });
         }
 
         function FBaddDancerToFormation(dancerUrl, formationIndex, x, y){
+            formationsRef.child(indexToID[formationIndex]).child("dancers").once("value", function(snapshot){
+                if (!snapshot.child(dancerUrl).exists()){
+            var initials;
+            dancersRef.child(dancerUrl).child("initials").once("value", function(snapshot){
+                initials = snapshot.val();
+            });
+            var gender;
+            dancersRef.child(dancerUrl).child("gender").once("value", function(snapshot){
+                gender = snapshot.val();
+            });           
             dancersRef.child(dancerUrl).child("formations").child(indexToID[formationIndex]).set({
                 x: x,
                 y: y
             });
             formationsRef.child(indexToID[formationIndex]).child("dancers").child(dancerUrl).set({
                 url: dancerUrl,
+                gender: gender,
+                initials: initials,
                 x: x,
                 y: y
             });
+
+                }
+            })
+
         }
+
+        function FBsetSelector(index){
+            selectorRef.set(index);
+        }
+
+
         function FBaddDancerToFormationID(dancerUrl, formationID, x, y){
+            var initials;
+            dancersRef.child(dancerUrl).child("initials").once("value", function(snapshot){
+                initials = snapshot.val();
+            });
+            var gender;
+            dancersRef.child(dancerUrl).child("gender").once("value", function(snapshot){
+                gender = snapshot.val();
+            });       
             dancersRef.child(dancerUrl).child("formations").child(formationID).set({
                 x: x,
                 y: y
             });
             formationsRef.child(formationID).child("dancers").child(dancerUrl).set({
+                gender: gender,
+                initials: initials,
                 url: dancerUrl,
                 x: x,
                 y: y
             });
         }
-        FBaddDancerToFormation("vineelc",0, 50, 50);
 
         //functions: addNotesToFormation, retrieveNotes, indexChange, reposition, getPositionsAtFormation
 
@@ -411,7 +453,7 @@
         function FBremoveFromRoster(dancerUrl){
             mydancers.splice(mydancers.indexOf(dancerUrl),1);
             dancersRef.child(dancerUrl).remove();
-            for (i = 0; i < existingFormations + 1; i++){
+            for (i = 0; i < existingFormations; i++){
                 formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
                         if (snapshot.child(dancerUrl).exists()){
                             formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).remove();
@@ -432,7 +474,6 @@
                 FBaddDancerToFormationID(newUrl, i, presences[i].x, presences[i].y);
             };
         }
-        FBreplaceDancer("vineelc", "Dicks", "McGee", "shit", "shit", null);
 
         function FBdeleteFormation(index){
             var ID = indexToID[index];
@@ -449,10 +490,10 @@
                     });
                 });
             }
-            for (i=index;i<existingFormations;i++){
+            for (i=index;i<existingFormations - 1;i++){
                 indexToID[i] = indexToID[i+1];
             }
-            delete indexToID[existingFormations];
+            delete indexToID[existingFormations - 1];
             existingFormations -= 1;
             for (p in indexToID){
                 formationsRef.child(indexToID[p]).child("index").set(p);
@@ -461,15 +502,7 @@
         }
 
 
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        console.log(indexToID);
-        FBdeleteFormation(3);
-        console.log(indexToID);
+
 
         
         function FBaddNotesToFormation(notes, index){
@@ -479,18 +512,19 @@
 
         function FBretrieveNotesFromFormation(index){
             formationsRef.child(indexToID[index]).child("notes").once("value", function(snapshot){
-                console.log(snapshot.val());
             })
 
         }
 
-        function FBreposition(dancerUrl, formationIndex, newx, newy){
+        function FBreposition(dancerUrl, formationIndex, newx, newy, gender, initials){
             dancersRef.child(dancerUrl).child("formations").child(indexToID[formationIndex]).set({
                 x: newx,
                 y: newy
             });
-            formationsRef.child(indexToID[formationID]).child("dancers").child(dancerUrl).set({
+            formationsRef.child(indexToID[formationIndex]).child("dancers").child(dancerUrl).set({
                 url: dancerUrl,
+                gender: gender,
+                initials: initials,
                 x: newx,
                 y: newy
             });
@@ -516,26 +550,15 @@
             }
         }
 
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        FBappendFormation();
-        console.log(indexToID);
-        FBindexchange(6,3);
 
         function FBgetStateAtFormation(index){
             var s;
             formationsRef.child(indexToID[index]).child("dancers").once("value", function(snapshot){
-                console.log(snapshot.val())
                 s = (snapshot.val());
             });
             return s;
         }
 
-        console.log(FBgetStateAtFormation(0));
 
         
 
@@ -544,31 +567,29 @@
         //Formation sidebar code:
 
         function deleteFormation(index){
-            var del = formations[index];
+            FBdeleteFormation(index);
+            var del = formationsList[index];
             $(del).remove();
-            formations.splice(index,1);
+            formationsList.splice(index,1);
             canvases.splice(index, 1);
             directory.splice(index, 1);
-            console.log(index);
-            console.log(formations);
             if (index <= selected) {
-                selected = Math.min(selected, formations.length - 1);
+                selected = Math.min(selected, formationsList.length - 1);
             } else {
                 selected = selected - 1;
             }
-            console.log(selected);
-            var new_sel = formations[selected];
-            formationFromList(directory[selected]);
+            var new_sel = formationsList[selected];
             $(new_sel).addClass("selected");
+            FBsetSelector(selected);
+
             }
 
 
         
 
         function editFormation(index, listOfDancers){
-            console.log(listOfDancers)
             directory[index] = listOfDancers;
-            var formation = formations[index];
+            var formation = formationsList[index];
             formation.removeChild(formation.childNodes[0]);
             var new_canvas = document.createElement("CANVAS");
             // var existingForms = $(".formation").length;
@@ -610,7 +631,6 @@
             loadImages(listOfDancers, function(images) {
                 for(i = 0; i< listOfDancers.length;i++){
                     image = listOfDancers[i]
-                    console.log(image[1])
                     context.drawImage(images[image], image[1]*sizex/100, image[2]*sizey/100, sizex/5, sizey/5);
                 }
             });
@@ -620,22 +640,22 @@
 
 
         function addFormation(listOfDancers) {
+            console.log("asasa")
+            FBappendFormation();
             directory.push(listOfDancers);
             var new_formation = document.createElement("div");
             new_formation.addEventListener("click", function(e){
+                //FBappendFormation();
                 var rec = document.getElementsByClassName("formation");
                 for (r in rec){
                     $(rec[r]).removeClass("selected");
                 }
                 $(new_formation).addClass("selected");
                 var index = parseInt($(new_formation).attr("id"));
-                formationFromList(directory[index]);
+                FBsetSelector(index);
                 selected = index;
 
             });
-
-
-
             var new_canvas = document.createElement("CANVAS");
             var existingForms = $(".formation").length;
             $(new_formation).attr("id", (existingForms).toString());
@@ -644,7 +664,7 @@
             new_formation.appendChild(new_canvas);
             $("#formations").append(new_formation);
             canvases.push(new_canvas);
-            formations.push(new_formation);
+            formationsList.push(new_formation);
             var brect = new_canvas.getBoundingClientRect();
             sizex = 109;
             sizey = 109;
@@ -656,6 +676,7 @@
                 var index = parseInt($(new_formation).attr("id"));
                 formationFromList(directory[index]);
                 selected = index;
+                FBsetSelector(index);
 
 
             function loadImages(listOfDancers, callback) {
@@ -687,11 +708,9 @@
             loadImages(listOfDancers, function(images) {
                 for(i = 0; i< listOfDancers.length;i++){
                     image = listOfDancers[i]
-                    console.log(image[1])
                     context.drawImage(images[image], image[1]*sizex/100, image[2]*sizey/100, sizex/4, sizey/7);
                 }
             });
-
 
 
 
@@ -699,8 +718,74 @@
     
         }
         addFormation([]);
+                FBaddDancerToFormation("vineelc",0, 50, 50);
+                        FBreplaceDancer("vineelc", "Dicks", "McGee", "boy", "shit", null);
 
 
+        ref.on("value", function(snapshot){
+            systemStateUpdate(snapshot.val());
+        });
+        function systemStateUpdate(snapshot){
+            console.log(snapshot);
+            console.log("start");
+            //get dancer list at main formation
+            var selectedIndex = snapshot.selector;
+            var mainFormation = snapshot.formations[indexToID[selectedIndex]];
+            var dancerList = [];
+
+            if ('dancers' in mainFormation){
+                var dancerObjectList = mainFormation.dancers;
+                for (k in dancerObjectList){
+                    var initials = dancerObjectList[k].initials;
+                    var gender = dancerObjectList[k].gender;
+                    var x = dancerObjectList[k].x;
+                    var y = dancerObjectList[k].y;
+                    var url = dancerObjectList[k].url;
+
+                    if (gender == "boy"){
+                        dancerList.push(["circle", x, y, initials, url]);
+                    } else{
+                        dancerList.push(["triangle", x, y, initials, url]);
+                    }
+
+                }
+            }
+
+            formationFromList(dancerList);
+
+            
+
+            //update all sidebar
+            console.log(existingFormations);
+
+            for (l=0; l < existingFormations; l++){
+                var targetFormation = snapshot.formations[indexToID[l]];
+                console.log(l);
+                console.log(targetFormation);
+                if ('dancers' in targetFormation){
+                    var dancerObjectList2 = targetFormation.dancers;
+                    var dancerList2 = [];
+                    for (k in dancerObjectList2){
+                        var initials = dancerObjectList2[k].initials;
+                        var gender = dancerObjectList2[k].gender;
+                        var x = dancerObjectList2[k].x;
+                        var y = dancerObjectList2[k].y;
+                        var url = dancerObjectList2[k].url;
+                        if (gender == "boy"){
+                            dancerList2.push(["circle", x, y, initials, url]);
+                        } else{
+                            dancerList2.push(["triangle", x, y, initials, url]);
+                        }
+
+                    }
+                    editFormation(l, dancerList2);    
+                }
+                console.log(l);
+
+            }
+
+            // make side thing according to roster
+        }
 
 
 
@@ -713,18 +798,19 @@
                 danceritem = [$(currentDancers[i]).attr("shape"),100/bounds.width*(parseFloat(currentDancers[i].style.left) - bounds.left), 100/bounds.height*(parseFloat(currentDancers[i].style.top) - bounds.top),$(currentDancers[i]).attr("initials")];
                 listr.push(danceritem);
             }
-            console.log(currentDancers)
             return listr;
         }
 
         function update() {
-            editFormation(selected, getCurrentDancers());
+            //editFormation(selected, getCurrentDancers());
         }
+
+
+
 
 
         //Takes list of dancers [[shape, style.left, style.top]...], puts them on the dancerWindow
         function formationFromList(dancerList) {
-            console.log(dancerList);
             document.getElementById("dancerWindow").innerHTML = "";
             if (gridLines) {
                 addGridLines();
@@ -732,11 +818,10 @@
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             for (i = 0; i< dancerList.length;i++){
                 x = dancerList[i];
-                obj = addDancerObject(x[0], x[3]);
+                obj = addDancerObject(x[0], x[3], x[4]);
 
                 obj.style.left = (x[1]*bounds.width/100 + bounds.left) + 'px';
                 obj.style.top = (x[2]*bounds.height/100 +bounds.top) + 'px';
-                console.log(obj.style.left);
                 
             }
         }
@@ -809,6 +894,10 @@
         function OnMouseDown(e)
         {
             var target = e.target;
+            var realStartx;
+            var realStarty;
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
+            var dancerUrl;
             
             if ((e.button == 0) && 
                 (target.className == 'dancerObject' || target.parentNode.className == 'dancerObject'))  
@@ -817,6 +906,7 @@
                 if (target.parentNode.className == 'dancerObject') {
 
                     target = target.parentNode;
+                    dancerUrl = $(target).attr("url");
                 }
                 // grab the mouse position
                 _startX = e.clientX;
@@ -825,6 +915,8 @@
                 // grab the clicked element's position
                 _offsetX = ExtractNumber(target.style.left);
                 _offsetY = ExtractNumber(target.style.top);
+                realStartx = (_offsetX - bounds.left) *100/bounds.width;
+                realStarty = (_offsetY - bounds.top) *100/bounds.height;
 
                 _dragElement = target;
 
@@ -854,21 +946,33 @@
         //Drag function for dancer objects in center pane.
         function OnMouseUp(e)
         {
+                        var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             if (_dragElement != null)
             {
                 //Need to check that dragged dancer is within center window
                 if (!isInsideDancerWindow(_dragElement)) {
                     _dragElement.style.left = _offsetX + 'px';
                     _dragElement.style.top =  _offsetY + 'px'; 
-                }
 
+                }
+                var dancerUrl = $(_dragElement).attr("url");
+                var shape = $(_dragElement).attr("shape");
+                var gender;
+                if (shape=="circle"){
+                    gender = "boy";
+                } else {
+                    gender = "girl";
+                }
+                var initials = $(_dragElement).attr("initials");
+                var realEndx = (parseInt(_dragElement.style.left) - bounds.left) *100/bounds.width;
+                var realEndy = (parseInt(_dragElement.style.top) - bounds.top) *100/bounds.height;
+                FBreposition(dancerUrl, selected, realEndx, realEndy, gender, initials);
                 document.onmousemove = null;
                 _dragElement = null;
-                update();
             }
         }
 
-        function addDancerObject(shape, initials) {
+        function addDancerObject(shape, initials, url) {
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var img = document.createElement('img');
             if (shape == 'circle') {
@@ -900,6 +1004,7 @@
             div.onmousedown = OnMouseDown;
             div.style.left = bounds['left'] + 'px';
             div.style.top = bounds['top'] + 'px';
+            $(div).attr("url", url);
             $(div).attr("shape", shape);
             $(div).attr("initials", initials);
             document.getElementById("dancerWindow").appendChild(div);
@@ -943,9 +1048,11 @@
             addDancerToRosterWindow(dancer1, 1);
             $('#button1').click(function() {
                 // if (dancer1.added == 0) {
-                    dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA")
-                    // dancer1.added = 1
-                    update();
+                    // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
+                    // // dancer1.added = 1
+                    // update();
+                    console.log(selected);
+                    FBaddDancerToFormation("alecandie", selected, 50, 50);
                 // }
             })
             //
