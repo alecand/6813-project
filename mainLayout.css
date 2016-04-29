@@ -228,6 +228,7 @@ html, body{
     margin: 2px 2px;
     border-radius: 4px;
     transition: all 0.4s;
+    user-select:none;
 }
 
 .normalBtn:hover {
@@ -238,7 +239,10 @@ html, body{
   background-color: #bfbab9;
   box-shadow: 4px #666;
   transform: translateY(1px);
+  transition: 0s;
+  
 }
+.normalBtn:focus {outline:0;}
 
 .normalBtn-edit{
 	background-color: white; 
@@ -264,7 +268,9 @@ html, body{
   background-color: #bfbab9;
   box-shadow: 4px #666;
   transform: translateY(1px);
+  transition: 0s;
 }
+.normalBtn-edit:focus {outline:0;}
 
 .plusBtn{
 
@@ -279,14 +285,21 @@ html, body{
     /*margin: 4px 2px;*/
     cursor: pointer;
     border-radius: 30pt;
-    transition: all 0.4s;
+    transition: all 0.3s;
 }
 
 .plusBtn:hover {
     background-color: #3e8e41;
 
 }
+.plusBtn:focus {outline:0;}
 
+.plusBtn:active {
+  background-color: #3e8e41;
+  
+  transform: translateY(1px);
+  transition: 0s;
+}
 
 
 
