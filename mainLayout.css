@@ -93,12 +93,13 @@ body {
 	height: 109px;
 }
 
-/* THE BELOW IS TO TAKE UP THE WHOLE SCREEN*/
-html, body{
-    margin:0;
+/* THE BELOW IS TO TAKE UP THE WHOLE FULL SCREEN*/
+html, body {
+    margin:0 auto;
     padding:0;
-    
+    /*min-height: 100%;*/
 }
+
 #grid-container{
     background:#f8f8f8 url(../images/grid-container-bg.gif) repeat-x top left;
 }
