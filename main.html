@@ -78,23 +78,29 @@
             </div>
     </table>
     <table id="musicWindow" style="width: 100%; height: 150px">
-    <tr>
-        <td>
-          <table>
+        <tr id="musicRow" style="text-align: center;">
+    <!--         <td>
+              <table>
 
-              <tr><td><input id="btnUpload" type="button" name="new" value="Upload Music File"/></td></tr>
-              <tr><td><input id="btnPlay" disabled type="button" name="new" value="Play"/></td></tr>
-                <tr><td><input id="btnPause" disabled type="button" name="new" value="Pause"/></td></tr>
-                <tr><td><input id="btnRewind" disabled type="button" name="new" value="Rewind"/></td></tr>
+                  <tr><td><input id="btnUpload" type="button" name="new" value="Upload Music File"/></td></tr>
+                  <tr><td><input id="btnPlay" disabled type="button" name="new" value="Play"/></td></tr>
+                    <tr><td><input id="btnPause" disabled type="button" name="new" value="Pause"/></td></tr>
+                    <tr><td><input id="btnRewind" disabled type="button" name="new" value="Rewind"/></td></tr>
 
 
-            </table>
-        </td>
+                </table>
+            </td>
 
-        <td id="content">
-            <img width="100%" src="wave.png" hidden id="wave">
-        </td>
-    </tr>
+            <td id="content">
+                <img width="100%" src="wave.png" hidden id="wave">
+            </td> -->
+            <td>
+                <!-- <input id="btnUpload" type="button" name="new" value="Upload Music File" align="center"/> -->
+                <a href="#" class="myButton" id="btnUpload">Upload Music File</a>
+            </td>
+            <!-- <iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
+     <!--        <iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/161540847&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
+        </tr>
     </table>
 
 </table>
@@ -250,15 +256,20 @@
             audio.currentTime = 0;
         });
 
+        // $("#btnUpload").click(function(evt) {
+        //     var playbtn = document.getElementById("btnPlay");
+        //     var pausebtn = document.getElementById("btnPause");
+        //     var rwbtn = document.getElementById("btnRewind");
+        //     var wv = document.getElementById("wave");
+        //     $(playbtn).prop('disabled', false);
+        //     $(pausebtn).prop('disabled', false);
+        //     $(rwbtn).prop('disabled', false);
+        //     $(wv).prop('hidden', false);
+        // });
+        // NEW FILE UPLOADING CODE
         $("#btnUpload").click(function(evt) {
-            var playbtn = document.getElementById("btnPlay");
-            var pausebtn = document.getElementById("btnPause");
-            var rwbtn = document.getElementById("btnRewind");
-            var wv = document.getElementById("wave");
-            $(playbtn).prop('disabled', false);
-            $(pausebtn).prop('disabled', false);
-            $(rwbtn).prop('disabled', false);
-            $(wv).prop('hidden', false);
+            $('#musicRow').empty();
+            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
         });
         //audio.play();
         // Loads on page load
