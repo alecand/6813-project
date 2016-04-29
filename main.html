@@ -1060,6 +1060,20 @@
             $('#rosterWindow').append(forDiv);
 
         }
+
+
+        function changeDancerButton(buttonName){
+            button = document.getElementById(buttonName);
+            if (button.className == "plusBtn") {
+                document.getElementById(buttonName).className = "xBtn";
+                document.getElementById(buttonName).innerHTML = "x";
+            } else {
+                document.getElementById(buttonName).className = "plusBtn";
+                document.getElementById(buttonName).innerHTML = "+";
+            }
+        }
+
+
         function loadRosterWindow() {
             // Make Dancers
             var dancers = new DancerList();
@@ -1072,6 +1086,7 @@
                     // update();
                     console.log(selected);
                     FBaddDancerToFormation("alecandie", selected, 50, 50);
+                    changeDancerButton("button1");
                 // }
             })
             //
