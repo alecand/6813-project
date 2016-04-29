@@ -14,6 +14,8 @@
 
 <!-- Load style sheets -->
 <link rel="stylesheet" href="mainLayout.css" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:700italic' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -43,6 +45,9 @@
                 </ul>
             </li>
             </ul>
+        <td style="padding-top:8px">
+            <span class="title" style="font-family: 'Josefin Sans', sans-serif, italic; float:center; position:relative; left:-30%;">eFormations</span>
+        </td>
         <td>
         <td align="right">
             <ul class="drop_menu" style="float:right;">
@@ -59,9 +64,9 @@
                 <div id ="formationWindow" style = "float:left; width: 120px; height: 598px;">
                     <div id="formations">
                     </div>
-                    <input id="btnAdd" type="button" name="new" value="Add"/><br>
-                    <input id="btnDelete" type="button" name="delete" value="Delete"/>
-                    <input id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/>
+                    <input id="btnAdd" type="button" class="normalBtn" name="new" value="Add"/><br>
+                    <input id="btnDelete" type="button" name="delete" class="normalBtn" value="Delete"/>
+                    <input id="btnGrid" type="button" name="grid" class="normalBtn" value="Show/Hide Grids"/>
 
                 </div>
                 <div id = "centerWindow" style = "float:left; width: 64%; height: 600px;">
@@ -78,23 +83,29 @@
             </div>
     </table>
     <table id="musicWindow" style="width: 100%; height: 150px">
-    <tr>
-        <td>
-          <table>
+        <tr id="musicRow" style="text-align: center;">
+    <!--         <td>
+              <table>
 
-              <tr><td><input id="btnUpload" type="button" name="new" value="Upload Music File"/></td></tr>
-              <tr><td><input id="btnPlay" disabled type="button" name="new" value="Play"/></td></tr>
-                <tr><td><input id="btnPause" disabled type="button" name="new" value="Pause"/></td></tr>
-                <tr><td><input id="btnRewind" disabled type="button" name="new" value="Rewind"/></td></tr>
+                  <tr><td><input id="btnUpload" type="button" name="new" value="Upload Music File"/></td></tr>
+                  <tr><td><input id="btnPlay" disabled type="button" name="new" value="Play"/></td></tr>
+                    <tr><td><input id="btnPause" disabled type="button" name="new" value="Pause"/></td></tr>
+                    <tr><td><input id="btnRewind" disabled type="button" name="new" value="Rewind"/></td></tr>
 
 
-            </table>
-        </td>
+                </table>
+            </td>
 
-        <td id="content">
-            <img width="100%" src="wave.png" hidden id="wave">
-        </td>
-    </tr>
+            <td id="content">
+                <img width="100%" src="wave.png" hidden id="wave">
+            </td> -->
+            <td>
+                <!-- <input id="btnUpload" type="button" name="new" value="Upload Music File" align="center"/> -->
+                <a href="#" class="myButton" id="btnUpload">Upload Music File</a>
+            </td>
+            <!-- <iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
+     <!--        <iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/161540847&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
+        </tr>
     </table>
 
 </table>
@@ -250,15 +261,20 @@
             audio.currentTime = 0;
         });
 
+        // $("#btnUpload").click(function(evt) {
+        //     var playbtn = document.getElementById("btnPlay");
+        //     var pausebtn = document.getElementById("btnPause");
+        //     var rwbtn = document.getElementById("btnRewind");
+        //     var wv = document.getElementById("wave");
+        //     $(playbtn).prop('disabled', false);
+        //     $(pausebtn).prop('disabled', false);
+        //     $(rwbtn).prop('disabled', false);
+        //     $(wv).prop('hidden', false);
+        // });
+        // NEW FILE UPLOADING CODE
         $("#btnUpload").click(function(evt) {
-            var playbtn = document.getElementById("btnPlay");
-            var pausebtn = document.getElementById("btnPause");
-            var rwbtn = document.getElementById("btnRewind");
-            var wv = document.getElementById("wave");
-            $(playbtn).prop('disabled', false);
-            $(pausebtn).prop('disabled', false);
-            $(rwbtn).prop('disabled', false);
-            $(wv).prop('hidden', false);
+            $('#musicRow').empty();
+            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
         });
         //audio.play();
         // Loads on page load
@@ -791,7 +807,7 @@
 
         function getCurrentDancers(){
             var windoww = document.getElementById('dancerWindow');
-            var currentDancers = windoww.childNodes;
+            var currentDancers = windoww.getElementsByClassName("dancerObject");
             var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             var listr = [];
             for (i = 0; i< currentDancers.length;i++){
@@ -1035,7 +1051,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:40px;height:40px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:25px; height: 25px; font-size: 100%;" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton > <button type="button" onclick=div_show()> Edit Info </button> </div>');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:50px;height:50px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton > <button type="button" class="normalBtn-edit" onclick=div_show()> Edit Info </button> </div>');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
