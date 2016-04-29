@@ -14,6 +14,8 @@
 
 <!-- Load style sheets -->
 <link rel="stylesheet" href="mainLayout.css" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:700italic' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -43,6 +45,9 @@
                 </ul>
             </li>
             </ul>
+        <td style="padding-top:8px">
+            <span class="title" style="font-family: 'Josefin Sans', sans-serif, italic; float:center; position:relative; left:-40%;">eFormations</span>
+        </td>
         <td>
         <td align="right">
             <ul class="drop_menu" style="float:right;">
@@ -59,9 +64,9 @@
                 <div id ="formationWindow" style = "float:left; width: 120px; height: 598px;">
                     <div id="formations">
                     </div>
-                    <input id="btnAdd" type="button" name="new" value="Add"/><br>
-                    <input id="btnDelete" type="button" name="delete" value="Delete"/>
-                    <input id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/>
+                    <input id="btnAdd" type="button" class="normalBtn" name="new" value="Add"/><br>
+                    <input id="btnDelete" type="button" name="delete" class="normalBtn" value="Delete"/>
+                    <input id="btnGrid" type="button" name="grid" class="normalBtn" value="Show/Hide Grids"/>
 
                 </div>
                 <div id = "centerWindow" style = "float:left; width: 64%; height: 600px;">
@@ -941,7 +946,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:40px;height:40px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:25px; height: 25px; font-size: 100%;" id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton > <button type="button" onclick=div_show()> Edit Info </button> </div>');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:50px;height:50px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton > <button type="button" class="normalBtn-edit" onclick=div_show()> Edit Info </button> </div>');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
