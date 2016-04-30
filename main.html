@@ -913,7 +913,7 @@
                 addDancerToRosterWindow(dd, count);
                 var mystr = "#button".concat(count.toString());
                 $(mystr).attr("urlname", dancerUrl);
-                if (snapshot['formations'][indexToID[selected]]['dancers'] != undefined) {
+                if (snapshot['formations'][selected+1]['dancers'] != undefined) {
                 if (dancerUrl in snapshot['formations'][indexToID[selected]]['dancers']){
                     document.getElementById("button".concat(count.toString())).className = "xBtn";
                     document.getElementById("button".concat(count.toString())).innerHTML = "x";   
