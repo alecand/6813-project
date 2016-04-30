@@ -93,12 +93,13 @@ body {
 	height: 109px;
 }
 
-/* THE BELOW IS TO TAKE UP THE WHOLE SCREEN*/
-html, body{
-    margin:0;
+/* THE BELOW IS TO TAKE UP THE WHOLE FULL SCREEN*/
+html, body {
+    margin:0 auto;
     padding:0;
-    /*min-width: 1140px;*/ /* this is the important part*/
+    min-height: 100%;
 }
+
 #grid-container{
     background:#f8f8f8 url(../images/grid-container-bg.gif) repeat-x top left;
 }
@@ -274,7 +275,34 @@ html, body{
 
 .plusBtn{
 
-	background-color: #4CAF50; /* Green */
+	background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    /*margin: 4px 2px;*/
+    cursor: pointer;
+    border-radius: 30pt;
+    transition: all 0.3s;
+}
+.plusBtn:hover {
+    background-color: #3c8f41;
+
+}
+.plusBtn:focus {outline:0;}
+
+.plusBtn:active {
+  background-color: #3c8f41;
+  transform: translateY(1px);
+  transition: 0s;
+}
+
+.xBtn{
+
+	background-color: #cc0000; 
     border: none;
     color: white;
     padding: 0px;
@@ -288,15 +316,14 @@ html, body{
     transition: all 0.3s;
 }
 
-.plusBtn:hover {
-    background-color: #3e8e41;
+.xBtn:hover {
+    background-color: #b11702;
 
 }
-.plusBtn:focus {outline:0;}
+.xBtn:focus {outline:0;}
 
-.plusBtn:active {
-  background-color: #3e8e41;
-  
+.xBtn:active {
+  background-color: #b11702;
   transform: translateY(1px);
   transition: 0s;
 }
