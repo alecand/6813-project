@@ -21,96 +21,75 @@
 <body>
 
 <!-- TODO we could do this using divs if the exact pixel spacing is an issue...-->
-<table id="mainTable" style="height: 100%;">
-    <table id="mainMenu">
-        <td>
-            <ul class="drop_menu">
-            <li><a href='#'>Roster</a>
-                <ul>
-                <li><a href='#' onClick="div_show()">View Roster</a></li>
-                <li><a href='#' onClick="div_show()">Edit Roster</a></li>
-                </ul>
-            </li>
-            <li><a href='#'>Formations</a>
-                <ul>
-                <li><a href='#' onClick="$('#btnAdd').click()">Add New Formation</a></li>
-                <li><a href='#' onClick="$('#btnDelete').click()">Delete Selected Formation</a></li>
-                <li><a href='#' onClick="alert('coming soon!')">Formations Library</a></li>
-                </ul>
-            </li>
-            <li><a href='#'>Transitions</a>
-                <ul>
-                <li><a href='#' onClick="alert('coming soon!')">Add New Transition</a></li>
-                <li><a href='#' onClick="alert('coming soon!')">Visualize Current Transition</a></li>
-                </ul>
-            </li>
+<table id="mainMenu">
+    <td>
+        <ul class="drop_menu">
+        <li><a href='#'>Roster</a>
+            <ul>
+            <li><a href='#' onClick="div_show()">View Roster</a></li>
+            <li><a href='#' onClick="div_show()">Edit Roster</a></li>
             </ul>
-        <td style="padding-top:8px">
-            <span class="title" style="font-family: 'Josefin Sans', sans-serif, italic; float:center; position:relative; left:-30%;">eFormations</span>
-        </td>
-        <td>
-        <td align="right">
-            <ul class="drop_menu" style="float:right;">
-            <li><a href='#'>Welcome, User!</a>
-               <!--  <ul style="float: left;">
-                <li><span>Logout</span></li>
-                </ul>
-            </li> -->
+        </li>
+        <li><a href='#'>Formations</a>
+            <ul>
+            <li><a href='#' onClick="$('#btnAdd').click()">Add New Formation</a></li>
+            <li><a href='#' onClick="$('#btnDelete').click()">Delete Selected Formation</a></li>
+            <li><a href='#' onClick="alert('coming soon!')">Formations Library</a></li>
+            </ul>
+        </li>
+        <li><a href='#'>Transitions</a>
+            <ul>
+            <li><a href='#' onClick="alert('coming soon!')">Add New Transition</a></li>
+            <li><a href='#' onClick="alert('coming soon!')">Visualize Current Transition</a></li>
+            </ul>
+        </li>
         </ul>
-        </td>
-    </table>
-    <table>
-            <div id = "middle" style = "width:100%; height: 100%;">
-                <div id ="formationWindow" style = "float:left; width: 120px; height: 598px; ">
-                    <div style="overflow: auto; height: 511px;">
-                        <div id="formations">
-                        </div>
-                    </div>
-                    <div style="height: 87px;">
-                        <input class = "normalBtn" id="btnAdd" type="button" name="new" value="Add"/><br>
-                        <input class = "normalBtn" id="btnDelete" type="button" name="delete" value="Delete"/>
-                        <input class = "normalBtn" id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/>
-                    </div>
-                </div>
-                <div id = "centerWindow" style = "float:left; width: 64%; height: 600px;">
-                    <div id="dancerWindow" style = "height: 85%; width: 100%;"> 
-                        
-                    </div>
-                    <div id="centerNotesWindow" style = "height: 15%; width: 100%;">
-                        <textarea id="notes_text" name="notesText" placeholder="Enter notes here..."></textarea>
+    <td style="padding-top:8px">
+        <span class="title" style="font-family: 'Josefin Sans', sans-serif, italic; float:center; position:relative; left:-30%;">eFormations</span>
+    </td>
+    <td>
+    <td align="right">
+        <ul class="drop_menu" style="float:right;">
+        <li><a href='#'>Welcome, User!</a>
+           <!--  <ul style="float: left;">
+            <li><span>Logout</span></li>
+            </ul>
+        </li> -->
+    </ul>
+    </td>
+</table>
+<div>
+        <div id = "middle" style = "width:100%; height: 100%;">
+            <div id ="formationWindow" style = "float:left; width: 120px; height: 598px; ">
+                <div style="overflow: auto; height: 511px;">
+                    <div id="formations">
                     </div>
                 </div>
-                <div id = "rosterWindow" style = "overflow: hidden; height: 604px; overflow: auto;">
-                    <!-- Roster window here -->
+                <div style="height: 87px;">
+                    <input class = "normalBtn" id="btnAdd" type="button" name="new" value="Add"/><br>
+                    <input class = "normalBtn" id="btnDelete" type="button" name="delete" value="Delete"/>
+                    <input class = "normalBtn" id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/>
                 </div>
             </div>
-    </table>
-    <table id="musicWindow" style="width: 100%; height: 150px;">
-        <tr id="musicRow" style="text-align: center;">
-    <!--         <td>
-              <table>
-
-                  <tr><td><input id="btnUpload" type="button" name="new" value="Upload Music File"/></td></tr>
-                  <tr><td><input id="btnPlay" disabled type="button" name="new" value="Play"/></td></tr>
-                    <tr><td><input id="btnPause" disabled type="button" name="new" value="Pause"/></td></tr>
-                    <tr><td><input id="btnRewind" disabled type="button" name="new" value="Rewind"/></td></tr>
-
-
-                </table>
-            </td>
-
-            <td id="content">
-                <img width="100%" src="wave.png" hidden id="wave">
-            </td> -->
-            <td>
-                <!-- <input id="btnUpload" type="button" name="new" value="Upload Music File" align="center"/> -->
-                <a href="#" class="myButton" id="btnUpload">Upload Music File</a>
-            </td>
-            <!-- <iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
-     <!--        <iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/161540847&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
-        </tr>
-    </table>
-
+            <div id = "centerWindow" style = "float:left; width: 64%; height: 600px;">
+                <div id="dancerWindow" style = "height: 85%; width: 100%;"> 
+                    
+                </div>
+                <div id="centerNotesWindow" style = "height: 15%; width: 100%;">
+                    <textarea id="notes_text" name="notesText" placeholder="Enter notes here..."></textarea>
+                </div>
+            </div>
+            <div id = "rosterWindow" style = "overflow: hidden; height: 604px; overflow: auto;">
+                <!-- Roster window here -->
+            </div>
+        </div>
+</div>
+<table id="musicWindow" style="width: 100%; height: 150px;">
+    <tr id="musicRow" style="text-align: center;">
+        <td style="height: 100%;">
+            <a href="#" class="myButton" id="btnUpload">Upload Music File</a>
+        </td>
+    </tr>
 </table>
 
 <div id="abc" style="z-index: 99999999;">
