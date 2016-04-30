@@ -50,7 +50,7 @@
     <td>
     <td align="right">
         <ul class="drop_menu" style="float:right;">
-        <li><a href='#'>Welcome, User!</a>
+        <li><a href='#' onClick="div_show2()">Welcome, User!</a>
            <!--  <ul style="float: left;">
             <li><span>Logout</span></li>
             </ul>
@@ -123,6 +123,20 @@
 <!-- Display Popup Button -->
 <!-- <h1>Click Button To Popup Form Using Javascript</h1>
 <button id="popup" onclick="div_show()">Popup</button> -->
+
+<!-- LOGIN PAGE -->
+<!-- NOTE: all classes, ids, fucntions will be the same as the "edit info" dancer popup except with a "2" at the end of it -->
+<div id="abc2" style="z-index: 99999999;">
+<!-- Popup Div Starts Here -->
+<div id="popupContact2">
+
+<table id="form2">
+
+</table>
+</div>
+<!-- Popup Div Ends Here -->
+</div>
+<!-- END LOGIN PAGE -->
 
 
 <!-- Load any supplemental Javascript libraries here -->
@@ -561,8 +575,26 @@
         $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
         }
 
+    // FOR LOGIN POPUP
+
+    //Function To Display Popup
+    function div_show2() {
+    document.getElementById('abc2').style.display = "block";
+    }
+    //Function to Hide Popup
+    function div_hide2(){
+    document.getElementById('abc2').style.display = "none";
+    }
+
+    function close_popup2() {
+        div_hide2();
+    }
+
+    // END FOR LOGIN POPUP
+
     $(document).ready(function() {
         div_hide();
+        div_hide2();
 
         var audio = new Audio('19ManOfTheYear.mp3');
         $("#btnAdd").click(function(evt) {
@@ -918,6 +950,17 @@
             $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
 
             $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+
+            // FOR LOGIN POPUP
+            $('#form2').html('');
+            function makePopupTable2() {
+                $('#form2').append('<tr><td> Username </td><td> Password </td></tr>');
+                $('#form2').append('<tr><td><input type="text"></input></td><td><input> </input></td></tr>')
+            }
+            makePopupTable2();
+
+            $('#form2').append('<tr><td style="display: block; text-align: left; margin: auto;"><button id="close2" onclick="close_popup2()"> Save </button></td></tr>');
+            // END FOR LOGIN POPUP
             
         }
 
