@@ -172,152 +172,37 @@
     // has finished loading in the browser.
     
     var overall_dancer_list = new DancerList()
+    formationsList = [];
+    canvases = [];
+    directory = [];
+    selected = 0;
+    var topDID = 1;
+    var topFID = 0;
+    var refOriginal;
+    var ref;
+    var dancersRef;
+    var formationsRef;
+    var selectorRef;
+    var existingFormations = 0;
+    var indexToID = {};
+    var mydancers = [];
+    var popupDancerState = [];
 
     function menu_add_formation() {
 
     }
-    //Function To Display Popup
-    function div_show() {
-    document.getElementById('abc').style.display = "block";
-    }
-    //Function to Hide Popup
-    function div_hide(){
-    document.getElementById('abc').style.display = "none";
+
+    function urlify(first, last){
+
+        return first.concat(last).toLowerCase();
     }
 
-    function close_popup() {
-        // var table = document.getElementById('form');
-        // for (var i=1;i<(table.rows.length-5);i++) {
-        //     var cur_uid = table.rows[i].id
-        //     alert(cur_uid)
-        //     var cur_fname = table.rows[i].cells[0].innerHTML.text
-        //     alert(cur_fname)
-        // }
 
-
-        // overall_dancer_list.list = []
-        // $("#form tr.tabledancer").each(function() {
-        //     var fName = $(this).find("input.firstname").val()
-        //     alert(fName)
-        //     var lName = $(this).find("input.lastname").val()
-        //     alert(lName)
-        //     var newGender = $(this).find("input.selectgender option:selected").text()
-        //     alert(newGender)
-        //     var profPic = $(this).find("input.profilepic").val()
-        //     alert(profPic)
-        //     var newNotes = $(this).find("input.dancernotes").val()
-        //     alert(newNotes)
-        //     var shape = -1
-        //     if (newGender == 'girl') { shape = 'triangle'}
-        //     else { shape = 'circle'}
-        //     alert(shape)
-        //     overall_dancer_list.list.push(new Dancer(fName,lName,newGender,profPic,newNotes,shape,null))
-        //     });
-        // alert(overall_dancer_list.list)
-        div_hide();
-        // TODO get the information and save to dancerlist
-    }
-
-    function other_gender(dancer) {
-        if (dancer.gender == "boy") {return "girl"}
-        else {return "boy"}
-    }
-
-    function makeEmptyPopupRow() {
-        $('#form tr:last').remove();
-        $('#form tr:last').remove();
-        $('#form').append('<tr><td><input placeholder="pl"> </input></td><td><input placeholder="pl"> </input></td><td><select><option>boy</option><option>girl</option></select></td><td><button type="button"> Choose Image </button></td><td><textarea></textarea></td></tr>');
-        $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-        $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
-        }
-
-    $(document).ready(function() {
-        div_hide();
-
-        var audio = new Audio('19ManOfTheYear.mp3');
-        $("#btnAdd").click(function(evt) {
-            addFormation([]);
-        });
-        $("#btnDelete").click(function(evt) {
-            deleteFormation(selected);
-        });
-        $("#btnGrid").click(function(evt) {
-            if (gridLines == false) {
-                addGridLines();
-                gridLines = true;
-            } else {
-                removeGridLines();
-                gridLines = false;
-            }
-        });
-
-        $("#btnPlay").click(function(evt) {
-            audio.play();
-        });
-        $("#btnPause").click(function(evt) {
-            audio.pause();
-        });
-        $("#btnRewind").click(function(evt) {
-            audio.currentTime = 0;
-        });
-
-        // $("#btnUpload").click(function(evt) {
-        //     var playbtn = document.getElementById("btnPlay");
-        //     var pausebtn = document.getElementById("btnPause");
-        //     var rwbtn = document.getElementById("btnRewind");
-        //     var wv = document.getElementById("wave");
-        //     $(playbtn).prop('disabled', false);
-        //     $(pausebtn).prop('disabled', false);
-        //     $(rwbtn).prop('disabled', false);
-        //     $(wv).prop('hidden', false);
-        // });
-        // NEW FILE UPLOADING CODE
-        $("#btnUpload").click(function(evt) {
-            $('#musicRow').empty();
-            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
-        });
-        //audio.play();
-        // Loads on page load
-
-        /// Alec messing around with back end
-        // var newDancer = new Dancer("Alec", "Anderson", "src", "total scrub", "circle")
-        // console.log(newDancer)
-        // addDancerObject(newDancer.shapeOf)
-        loadRosterWindow();
-        // End Alec messing around with back end
-        
-        gridLines = false;
-        
-
-        //Variables for dragging
-        var _startX = 0;            // mouse starting positions
-        var _startY = 0;
-        var _offsetX = 0;           // current element offset
-        var _offsetY = 0;
-        var _topZ = 10;
-        var _dragElement;           // to store target of mousedown (what's being dragged)
-        
-        //We will need to maintain some mapping of dancer names to their associated objects. 
-        formationsList = [];
-        canvases = [];
-        directory = [];
-        selected = 0;
-        var topDID = 1;
-        var topFID = 0;
-        var refOriginal;
-        var ref;
-        var dancersRef;
-        var formationsRef;
-        var selectorRef;
-        var existingFormations = 0;
-        var indexToID = {};
-        var mydancers = [];
-
-        function FBinit(){
+            function FBinit(){
             refOriginal = new Firebase("https://amber-fire-7704.firebaseio.com");
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
 
-            sessionNumber = "ueleTestingSession";
+            sessionNumber = "trashCity";
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
@@ -348,18 +233,11 @@
             //     formationID: 1,
             //     notes: ""
             // });
-            console.log("init");
         }
         FBinit();
 
 
-
-        function urlify(first, last){
-
-            return first.concat(last).toLowerCase();
-        }
-
-        function FBnewDancer(first, last, gender, notes, picture){
+    function FBnewDancer(first, last, gender, notes, picture){
             topDID += 1;
             var url = urlify(first, last);
             mydancers.push(url);
@@ -380,7 +258,6 @@
         function FBappendFormation(){
 
             topFID += 1;
-            console.log(topFID);
             existingFormations += 1;
             indexToID[existingFormations - 1] = topFID.toString();
 
@@ -456,6 +333,18 @@
                     dancersRef.child(url).child(target).set(newvalue);
                 }
             });
+            var k = existingFormations;
+            while(k >0){
+                k = k-1;
+            for (i = 0; i < existingFormations; i++){
+                formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
+                    console.log(target)
+                        if (snapshot.child(dancerUrl).exists()){
+                            console.log("here");
+                            formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).child(target).set(newvalue);
+                        }
+                });
+            }}
         }
         function FBupdateDancer(first, last, gender, notes, picture) {
             FBupdateDancerSpecific(first, last, "gender", gender);
@@ -469,13 +358,16 @@
         function FBremoveFromRoster(dancerUrl){
             mydancers.splice(mydancers.indexOf(dancerUrl),1);
             dancersRef.child(dancerUrl).remove();
+            var k = existingFormations;
+            while(k >0){
+                k = k-1;
             for (i = 0; i < existingFormations; i++){
                 formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
                         if (snapshot.child(dancerUrl).exists()){
                             formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).remove();
                         }
                 });
-            }
+            }}
         }
 
         function FBreplaceDancer(oldDancerUrl, first, last, gender, notes, picture){
@@ -576,6 +468,196 @@
         }
 
 
+
+    //Function To Display Popup
+    function div_show() {
+    document.getElementById('abc').style.display = "block";
+    }
+    //Function to Hide Popup
+    function div_hide(){
+    document.getElementById('abc').style.display = "none";
+    }
+
+    function close_popup() {
+        var newContent = {};
+        var ctt = 0;
+        var a = document.getElementById('form').rows;
+        for (r in a){
+            if (r != "length" && r != "item" && r != "namedItem"){
+                if (a[r].getAttribute("class") == "tabledancer"){
+                    var rowid = ctt;
+                    ctt += 1;
+                    var fn;
+                    var ln;
+                    var gd;
+                    var ns;
+                    var cols = a[r].getElementsByTagName("td");
+                    for (c in cols){
+                        if (c != "length" && c != "item" && c != "namedItem") {
+                            var myItem = cols[c].childNodes[0];
+                            if (myItem.getAttribute("class") == "firstname"){
+                                fn = $(myItem)[0].value;
+                            } else if (myItem.getAttribute("class") == "lastname"){
+                                ln = $(myItem)[0].value;
+                            } else if (myItem.getAttribute("class") == "selectgender"){
+                                gd = $(myItem)[0].value;
+                            } else if (myItem.getAttribute("class") == "dancernotes"){
+                                ns = $(myItem)[0].value;
+                            }
+                        }
+                    }
+                    newContent[rowid] = [fn, ln, gd, ns];
+                }
+            }
+        }
+        for (id in newContent){
+            var fn = newContent[id][0];
+            var ln = newContent[id][1];
+            var gd = newContent[id][2];
+            var ns = newContent[id][3];
+            var newUrl = urlify(fn, ln);
+            console.log(newUrl);
+            console.log(popupDancerState);
+            console.log(id)
+            if (id >= popupDancerState.length){
+                console.log("k")
+                FBnewDancer(fn, ln, gd, ns, null);
+            }
+            else if (newUrl == popupDancerState[id]){
+                                console.log("kl")
+
+                FBupdateDancer(fn, ln, gd, ns, null);
+            } else {
+                                console.log("kgjy")
+
+                FBreplaceDancer(popupDancerState[id], fn, ln, gd, ns, null);
+            }
+        }
+        // var table = document.getElementById('form');
+        // for (var i=1;i<(table.rows.length-5);i++) {
+        //     var cur_uid = table.rows[i].id
+        //     alert(cur_uid)
+        //     var cur_fname = table.rows[i].cells[0].innerHTML.text
+        //     alert(cur_fname)
+        // }
+
+
+        // overall_dancer_list.list = []
+        // $("#form tr.tabledancer").each(function() {
+        //     var fName = $(this).find("input.firstname").val()
+        //     alert(fName)
+        //     var lName = $(this).find("input.lastname").val()
+        //     alert(lName)
+        //     var newGender = $(this).find("input.selectgender option:selected").text()
+        //     alert(newGender)
+        //     var profPic = $(this).find("input.profilepic").val()
+        //     alert(profPic)
+        //     var newNotes = $(this).find("input.dancernotes").val()
+        //     alert(newNotes)
+        //     var shape = -1
+        //     if (newGender == 'girl') { shape = 'triangle'}
+        //     else { shape = 'circle'}
+        //     alert(shape)
+        //     overall_dancer_list.list.push(new Dancer(fName,lName,newGender,profPic,newNotes,shape,null))
+        //     });
+        // alert(overall_dancer_list.list)
+        div_hide();
+        // TODO get the information and save to dancerlist
+    }
+
+    function other_gender(dancer) {
+        if (dancer.gender == "boy") {return "girl"}
+        else {return "boy"}
+    }
+
+    function makeEmptyPopupRow() {
+        var rowindex = document.getElementById('form').rows.length - 3;
+        $('#form tr:last').remove();
+        $('#form tr:last').remove();
+        $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>'));
+        $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+        $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+        }
+
+    $(document).ready(function() {
+        div_hide();
+
+        var audio = new Audio('19ManOfTheYear.mp3');
+        $("#btnAdd").click(function(evt) {
+            addFormation([]);
+        });
+        $("#btnDelete").click(function(evt) {
+            deleteFormation(selected);
+        });
+        $("#btnGrid").click(function(evt) {
+            if (gridLines == false) {
+                addGridLines();
+                gridLines = true;
+            } else {
+                removeGridLines();
+                gridLines = false;
+            }
+        });
+
+        $("#btnPlay").click(function(evt) {
+            audio.play();
+        });
+        $("#btnPause").click(function(evt) {
+            audio.pause();
+        });
+        $("#btnRewind").click(function(evt) {
+            audio.currentTime = 0;
+        });
+
+        // $("#btnUpload").click(function(evt) {
+        //     var playbtn = document.getElementById("btnPlay");
+        //     var pausebtn = document.getElementById("btnPause");
+        //     var rwbtn = document.getElementById("btnRewind");
+        //     var wv = document.getElementById("wave");
+        //     $(playbtn).prop('disabled', false);
+        //     $(pausebtn).prop('disabled', false);
+        //     $(rwbtn).prop('disabled', false);
+        //     $(wv).prop('hidden', false);
+        // });
+        // NEW FILE UPLOADING CODE
+        $("#btnUpload").click(function(evt) {
+            $('#musicRow').empty();
+            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+        });
+        //audio.play();
+        // Loads on page load
+
+        /// Alec messing around with back end
+        // var newDancer = new Dancer("Alec", "Anderson", "src", "total scrub", "circle")
+        // console.log(newDancer)
+        // addDancerObject(newDancer.shapeOf)
+        // loadRosterWindow();
+
+
+        // End Alec messing around with back end
+        
+        gridLines = false;
+        
+
+        //Variables for dragging
+        var _startX = 0;            // mouse starting positions
+        var _startY = 0;
+        var _offsetX = 0;           // current element offset
+        var _offsetY = 0;
+        var _topZ = 10;
+        var _dragElement;           // to store target of mousedown (what's being dragged)
+        
+        //We will need to maintain some mapping of dancer names to their associated objects. 
+
+
+
+
+
+
+
+
+
+
         
 
         
@@ -656,7 +738,6 @@
 
 
         function addFormation(listOfDancers) {
-            console.log("asasa")
             FBappendFormation();
             directory.push(listOfDancers);
             var new_formation = document.createElement("div");
@@ -742,8 +823,6 @@
             systemStateUpdate(snapshot.val());
         });
         function systemStateUpdate(snapshot){
-            console.log(snapshot);
-            console.log("start");
             //get dancer list at main formation
             var selectedIndex = snapshot.selector;
             var mainFormation = snapshot.formations[indexToID[selectedIndex]];
@@ -772,12 +851,9 @@
             
 
             //update all sidebar
-            console.log(existingFormations);
 
             for (l=0; l < existingFormations; l++){
                 var targetFormation = snapshot.formations[indexToID[l]];
-                console.log(l);
-                console.log(targetFormation);
                 if ('dancers' in targetFormation){
                     var dancerObjectList2 = targetFormation.dancers;
                     var dancerList2 = [];
@@ -796,11 +872,71 @@
                     }
                     editFormation(l, dancerList2);    
                 }
-                console.log(l);
 
             }
 
             // make side thing according to roster
+
+            //clear roster bar
+            $('#rosterWindow').html('');
+
+            //call copy of funct
+
+            var dancers = new DancerList();
+            var count = 0;
+            var lll = []
+            popupDancerState = [];
+            for (dancerUrl in snapshot.dancers){
+                popupDancerState.push(dancerUrl);
+                count +=1;
+                var ddr = snapshot.dancers[dancerUrl];
+                var dd;
+                if (ddr.gender == "boy"){
+                    dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "circle", "");
+                } else {
+                    dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "triangle", "");
+                }
+                lll.push(dd);
+                addDancerToRosterWindow(dd, count);
+                var mystr = "#button".concat(count.toString());
+                $(mystr).attr("urlname", dancerUrl);
+                $(mystr).click(function(event) {
+                // if (dancer1.added == 0) {
+                    // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
+                    // // dancer1.added = 1
+                    // update();
+                    var permurl = dancerUrl;
+                    // console.log($(event.target).attr("urlname"));
+                    FBaddDancerToFormation($(event.target).attr("urlname"), selected, 50, 50);
+                // }
+            });
+
+            }
+
+            
+
+            dancers.list = lll;
+
+            //Function To Display Popup
+            $('#form').html('');
+
+
+            function populatePopupRow(dancer) {
+                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>')));
+            }
+
+            function makePopupTable() {
+                $('#form').append('<tr><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Profile Picture </td><td> Notes </td></tr>');
+                for (i=0; i<dancers.list.length; i++) {
+                    // alert("going")
+                    populatePopupRow(dancers.list[i]);
+                }
+            }
+            makePopupTable();
+            $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+
+            $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+            
         }
 
 
@@ -1057,6 +1193,9 @@
             $('#rosterWindow').append(forDiv);
 
         }
+
+
+
         function loadRosterWindow() {
             // Make Dancers
             var dancers = new DancerList();
@@ -1067,52 +1206,51 @@
                     // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
                     // // dancer1.added = 1
                     // update();
-                    console.log(selected);
                     FBaddDancerToFormation("alecandie", selected, 50, 50);
                 // }
             })
             //
-            var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
-            addDancerToRosterWindow(dancer2, 2);
-            $('#button2').click(function() {
-                // if (dancer2.added == 0) {
-                    dancer2.shapeObject = addDancerObject(dancer2.shapeOf, "AL")
-                    // dancer2.added = 1
-                    update();
-                // }
-            })
-            // 
-            var dancer3 = new Dancer("Uele", "Italian", "boy", "./profile.png", "total scrub", "circle", "")
-            addDancerToRosterWindow(dancer3, 3);
-            $('#button3').click(function() {
-                // if (dancer3.added == 0) {
-                    dancer3.shapeObject = addDancerObject(dancer3.shapeOf, "UI")
-                    // dancer3.added = 1
-                    update();
-                // }
-            })
-            //
-            var dancer4 = new Dancer("Vineel", "C.", "boy", "./profile.png", "total scrub", "triangle", "")
-            addDancerToRosterWindow(dancer4, 4);
-            $('#button4').click(function() {
-                // if (dancer4.added == 0) {
-                    dancer4.shapeObject = addDancerObject(dancer4.shapeOf, "VC")
-                    // dancer4.added = 1
-                    update();
-                // }
-            })
-            //
-            var dancer5 = new Dancer("Another", "One", "boy", "./profile.png", "total scrub", "circle", "")
-            addDancerToRosterWindow(dancer5, 5);
-            $('#button5').click(function() {
-                // if (dancer5.added == 0) {
-                    dancer5.shapeObject = addDancerObject(dancer5.shapeOf, "AO")
-                    // dancer5.added = 1
-                    update();
-                // }
-            })
+            // var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
+            // addDancerToRosterWindow(dancer2, 2);
+            // $('#button2').click(function() {
+            //     // if (dancer2.added == 0) {
+            //         dancer2.shapeObject = addDancerObject(dancer2.shapeOf, "AL")
+            //         // dancer2.added = 1
+            //         update();
+            //     // }
+            // })
+            // // 
+            // var dancer3 = new Dancer("Uele", "Italian", "boy", "./profile.png", "total scrub", "circle", "")
+            // addDancerToRosterWindow(dancer3, 3);
+            // $('#button3').click(function() {
+            //     // if (dancer3.added == 0) {
+            //         dancer3.shapeObject = addDancerObject(dancer3.shapeOf, "UI")
+            //         // dancer3.added = 1
+            //         update();
+            //     // }
+            // })
+            // //
+            // var dancer4 = new Dancer("Vineel", "C.", "boy", "./profile.png", "total scrub", "triangle", "")
+            // addDancerToRosterWindow(dancer4, 4);
+            // $('#button4').click(function() {
+            //     // if (dancer4.added == 0) {
+            //         dancer4.shapeObject = addDancerObject(dancer4.shapeOf, "VC")
+            //         // dancer4.added = 1
+            //         update();
+            //     // }
+            // })
+            // //
+            // var dancer5 = new Dancer("Another", "One", "boy", "./profile.png", "total scrub", "circle", "")
+            // addDancerToRosterWindow(dancer5, 5);
+            // $('#button5').click(function() {
+            //     // if (dancer5.added == 0) {
+            //         dancer5.shapeObject = addDancerObject(dancer5.shapeOf, "AO")
+            //         // dancer5.added = 1
+            //         update();
+            //     // }
+            // })
 
-            dancers.list = [dancer1,dancer2,dancer3,dancer4,dancer5];
+            dancers.list = [dancer1];
 
             //Function To Display Popup
 
