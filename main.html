@@ -205,7 +205,7 @@
             refOriginal = new Firebase("https://amber-fire-7704.firebaseio.com");
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
 
-            sessionNumber = "trashCity";
+            //sessionNumber = "trashCity";
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
@@ -297,7 +297,6 @@
 
                 }
             })
-
         }
 
         function FBsetSelector(index){
@@ -903,6 +902,10 @@
                 addDancerToRosterWindow(dd, count);
                 var mystr = "#button".concat(count.toString());
                 $(mystr).attr("urlname", dancerUrl);
+                if (dancerUrl in snapshot['formations'][indexToID[selected]]['dancers']){
+                    document.getElementById("button".concat(count.toString())).className = "xBtn";
+                    document.getElementById("button".concat(count.toString())).innerHTML = "x";   
+                }
                 $(mystr).click(function(event) {
                 // if (dancer1.added == 0) {
                     // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
@@ -910,12 +913,26 @@
                     // update();
                     var permurl = dancerUrl;
                     // console.log($(event.target).attr("urlname"));
-                    FBaddDancerToFormation($(event.target).attr("urlname"), selected, 50, 50);
+                    //FBaddDancerToFormation($(event.target).attr("urlname"), selected, 50, 50);    
+                    plusBtnOnClick(this.id, $(event.target).attr("urlname"), selected, 50, 50)
                 // }
             });
 
             }
 
+            function plusBtnOnClick(buttonID, dancerUrl, formationIndex, x, y) {
+                
+                if (document.getElementById(buttonID).className == "plusBtn") {
+                    
+                    FBaddDancerToFormation(dancerUrl, formationIndex, 10, 10);    
+                    document.getElementById(buttonID).className = "xBtn";
+                    document.getElementById(buttonID).innerHTML = "x";
+                } else {
+                    FBremoveFromFormation(dancerUrl,formationIndex);
+                    document.getElementById(buttonID).className = "plusBtn";
+                    document.getElementById(buttonID).innerHTML = "+";
+                }
+            }
             
 
             dancers.list = lll;
@@ -1197,18 +1214,22 @@
 
         }
 
+        
 
 
-        function changeDancerButton(buttonName){
-            button = document.getElementById(buttonName);
-            if (button.className == "plusBtn") {
-                document.getElementById(buttonName).className = "xBtn";
-                document.getElementById(buttonName).innerHTML = "x";
-            } else {
-                document.getElementById(buttonName).className = "plusBtn";
-                document.getElementById(buttonName).innerHTML = "+";
-            }
-        }
+        // function changeDancerButton(buttonName){
+        //     button = document.getElementById(buttonName);
+        //     if (button.className == "plusBtn") {
+        //         console.log('5');
+        //         $(buttonName).removeClass('plusBtn');
+        //         $(buttonName).className = "xBtn";
+        //         button.innerHTML = "x";
+        //     } else {
+        //         $(buttonName).removeClass("xBtn");
+        //         button.className = "plusBtn";
+        //         button.innerHTML = "+";
+        //     }
+        // }
 
 
         function loadRosterWindow() {
