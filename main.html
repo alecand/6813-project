@@ -4,7 +4,9 @@
   Alec Anderson, Alex Latham, Emanuele Ceccarelli, Vineel Chakradhar
 
 
-  Sources Cited: For help with our pop-up (used some elements from this, mostly our own): http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/
+  Sources Cited:
+  1) For help with our pop-up (used some elements from this, mostly our own): http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/
+  2) Toggle button we used 
 -->
 <html>
 
@@ -61,14 +63,19 @@
 <div>
         <div id = "middle" style = "width:100%; height: 100%;">
             <div id ="formationWindow" style = "float:left; width: 120px; height: 598px; ">
-                <div style="overflow: auto; height: 511px;">
+                <div style="overflow: auto; height: 499px;">
                     <div id="formations">
                     </div>
                 </div>
-                <div style="height: 87px;">
-                    <input class = "normalBtn" id="btnAdd" type="button" name="new" value="Add"/><br>
-                    <input class = "normalBtn" id="btnDelete" type="button" name="delete" value="Delete"/>
-                    <input class = "normalBtn" id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/>
+                <div style="height: 99px;">
+                    <div class="toggle-button" id="btnGrid" name="grid">
+                        <button></button>
+                    </div>
+                    <div>                  
+                        <input class = "normalBtn" id="btnAdd" type="button" name="new" value="Add"/><br>
+                        <input class = "normalBtn" id="btnDelete" type="button" name="delete" value="Delete"/>
+                    </div>
+                    <!-- <input class = "normalBtn" id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/> -->
                 </div>
             </div>
             <div id = "centerWindow" style = "float:left; width: 64%; height: 600px;">
@@ -610,6 +617,9 @@
                 removeGridLines();
                 gridLines = false;
             }
+        });
+        $(document).on('click', '.toggle-button', function() {
+            $(this).toggleClass('toggle-button-selected'); 
         });
 
         $("#btnPlay").click(function(evt) {
