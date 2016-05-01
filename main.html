@@ -915,6 +915,7 @@
                 for (var dancer in dancerList) {
                     if (dancerUrl == dancerList[dancer][4]) {
                         changeDancerButton(document.getElementById("button".concat(count.toString())));
+                        document.getElementById("button".concat(count.toString())).innerHTML = "x";
                     }
                 }
                 $(mystr).click(function(event) {
@@ -1200,6 +1201,8 @@
             $(div).attr("url", url);
             $(div).attr("shape", shape);
             $(div).attr("initials", initials);
+            div.style.zIndex = _topZ;
+            _topZ++;
             document.getElementById("dancerWindow").appendChild(div);
 
             return div;
@@ -1241,8 +1244,7 @@
         function changeDancerButton(buttonName){
             $(buttonName).removeClass('plusBtn');
             $(buttonName).addClass("xBtn");
-            $(buttonName).innerHTML = "x"; //WHY DOESNT THIS SET THE TEXT
-            console.log("should be an x");
+            $(buttonName).value = "x"; //WHY DOESNT THIS SET THE TEXT
             }
 
 
