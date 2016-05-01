@@ -828,8 +828,8 @@
     
         }
         addFormation([]);
-                FBaddDancerToFormation("vineelc",0, 50, 50);
-                        FBreplaceDancer("vineelc", "Dicks", "McGee", "boy", "shit", null);
+                // FBaddDancerToFormation("vineelc",0, 50, 50);
+                //         FBreplaceDancer("vineelc", "Dicks", "McGee", "boy", "shit", null);
 
 
         ref.on("value", function(snapshot){
@@ -861,7 +861,6 @@
 
             formationFromList(dancerList);
 
-            
 
             //update all sidebar
 
@@ -913,12 +912,11 @@
                 addDancerToRosterWindow(dd, count);
                 var mystr = "#button".concat(count.toString());
                 $(mystr).attr("urlname", dancerUrl);
-                if (snapshot['formations'][selected+1]['dancers'] != undefined) {
-                if (dancerUrl in snapshot['formations'][indexToID[selected]]['dancers']){
-                    document.getElementById("button".concat(count.toString())).className = "xBtn";
-                    document.getElementById("button".concat(count.toString())).innerHTML = "x";   
+                for (var dancer in dancerList) {
+                    if (dancerUrl == dancerList[dancer][4]) {
+                        changeDancerButton(document.getElementById("button".concat(count.toString())));
+                    }
                 }
-            }
                 $(mystr).click(function(event) {
                 // if (dancer1.added == 0) {
                     // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
@@ -936,7 +934,6 @@
             function plusBtnOnClick(buttonID, dancerUrl, formationIndex, x, y) {
                 
                 if (document.getElementById(buttonID).className == "plusBtn") {
-                    
                     FBaddDancerToFormation(dancerUrl, formationIndex, 10, 10);    
                     document.getElementById(buttonID).className = "xBtn";
                     document.getElementById(buttonID).innerHTML = "x";
@@ -1036,19 +1033,19 @@
             grids = []
             for (i=1; i< divs; i++) {
                 //vert lines
-                var img = document.createElement('img');
-                img.src = './vert_grid.png';
+                var img_v = document.createElement('img');
+                img_v.src = './vert_grid.png';
                 var left = (window.offsetWidth/divs)*i;
-                img.style.left = (100*i)/divs +"%";
-                img.style.top = '0%';
-                img.style.position = 'relative';
-                img.height = window.offsetHeight;
-                img.className = "gridLine";
-                img.style.zIndex = 1;
-                img.style.opacity = "0.3";
+                img_v.style.left = (100*i)/divs +"%";
+                img_v.style.top = '0%';
+                img_v.style.position = 'relative';
+                img_v.height = window.offsetHeight;
+                img_v.className = "gridLine";
+                img_v.style.zIndex = 0;
+                img_v.style.opacity = "0.3";
                 //Horiz line
 
-                document.getElementById('dancerWindow').appendChild(img);
+                document.getElementById('dancerWindow').appendChild(img_v);
                
                 
             }
@@ -1064,9 +1061,9 @@
                 img_h.style.left = '0%';
                 img_h.style.position = 'relative';
                 img_h.style.width = '100%';
-                img.style.zIndex = 2;
+                img_h.style.zIndex = 0;
                 img_h.className = "gridLine";
-
+                // img_h.style.opacity = "0.5";
                 document.getElementById('dancerWindow').appendChild(img_h);
         }
     }
@@ -1142,7 +1139,7 @@
         //Drag function for dancer objects in center pane.
         function OnMouseUp(e)
         {
-                        var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             if (_dragElement != null)
             {
                 //Need to check that dragged dancer is within center window
@@ -1241,19 +1238,12 @@
         
 
 
-        // function changeDancerButton(buttonName){
-        //     button = document.getElementById(buttonName);
-        //     if (button.className == "plusBtn") {
-        //         console.log('5');
-        //         $(buttonName).removeClass('plusBtn');
-        //         $(buttonName).className = "xBtn";
-        //         button.innerHTML = "x";
-        //     } else {
-        //         $(buttonName).removeClass("xBtn");
-        //         button.className = "plusBtn";
-        //         button.innerHTML = "+";
-        //     }
-        // }
+        function changeDancerButton(buttonName){
+            $(buttonName).removeClass('plusBtn');
+            $(buttonName).addClass("xBtn");
+            $(buttonName).innerHTML = "x"; //WHY DOESNT THIS SET THE TEXT
+            console.log("should be an x");
+            }
 
 
         function loadRosterWindow() {
@@ -1261,15 +1251,15 @@
             var dancers = new DancerList();
             var dancer1 = new Dancer("Alec", "Andie", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer1, 1);
-            $('#button1').click(function() {
+            //$('#button1').click(function() {
                 // if (dancer1.added == 0) {
                     // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
                     // // dancer1.added = 1
                     // update();
-                    FBaddDancerToFormation("alecandie", selected, 50, 50);
-                    changeDancerButton("button1");
+                    //FBaddDancerToFormation("alecandie", selected, 50, 50);
+                    //changeDancerButton("button1");
                 // }
-            })
+            //})
             //
             // var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
             // addDancerToRosterWindow(dancer2, 2);
