@@ -60,10 +60,13 @@
                     <div style="text-align:center;">                  
                         <input class = "plusFormationBtn" id="btnAdd" type="button" name="new" value="+"/>
                         <input class = "xFormationBtn" id="btnDelete" type="button" name="delete" value="x"/>
-                    </div>w
-                    <div class="toggle-button" id="btnGrid" name="grid">
+                    </div> 
+                    <div style="padding-top:5px">
+                    <div style="font-size:16px;display:block; width:40px; float: left; padding-top:8px; padding-left:10px">Grids</div>
+                    <div class="toggle-button" id="btnGrid" name="grid" style="margin-top: 5px">
                         <button></button>
                     </div>
+                </div>
                     
                     <!-- <input class = "normalBtn" id="btnGrid" type="button" name="grid" value="Show/Hide Grids"/> -->
                 </div>
@@ -75,8 +78,8 @@
                 <div id="centerNotesWindow" style = "height: 12%; width: 100%;">
                     <textarea id="notes_text" name="notesText" placeholder="Enter notes here..."></textarea>
                 </div>
-                <div id="saveButtonPls" style = "height:3%; width:100%">
-                    <input type="button" value="Save" onclick='FBstoreNotesFromFormation()'></input>
+                <div id="saveButtonPls" style = "height:3%; width:100%, text-align:center, margin: 0 auto;">
+                    <input type="button" class="normalBtn-edit" value="Save" onclick='FBstoreNotesFromFormation()' style="width: 50px; height: 18px; padding:0px;"></input>
                 </div>
             </div>
             <div id = "rosterWindow" style = "overflow: hidden; height: 604px; overflow: auto;">
