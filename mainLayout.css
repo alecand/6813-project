@@ -23,18 +23,18 @@ body {
 }
 
 #centerNotesWindow {
-	background-color: black;
+	background-color: white;
 	color: white;
 	width: 350px;
 }
 
 #notes_text {
-	width:97.8%;
-	height:85%;
+  resize: none;
+	width:99.1%;
+  height:70px;
 	background-color:white;
 	color:black;
 	border:1px solid black;
-	padding:1%;
 	font:22px;
 }
 
