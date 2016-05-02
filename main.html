@@ -79,7 +79,7 @@
                     <textarea id="notes_text" name="notesText" placeholder="Enter notes here..."></textarea>
                 </div>
                 <div id="saveButtonPls" style = "height:3%; width:100%, text-align:center, margin: 0 auto;">
-                    <input type="button" class="normalBtn-edit" value="Save" onclick='FBstoreNotesFromFormation()' style="width: 50px; height: 18px; padding:0px;"></input>
+                    <input type="button" class="normalBtn-edit" value="Save Notes" onclick='FBstoreNotesFromFormation()' style="width: 75px; height: 18px; padding:0px; position:relative; left:45%;"></input>
                 </div>
             </div>
             <div id = "rosterWindow" style = "overflow: hidden; height: 604px; overflow: auto;">
@@ -477,7 +477,9 @@
     function div_hide(){
     document.getElementById('abc').style.display = "none";
     }
-
+    function close_popup_no_save() {
+        div_hide()
+    }
     function close_popup() {
         var newContent = {};
         var ctt = 0;
@@ -576,7 +578,7 @@
         $('#form tr:last').remove();
         $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>'));
         $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-        $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+        $('#form').append('<tr><td></td><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button></td><td style="display: block; text-align: center; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td></tr>');
         }
 
     // FOR LOGIN POPUP
@@ -986,7 +988,7 @@
             makePopupTable();
             $('#form').append('<tr> <td> <button type="button" class="normalBtn-edit" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
 
-            $('#form').append('<tr><td></td><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button></td></tr>');
+            $('#form').append('<tr><td></td><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button></td><td style="display: block; text-align: center; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td></tr>');
 
 
             // FOR LOGIN POPUP
@@ -1339,13 +1341,13 @@
                     populatePopupRow(dancers.list[i]);
                 }
             }
-            makePopupTable();
-            $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+            //makePopupTable();
+            //$('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
             // $('#popupContact').append('<div style="display: block; text-align: center; margin: auto;"> <button id="close" onclick="close_popup()"> Save </button> </div>');
             // $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
             // $('#form').append('<tr><td><button id="close" onclick="close_popup()"> Save </button></td></tr>');
             // $('#form').append('<tr><td></td><td style="display: block; text-align: center; margin: auto;"> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-            $('#form').append('<tr><td></td><td></td><td tyle="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td></tr>');
+            //$('#form').append('<tr><td></td><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" onclick="close_popup()"> Save </button></td><td style="display: block; text-align: right; margin: auto;"><button id="closeNoSave" onclick="close_popup_no_save()"> Close Without Saving </button></td></tr>');
             }
             //document.body.addEventListener("mouseup",FBaddNotesToFormation)
 
