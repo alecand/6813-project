@@ -988,7 +988,7 @@
             makePopupTable();
             $('#form').append('<tr> <td> <button type="button" class="normalBtn-edit" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
 
-            $('#form').append('<tr><td></td><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button></td><td style="display: block; text-align: center; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td></tr>');
+            $('#form').append('<tr><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
 
 
             // FOR LOGIN POPUP
@@ -999,7 +999,7 @@
             }
             makePopupTable2();
 
-            $('#form2').append('<tr><td style="display: block; text-align: left; margin: auto;"><button id="close2" class="normalBtn-edit" onclick="close_popup2()"> Save </button></td></tr>');
+            $('#form2').append('<tr><td><button id="close2" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup2()"> Save </button></td><td><button id="close2nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup2()"> Close </button></td></tr>');
             // END FOR LOGIN POPUP
             
         }
