@@ -41,7 +41,7 @@
     <td>
     <td align="right">
         <ul class="drop_menu" style="float:right;">
-        <li><a href='#' onClick="div_show2()">Welcome, User!</a>
+        <li><a href='#' onClick="div_show2()"><span id="logname"> Login</span></a>
            <!--  <ul style="float: left;">
             <li><span>Logout</span></li>
             </ul>
@@ -593,6 +593,18 @@
     }
 
     function close_popup2() {
+        document.getElementById("userspace").value = "";
+        document.getElementById("passspace").value = "";
+        div_hide2();
+    }
+
+        function close_save_popup2() {
+            console.log($("#logname").html());
+            $("#logname").html("Welcome, ".concat(document.getElementById("userspace").value).concat("!"));
+            document.getElementById("userspace").value = "";
+            document.getElementById("passspace").value = "";
+            
+
         div_hide2();
     }
 
@@ -1015,11 +1027,11 @@
             $('#form2').html('');
             function makePopupTable2() {
                 $('#form2').append('<tr><td> Username </td><td> Password </td></tr>');
-                $('#form2').append('<tr><td><input type="text"></input></td><td><input> </input></td></tr>')
+                $('#form2').append('<tr><td><input id="userspace" type="text"></input></td><td><input id="passspace" type="password"> </input></td></tr>')
             }
             makePopupTable2();
 
-            $('#form2').append('<tr><td><button id="close2" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup2()"> Save </button></td><td><button id="close2nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup2()"> Close </button></td></tr>');
+            $('#form2').append('<tr><td><button id="close2" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_save_popup2()"> Save </button></td><td><button id="close2nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup2()"> Close </button></td></tr>');
             // END FOR LOGIN POPUP
             
         }
