@@ -37,6 +37,11 @@
             <li><a href='#' onClick="$('#btnDelete').click()">Delete Selected Formation</a></li>
             </ul>
         </li>
+        <li><a href='#'>Music</a>
+            <ul>
+            <li><a href='#' onClick="remove_song()">Remove Song</a></li>
+            </ul>
+        </li>
         </ul>
     <td style="padding-top:8px">
         <span class="title" style="font-family: 'Josefin Sans', sans-serif, italic; float:center; position:relative; left:-5%;">eFormations</span>
@@ -98,7 +103,7 @@
 <table id="musicWindow" style="width: 100%; height: 150px;">
     <tr id="musicRow" style="text-align: center;">
         <td style="height: 100%;">
-            <a href="#" class="myButton" id="btnUpload">Upload Music File</a>
+            <a href="#" class="myButton" id="btnUpload" onClick="upload_song()">Upload Music File</a>
         </td>
     </tr>
 </table>
@@ -585,7 +590,7 @@
         $('#form tr:last').remove();
         $('#form tr:last').remove();
         $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>'));
-        $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+        $('#form').append('<tr> <td> <button type="button" class="normalBtn-edit" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
         $('#form').append('<tr><td></td><td style="display: block; text-align: left; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; margin: auto; align: left;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
         }
 
@@ -617,6 +622,18 @@
     }
 
     // END FOR LOGIN POPUP
+
+    function remove_song() {
+            $('#musicRow').empty();
+            $('#musicRow').append('<td style="height: 100%;"><a href="#" class="myButton" id=btnUpload onClick=upload_song()>Upload Music File</a></td>')
+    }
+
+    function upload_song() {
+            console.log("in the function")
+            $('#musicRow').empty();
+            // $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/213359816&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+    }
 
     $(document).ready(function() {
         //document.getElementById("notes_text").addEventListener("onfocusout",FBstoreNotesFromFormation(selected))
@@ -680,12 +697,13 @@
         //     $(rwbtn).prop('disabled', false);
         //     $(wv).prop('hidden', false);
         // });
-        // NEW FILE UPLOADING CODE
-        $("#btnUpload").click(function(evt) {
-            $('#musicRow').empty();
-            // $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
-            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/213359816&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
-        });
+        // NEW FILE UPLOADING CODE -> DO NOT DELETE*******
+        // $("#btnUpload").click(function(evt) {
+        //     console.log("in the function")
+        //     $('#musicRow').empty();
+        //     // $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+        //     $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/213359816&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+        // });
         //audio.play();
         // Loads on page load
 
