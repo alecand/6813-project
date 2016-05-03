@@ -82,8 +82,13 @@
                     <input type="button" class="normalBtn-edit" value="Save Notes" onclick='FBstoreNotesFromFormation()' style="width: 75px; height: 18px; padding:0px; position:relative; left:45%;"></input>
                 </div>
             </div>
-            <div id = "rosterWindow" style = "overflow: hidden; height: 604px; overflow: auto;">
+            <div style = "height: 604px; overflow: auto; background-color: #616a7f">
                 <!-- Roster window here -->
+                <div id = "rosterWindow" style = "overflow: auto; height: 558px">
+                </div>
+                <div style="height: 40px; text-align: center">
+                    <button type="button" class="normalBtn-edit" onclick='div_show()' align="center" style="margin-top: 10px;"> Edit Info </button>
+                </div>
             </div>
         </div>
 </div>
@@ -1286,7 +1291,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:50px;height:50px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton > <button type="button" class="normalBtn-edit" onclick=div_show()> Edit Info </button> </div>');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:50px;height:50px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" />');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
@@ -1308,55 +1313,6 @@
             var dancers = new DancerList();
             var dancer1 = new Dancer("Alec", "Andie", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer1, 1);
-            //$('#button1').click(function() {
-                // if (dancer1.added == 0) {
-                    // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
-                    // // dancer1.added = 1
-                    // update();
-                    //FBaddDancerToFormation("alecandie", selected, 50, 50);
-                    //changeDancerButton("button1");
-                // }
-            //})
-            //
-            // var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
-            // addDancerToRosterWindow(dancer2, 2);
-            // $('#button2').click(function() {
-            //     // if (dancer2.added == 0) {
-            //         dancer2.shapeObject = addDancerObject(dancer2.shapeOf, "AL")
-            //         // dancer2.added = 1
-            //         update();
-            //     // }
-            // })
-            // // 
-            // var dancer3 = new Dancer("Uele", "Italian", "boy", "./profile.png", "total scrub", "circle", "")
-            // addDancerToRosterWindow(dancer3, 3);
-            // $('#button3').click(function() {
-            //     // if (dancer3.added == 0) {
-            //         dancer3.shapeObject = addDancerObject(dancer3.shapeOf, "UI")
-            //         // dancer3.added = 1
-            //         update();
-            //     // }
-            // })
-            // //
-            // var dancer4 = new Dancer("Vineel", "C.", "boy", "./profile.png", "total scrub", "triangle", "")
-            // addDancerToRosterWindow(dancer4, 4);
-            // $('#button4').click(function() {
-            //     // if (dancer4.added == 0) {
-            //         dancer4.shapeObject = addDancerObject(dancer4.shapeOf, "VC")
-            //         // dancer4.added = 1
-            //         update();
-            //     // }
-            // })
-            // //
-            // var dancer5 = new Dancer("Another", "One", "boy", "./profile.png", "total scrub", "circle", "")
-            // addDancerToRosterWindow(dancer5, 5);
-            // $('#button5').click(function() {
-            //     // if (dancer5.added == 0) {
-            //         dancer5.shapeObject = addDancerObject(dancer5.shapeOf, "AO")
-            //         // dancer5.added = 1
-            //         update();
-            //     // }
-            // })
 
             dancers.list = [dancer1];
 
