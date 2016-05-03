@@ -602,7 +602,20 @@
         //document.getElementById("notes_text").addEventListener("onfocusout",FBstoreNotesFromFormation(selected))
         div_hide();
         div_hide2();
+        var enabled;
 
+        function disablebutton() {
+            document.getElementById("btnDelete").style.cursor = "default";
+            document.getElementById("btnDelete").style.opacity = 0.250;
+            enabled = false;
+        }
+        function enablebutton() {
+            document.getElementById("btnDelete").style.cursor = "pointer";
+            document.getElementById("btnDelete").style.opacity = 1;
+            enabled = true;
+        }
+
+        disablebutton();
 
 
         var audio = new Audio('19ManOfTheYear.mp3');
@@ -610,7 +623,9 @@
             addFormation([]);
         });
         $("#btnDelete").click(function(evt) {
-            deleteFormation(selected);
+            if (enabled) {
+                deleteFormation(selected);
+         }
         });
         $("#btnGrid").click(function(evt) {
             if (gridLines == false) {
@@ -881,6 +896,11 @@
             }
 
             formationFromList(dancerList);
+            if (existingFormations > 1){
+                enablebutton();
+            } else {
+                disablebutton();
+            }
 
             //$("notes_text").blur(FBstoreNotesFromFormation(selected));
 
