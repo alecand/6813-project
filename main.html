@@ -108,6 +108,7 @@
     </tr>
 </table>
 
+
 <div id="abc" style="z-index: 99999999;">
 <!-- Popup Div Starts Here -->
 <div id="popupContact">
@@ -154,6 +155,16 @@
 </div>
 <!-- END LOGIN PAGE -->
 
+<div id="confirm" style="z-index: 99999999;">
+<!-- Popup Div Starts Here -->
+<div id="popupContact3">
+
+<table id="confirmBox">
+
+</table>
+</div>
+<!-- Popup Div Ends Here -->
+</div>
 
 <!-- Load any supplemental Javascript libraries here -->
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
@@ -605,6 +616,24 @@
     document.getElementById('abc2').style.display = "none";
     }
 
+    function div_hide_confirm() {
+
+    document.getElementById('confirmBox').style.display = "none";
+    }
+
+    function div_show_confirm() {
+    document.getElementById('confirmBox').style.display = "block";   
+    }
+
+    function close_delete_popup_confirm() {
+        deleteFormation(selected);
+        div_hide_confirm();
+    }
+
+    function close_popup_confirm() {
+        div_hide_confirm();
+    }
+
     function close_popup2() {
         document.getElementById("userspace").value = "";
         document.getElementById("passspace").value = "";
@@ -639,7 +668,9 @@
         //document.getElementById("notes_text").addEventListener("onfocusout",FBstoreNotesFromFormation(selected))
         div_hide();
         div_hide2();
+        div_hide_confirm();
         var enabled;
+
 
         function disablebutton() {
             document.getElementById("btnDelete").style.cursor = "default";
@@ -660,9 +691,12 @@
             addFormation([]);
         });
         $("#btnDelete").click(function(evt) {
-            if (enabled) {
-                deleteFormation(selected);
-         }
+            if (enabled) {  
+                div_show_confirm();
+                // if (del) {
+                //     deleteFormation(selected);
+                // }
+            }
         });
         $("#btnGrid").click(function(evt) {
             if (gridLines == false) {
@@ -729,22 +763,11 @@
         
         //We will need to maintain some mapping of dancer names to their associated objects. 
 
-
-
-
-
-
-
-
-
-
-        
-
         
 
         //Formation sidebar code:
 
-        function deleteFormation(index){
+        window.deleteFormation = function(index){
             FBdeleteFormation(index);
             var del = formationsList[index];
             $(del).remove();
@@ -915,6 +938,7 @@
             var dancerList = [];
             // document.getElementById("notes_text").value = ""
             // FBaddNotesToFormation(selected);
+            if (mainFormation != undefined){
             if ('dancers' in mainFormation){
                 var dancerObjectList = mainFormation.dancers;
                 for (k in dancerObjectList){
@@ -932,6 +956,7 @@
 
                 }
             }
+        }
 
             formationFromList(dancerList);
             if (existingFormations > 1){
@@ -946,6 +971,7 @@
 
             for (l=0; l < existingFormations; l++){
                 var targetFormation = snapshot.formations[indexToID[l]];
+                if (targetFormation != undefined){
                 if ('dancers' in targetFormation){
                     var dancerObjectList2 = targetFormation.dancers;
                     var dancerList2 = [];
@@ -964,6 +990,7 @@
                     }
                     editFormation(l, dancerList2);    
                 }
+            }
 
             }
 
@@ -1059,7 +1086,15 @@
 
             $('#form2').append('<tr><td><button id="close2" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_save_popup2()"> Save </button></td><td><button id="close2nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup2()"> Close </button></td></tr>');
             // END FOR LOGIN POPUP
-            
+
+            // For delete-formation confirmation box
+            $('#confirmBox').html('');
+            function makePopupTableConfirm() {
+                $('#confirmBox').append('<td style="font-size: small; text-align: center;"> Delete selected formation? </td>');
+                $('#confirmBox').append('<tr><td><button id="close3" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_delete_popup_confirm()"> Ok </button></td><td><button id="close3nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup_confirm()"> Cancel </button></td></tr>');
+                
+            }
+            makePopupTableConfirm();
         }
 
 
