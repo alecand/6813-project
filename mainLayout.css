@@ -438,7 +438,7 @@ position:absolute;
 left:50%;
 top:17%;
 margin-left:-202px;
-font-family:'Raleway',sans-serif
+font-family:'Raleway',sans-serif;
 }
 #form {
 /*max-width:300px;
@@ -449,6 +449,9 @@ border:2px solid gray;
 border-radius:10px;
 /*font-family:raleway;*/
 background-color:#fff
+}
+#firstRowPopup {
+  font-size: 5%;
 }
 
 /* FOR LOGIN POPUP */

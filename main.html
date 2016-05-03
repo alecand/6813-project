@@ -576,9 +576,9 @@
         var rowindex = document.getElementById('form').rows.length - 3;
         $('#form tr:last').remove();
         $('#form tr:last').remove();
-        $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>'));
+        $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>'));
         $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-        $('#form').append('<tr><td></td><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button></td><td style="display: block; text-align: center; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td></tr>');
+        $('#form').append('<tr><td></td><td style="display: block; text-align: left; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; margin: auto; align: left;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
         }
 
     // FOR LOGIN POPUP
@@ -1007,11 +1007,11 @@
 
 
             function populatePopupRow(dancer) {
-                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>')));
+                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>')));
             }
 
             function makePopupTable() {
-                $('#form').append('<tr><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Profile Picture </td><td> Notes </td></tr>');
+                $('#form').append('<tr style="font-size: small; text-align: center;"><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Notes </td></tr>');
                 for (i=0; i<dancers.list.length; i++) {
                     // alert("going")
                     populatePopupRow(dancers.list[i]);
@@ -1020,13 +1020,13 @@
             makePopupTable();
             $('#form').append('<tr> <td> <button type="button" class="normalBtn-edit" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
 
-            $('#form').append('<tr><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
+            $('#form').append('<tr><td></td><td style="display: block; text-align: left; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; align: left;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
 
 
             // FOR LOGIN POPUP
             $('#form2').html('');
             function makePopupTable2() {
-                $('#form2').append('<tr><td> Username </td><td> Password </td></tr>');
+                $('#form2').append('<tr style="font-size: small; text-align: center;"><td> Username </td><td> Password </td></tr>');
                 $('#form2').append('<tr><td><input id="userspace" type="text"></input></td><td><input id="passspace" type="password"> </input></td></tr>')
             }
             makePopupTable2();
