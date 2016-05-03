@@ -53,6 +53,7 @@ html {
 }
 
 .dancerObject { 
+  cursor: move;
     position: absolute; 
 }
 
