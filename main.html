@@ -225,7 +225,6 @@
             function FBinit(){
             refOriginal = new Firebase("https://amber-fire-7704.firebaseio.com");
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
-            //sessionNumber = 1010101
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
@@ -234,9 +233,9 @@
             dancersRef = ref.child("dancers");
             dancersRef.set({});
 
-            mydancers.push("vineelc");
+            mydancers.push("alyssahacker");
             dancersRef.set({
-                vineelc: {
+                alyssahacker: {
                     first_name: "Alyssa",
                     last_name: "Hacker",
                     initials: "AH",
