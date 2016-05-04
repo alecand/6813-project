@@ -225,7 +225,6 @@
             function FBinit(){
             refOriginal = new Firebase("https://amber-fire-7704.firebaseio.com");
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
-            sessionNumber = "trashCity";
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
