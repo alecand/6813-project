@@ -20,7 +20,7 @@
 <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:700italic' rel='stylesheet' type='text/css'>
 </head>
 
-<body>
+<body id="body">
 
 <!-- TODO we could do this using divs if the exact pixel spacing is an issue...-->
 <table id="mainMenu">
@@ -109,7 +109,7 @@
 </table>
 
 
-<div id="abc" style="z-index: 99999999;">
+<div id="abc" style="z-index: 999999;">
 <!-- Popup Div Starts Here -->
 <div id="popupContact">
 <!-- Contact Us Form -->
@@ -711,6 +711,13 @@
         div_hide2();
         div_hide_confirm();
         var enabled;
+
+        // $("#abc").click(function(evt) {
+        //         div_hide();
+        //     });
+        // $("#abc2").click(function(evt) {
+        //         div_hide2();
+        //     });
 
 
         function disablebutton() {
