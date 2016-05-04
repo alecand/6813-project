@@ -611,15 +611,22 @@
         else {return "boy"}
     }
 
+// To remove dancer popup
+
     function makeEmptyPopupRow() {
         var rowindex = document.getElementById('form').rows.length - 3;
         $('#form tr:last').remove();
         $('#form tr:last').remove();
-        $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>'));
+        $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><textarea class="dancernotes"></textarea><td><button class="xBtn" type="button" style="width: 30px; height: 30px; margin-left: 10px; margin-right: -10px; font-size: small;" onClick = "removeDancerFromPopup()"> x </button></td></tr>'));
         $('#form').append('<tr> <td> <button type="button" class="normalBtn-edit" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
         $('#form').append('<tr><td></td><td style="display: block; text-align: left; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; margin: auto; align: left;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
         }
 
+
+    function removeDancerFromPopup(first,last) {
+        console.log("going");
+        FBremoveFromRoster(urlify(first, last));
+    }
     // FOR LOGIN POPUP
 
     //Function To Display Popup
@@ -1115,11 +1122,11 @@
 
 
             function populatePopupRow(dancer) {
-                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes">'.concat(dancer.notes).concat('</textarea></td></tr>'))));
+                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes">'.concat(dancer.notes).concat('</textarea></td><td><button class="xBtn" type="button" style="width: 30px; height: 30px; margin-left: 10px; margin-right: -10px; font-size: small;" onClick = removeDancerFromPopup("').concat(dancer.firstName).concat('","').concat(dancer.lastName).concat('") > x </button></td></tr>'))));
             }
 
             function makePopupTable() {
-                $('#form').append('<tr style="font-size: small; text-align: center;"><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Notes </td></tr>');
+                $('#form').append('<tr style="font-size: small; text-align: center;"><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Notes </td><td></td></tr>');
                 for (i=0; i<dancers.list.length; i++) {
                     // alert("going")
                     populatePopupRow(dancers.list[i]);
@@ -1402,7 +1409,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:50px;height:50px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" />');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 39%;">').concat('<img src="' + dancer.profilePicture + '" style="width:40px;height:40px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" />');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
@@ -1428,6 +1435,7 @@
             dancers.list = [dancer1];
 
             //Function To Display Popup
+            // THE METHODS BELOW DO NOT DO ANYTHING, BUT CANNOT BE DELETED
 
             function populatePopupRow(dancer) {
                 $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>')));
