@@ -638,6 +638,7 @@
         document.getElementById("userspace").value = "";
         document.getElementById("passspace").value = "";
         div_hide2();
+        e.stopPropagation();
     }
 
         function close_save_popup2() {
@@ -645,12 +646,37 @@
             $("#logname").html("Welcome, ".concat(document.getElementById("userspace").value).concat("!"));
             document.getElementById("userspace").value = "";
             document.getElementById("passspace").value = "";
+            e.stopPropagation();
             
 
         div_hide2();
     }
 
     // END FOR LOGIN POPUP
+
+    $(document).on('click', '#abc2', function(e) {
+            var bounds = document.getElementById('form2').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide2();    
+            }
+            
+        });
+
+    $(document).on('click', '#abc', function(e) {
+            var bounds = document.getElementById('form').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide();    
+            }
+            
+        });
+
+    $(document).on('click', '#confirm', function(e) {
+            var bounds = document.getElementById('confirmBox').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide_confirm();    
+            }
+            
+        });
 
     function remove_song() {
             $('#musicRow').empty();
