@@ -238,14 +238,14 @@
             mydancers.push("vineelc");
             dancersRef.set({
                 vineelc: {
-                    first_name: "Vineel",
-                    last_name: "C",
-                    initials: "VC",
+                    first_name: "Alyssa P.",
+                    last_name: "Hacker",
+                    initials: "AH",
                     formations: {},
                     picture: null,
                     dancerID: 1,
-                    gender: "boy",
-                    notes: ""
+                    gender: "girl",
+                    notes: "Alyssa has taken 6.005"
                 }
             });     
         
@@ -286,7 +286,7 @@
                 notes: notes   
             })
         }
-        FBnewDancer("Alec", "Andie", "boy", "", null);
+        FBnewDancer("Ben", "Bitdiddle", "boy", "Ben likes 6.813", null);
 
         function FBappendFormation(){
 
@@ -1429,7 +1429,7 @@
         function loadRosterWindow() {
             // Make Dancers
             var dancers = new DancerList();
-            var dancer1 = new Dancer("Alec", "Andie", "boy", "./profile.png", "total scrub", "circle", "")
+            var dancer1 = new Dancer("Ben", "Bitdiddle", "boy", "./profile.png", "total scrub", "circle", "Ben is a terrible coder")
             addDancerToRosterWindow(dancer1, 1);
 
             dancers.list = [dancer1];
