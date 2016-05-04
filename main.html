@@ -226,7 +226,7 @@
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
             //sessionNumber = 1010101
 
-            sessionNumber = "trashTown";
+            sessionNumber = "trashVille";
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
@@ -370,10 +370,8 @@
                  k = k-1;
              for (i = 0; i < existingFormations; i++){
                  formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
-                     console.log(target)
-                         if (snapshot.child(dancerUrl).exists()){
-                             console.log("here");
-                             formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).child(target).set(newvalue);
+                         if (snapshot.child(url).exists()){
+                             formationsRef.child(indexToID[i]).child("dancers").child(url).child(target).set(newvalue);
                          }
                  });
              }}
@@ -558,19 +556,13 @@
             var gd = newContent[id][2];
             var ns = newContent[id][3];
             var newUrl = urlify(fn, ln);
-            console.log(newUrl);
-            console.log(popupDancerState);
-            console.log(id)
             if (id >= popupDancerState.length){
-                console.log("k")
                 FBnewDancer(fn, ln, gd, ns, null);
             }
             else if (newUrl == popupDancerState[id]){
-                                console.log("kl")
 
                 FBupdateDancer(fn, ln, gd, ns, null);
             } else {
-                                console.log("kgjy")
 
                 FBreplaceDancer(popupDancerState[id], fn, ln, gd, ns, null);
             }
@@ -658,7 +650,6 @@
     }
 
         function close_save_popup2() {
-            console.log($("#logname").html());
             $("#logname").html("Welcome, ".concat(document.getElementById("userspace").value).concat("!"));
             document.getElementById("userspace").value = "";
             document.getElementById("passspace").value = "";
@@ -986,7 +977,6 @@
             FBaddNotesToFormation(snapshot.val())
         });
         function systemStateUpdate(snapshot){
-            console.log(indexToID)
 
             //get dancer list at main formation
             var selectedIndex = snapshot.selector;
