@@ -657,7 +657,7 @@
     $(document).on('click', '#abc2', function(e) {
             var bounds = document.getElementById('form2').getBoundingClientRect();
             if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
-                div_hide2();    
+                div_hide2(); 
             }
             
         });
@@ -1068,7 +1068,8 @@
             function plusBtnOnClick(buttonID, dancerUrl, formationIndex, x, y) {
                 
                 if (document.getElementById(buttonID).className == "plusBtn") {
-                    FBaddDancerToFormation(dancerUrl, formationIndex, 10, 10);    
+                    coords = generateRandIndices();
+                    FBaddDancerToFormation(dancerUrl, formationIndex, coords[0], coords[1]);    
                     document.getElementById(buttonID).className = "xBtn";
                     document.getElementById(buttonID).innerHTML = "x";
                 } else {
@@ -1076,6 +1077,12 @@
                     document.getElementById(buttonID).className = "plusBtn";
                     document.getElementById(buttonID).innerHTML = "+";
                 }
+            }
+
+            function generateRandIndices() {
+                var x = Math.floor((Math.random() * 85) + 1);
+                var y = Math.floor((Math.random() * 85) + 1);
+                return [x,y]
             }
             
 
