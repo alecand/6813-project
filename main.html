@@ -546,7 +546,9 @@
                             }
                         }
                     }
-                    newContent[rowid] = [fn, ln, gd, ns];
+                    if (fn.length + ln.length > 0){
+                        newContent[rowid] = [fn, ln, gd, ns];
+                    }
                 }
             }
         }
