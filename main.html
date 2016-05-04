@@ -638,6 +638,7 @@
         document.getElementById("userspace").value = "";
         document.getElementById("passspace").value = "";
         div_hide2();
+        e.stopPropagation();
     }
 
         function close_save_popup2() {
@@ -645,12 +646,37 @@
             $("#logname").html("Welcome, ".concat(document.getElementById("userspace").value).concat("!"));
             document.getElementById("userspace").value = "";
             document.getElementById("passspace").value = "";
+            e.stopPropagation();
             
 
         div_hide2();
     }
 
     // END FOR LOGIN POPUP
+
+    $(document).on('click', '#abc2', function(e) {
+            var bounds = document.getElementById('form2').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide2();    
+            }
+            
+        });
+
+    $(document).on('click', '#abc', function(e) {
+            var bounds = document.getElementById('form').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide();    
+            }
+            
+        });
+
+    $(document).on('click', '#confirm', function(e) {
+            var bounds = document.getElementById('confirmBox').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide_confirm();    
+            }
+            
+        });
 
     function remove_song() {
             $('#musicRow').empty();
@@ -1019,6 +1045,7 @@
                 var dd;
                 if (ddr.gender == "boy"){
                     dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "circle", "");
+                    console.log(dd.notes);
                 } else {
                     dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "triangle", "");
                 }
@@ -1097,8 +1124,8 @@
             // For delete-formation confirmation box
             $('#confirmBox').html('');
             function makePopupTableConfirm() {
-                $('#confirmBox').append('<td style="font-size: small; text-align: center; width:200px;"> Delete selected formation? </td>');
-                $('#confirmBox').append('<td><button id="close3" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_delete_popup_confirm()"> Ok </button></td><td><button id="close3nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup_confirm()"> Cancel </button></td>');
+                $('#confirmBox').append('<tr><td style="font-size: small; text-align: center; width:200px;"> Delete selected formation? </td></tr>');
+                $('#confirmBox').append('<tr><td><button id="close3" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_delete_popup_confirm()"> Ok </button></td></tr><tr><td><button id="close3nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup_confirm()"> Cancel </button></td></tr>');
                 
             }
             makePopupTableConfirm();
