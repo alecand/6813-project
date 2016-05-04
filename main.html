@@ -909,8 +909,6 @@
                 var index = parseInt($(new_formation).attr("id"));
                 FBsetSelector(index);
                 selected = index;
-                dancersRef.child("SHIT").set(index);
-                //dancersRef.child("SHIT").remove();
                 FBaddNotesToFormation(selected)
 
             });
