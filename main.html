@@ -226,7 +226,7 @@
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
             //sessionNumber = 1010101
 
-            //sessionNumber = "trashCity";
+            sessionNumber = "trashCity";
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
@@ -813,6 +813,11 @@
             var del = formationsList[index];
             $(del).remove();
             formationsList.splice(index,1);
+            for (i = index; i < formationsList.length; i++){
+                var f = formationsList[i];
+                var id = $(f).attr("id");
+                $(f).attr("id",id -1);
+            }
             canvases.splice(index, 1);
             directory.splice(index, 1);
             if (index <= selected) {
@@ -897,6 +902,8 @@
                 var index = parseInt($(new_formation).attr("id"));
                 FBsetSelector(index);
                 selected = index;
+                dancersRef.child("SHIT").set(index);
+                //dancersRef.child("SHIT").remove();
                 FBaddNotesToFormation(selected)
 
             });
@@ -973,6 +980,7 @@
             FBaddNotesToFormation(snapshot.val())
         });
         function systemStateUpdate(snapshot){
+
             //get dancer list at main formation
             var selectedIndex = snapshot.selector;
             var mainFormation = snapshot.formations[indexToID[selectedIndex]];
