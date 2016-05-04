@@ -265,14 +265,20 @@
             topDID += 1;
             var url = urlify(first, last);
             mydancers.push(url);
-            if (first[0].concat(last[0]).toUpperCase()){
-
+            var init = '';
+            if (first.length > 0){
+                init = first[0];
             }
+            if (last.length > 0){
+                init = init.concat(last[0]);
+            }
+            init = init.toUpperCase();
+
             dancersRef.child(url).set({
                 
                 first_name: first,
                 last_name: last,
-                initials: first[0].concat(last[0]).toUpperCase(),
+                initials: init,
                 formations: {},
                 picture: picture,
                 dancerID: topDID,
