@@ -546,9 +546,7 @@
                             }
                         }
                     }
-                    if (fn.length + ln.length > 0){
-                        newContent[rowid] = [fn, ln, gd, ns];
-                    }
+                    newContent[rowid] = [fn, ln, gd, ns];
                 }
             }
         }
@@ -558,7 +556,11 @@
             var gd = newContent[id][2];
             var ns = newContent[id][3];
             var newUrl = urlify(fn, ln);
-            if (id >= popupDancerState.length){
+
+            if ((fn.length + ln.length) == 0){
+                continue;
+            }
+            else if (id >= popupDancerState.length){
                 FBnewDancer(fn, ln, gd, ns, null);
             }
             else if (newUrl == popupDancerState[id]){
