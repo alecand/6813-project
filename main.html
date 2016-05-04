@@ -1090,8 +1090,8 @@
             // For delete-formation confirmation box
             $('#confirmBox').html('');
             function makePopupTableConfirm() {
-                $('#confirmBox').append('<td style="font-size: small; text-align: center; width:200px;"> Delete selected formation? </td>');
-                $('#confirmBox').append('<td><button id="close3" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_delete_popup_confirm()"> Ok </button></td><td><button id="close3nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup_confirm()"> Cancel </button></td>');
+                $('#confirmBox').append('<tr><td style="font-size: small; text-align: center; width:200px;"> Delete selected formation? </td></tr>');
+                $('#confirmBox').append('<tr><td><button id="close3" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_delete_popup_confirm()"> Ok </button></td></tr><tr><td><button id="close3nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup_confirm()"> Cancel </button></td></tr>');
                 
             }
             makePopupTableConfirm();
