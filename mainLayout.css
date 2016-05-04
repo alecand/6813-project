@@ -41,10 +41,13 @@ html {
 #dancerWindow {
 	width: 350px;
 	background-color: #f6f1ed;
+
 }
 
 #rosterWindow {
 	background-color: #616a7f;
+  z-index: 10;
+  opacity: .99;
 }
 
 #musicWindow {

@@ -1208,18 +1208,18 @@
 
         function addGridLines(){
             var divs = 4;
-            var window = document.getElementById('dancerWindow');
-            var bounds = window.getBoundingClientRect();
+            //var window = document.getElementById('dancerWindow');
+            var bounds = document.getElementById('dancerWindow').getBoundingClientRect();
             grids = []
             for (i=1; i< divs; i++) {
                 //vert lines
                 var img_v = document.createElement('img');
                 img_v.src = './vert_grid.png';
-                var left = (window.offsetWidth/divs)*i;
+                var left = (document.getElementById('dancerWindow').offsetWidth/divs)*i;
                 img_v.style.left = (100*i)/divs +"%";
                 img_v.style.top = '0%';
                 img_v.style.position = 'relative';
-                img_v.height = window.offsetHeight;
+                img_v.height = document.getElementById('dancerWindow').offsetHeight;
                 img_v.className = "gridLine";
                 img_v.style.zIndex = 0;
                 img_v.style.opacity = "0.3";
@@ -1234,16 +1234,15 @@
                 console.log("HORIZ");
                 var img_h = document.createElement('img');
                 img_h.src = './horiz_grid.png';
-                console.log(window.offsetHeight);
-                var top_h = ((window.offsetHeight+bounds['top'])/divs)*j;
+                var top_h = ((bounds['bottom'] - bounds['top'])/divs)*j + bounds['top'];
                 //img_h.style.top = (-100*j)/divs +"%";
-                img_h.style.top = -top_h+'px';
-                img_h.style.left = '0%';
-                img_h.style.position = 'relative';
-                img_h.style.width = '100%';
+                img_h.style.top = (top_h+$(window).scrollTop())+'px';
+                img_h.style.left = bounds['left']+'px';
+                img_h.style.position = 'absolute';
+                img_h.style.width = 100+'%'; //(bounds['right'] - bounds['left']) + 'px' ;
                 img_h.style.zIndex = 0;
                 img_h.className = "gridLine";
-                // img_h.style.opacity = "0.5";
+                img_h.style.opacity = "0.5";
                 document.getElementById('dancerWindow').appendChild(img_h);
         }
     }
