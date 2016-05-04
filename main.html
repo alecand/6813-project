@@ -226,7 +226,7 @@
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
             //sessionNumber = 1010101
 
-            sessionNumber = "trashCity";
+            sessionNumber = "trashTown";
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
@@ -358,62 +358,63 @@
 
         //functions: addNotesToFormation, retrieveNotes, indexChange, reposition, getPositionsAtFormation
 
-        function FBupdateDancerSpecific(first, last, target, newvalue) {
-            var url = urlify(first, last);
-            dancersRef.once("value", function(snapshot) {
-                if (snapshot.child(url).exists()){
-                    dancersRef.child(url).child(target).set(newvalue);
-                }
-            });
-            var k = existingFormations;
-            while(k >0){
-                k = k-1;
-            for (i = 0; i < existingFormations; i++){
-                formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
-                    console.log(target)
-                        if (snapshot.child(dancerUrl).exists()){
-                            console.log("here");
-                            formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).child(target).set(newvalue);
-                        }
-                });
-            }}
-        }
-        function FBupdateDancer(first, last, gender, notes, picture) {
-            FBupdateDancerSpecific(first, last, "gender", gender);
-            FBupdateDancerSpecific(first, last, "notes", notes);
-            FBupdateDancerSpecific(first, last, "picture", picture);
-        }
-        function FBremoveFromFormation(dancerUrl, formationIndex){
-            formationsRef.child(indexToID[formationIndex]).child("dancers").child(dancerUrl).remove();
-            dancersRef.child(dancerUrl).child("formations").child(indexToID[formationIndex]).remove();
-        }
-        function FBremoveFromRoster(dancerUrl){
-            mydancers.splice(mydancers.indexOf(dancerUrl),1);
-            dancersRef.child(dancerUrl).remove();
-            var k = existingFormations;
-            while(k >0){
-                k = k-1;
-            for (i = 0; i < existingFormations; i++){
-                formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
-                        if (snapshot.child(dancerUrl).exists()){
-                            formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).remove();
-                        }
-                });
-            }}
-        }
+         function FBupdateDancerSpecific(first, last, target, newvalue) {
+             var url = urlify(first, last);
+             dancersRef.once("value", function(snapshot) {
+                 if (snapshot.child(url).exists()){
+                     dancersRef.child(url).child(target).set(newvalue);
+                 }
+             });
+             var k = existingFormations;
+             while(k >0){
+                 k = k-1;
+             for (i = 0; i < existingFormations; i++){
+                 formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
+                     console.log(target)
+                         if (snapshot.child(dancerUrl).exists()){
+                             console.log("here");
+                             formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).child(target).set(newvalue);
+                         }
+                 });
+             }}
+         }
+         function FBupdateDancer(first, last, gender, notes, picture) {
+             FBupdateDancerSpecific(first, last, "gender", gender);
+             FBupdateDancerSpecific(first, last, "notes", notes);
+             FBupdateDancerSpecific(first, last, "picture", picture);
+         }
+         function FBremoveFromFormation(dancerUrl, formationIndex){
+             formationsRef.child(indexToID[formationIndex]).child("dancers").child(dancerUrl).remove();
+             dancersRef.child(dancerUrl).child("formations").child(indexToID[formationIndex]).remove();
+         }
+         function FBremoveFromRoster(dancerUrl){
+             mydancers.splice(mydancers.indexOf(dancerUrl),1);
+             dancersRef.child(dancerUrl).remove();
+             var k = existingFormations;
+             while(k >0){
+                 k = k-1;
+             for (i = 0; i < existingFormations; i++){
+                 formationsRef.child(indexToID[i]).child("dancers").once("value", function(snapshot){
+                         if (snapshot.child(dancerUrl).exists()){
+                             formationsRef.child(indexToID[i]).child("dancers").child(dancerUrl).remove();
+                         }
+                 });
+             }}
+         }
+ 
+         function FBreplaceDancer(oldDancerUrl, first, last, gender, notes, picture){
+             var presences;
+             dancersRef.child(oldDancerUrl).once("value", function(snapshot){
+                 presences = snapshot.val().formations;
+             });
+             FBremoveFromRoster(oldDancerUrl);
+             var newUrl = urlify(first, last);
+             FBnewDancer(first, last, gender, notes, picture);
+             for (i in presences){
+                 FBaddDancerToFormationID(newUrl, i, presences[i].x, presences[i].y);
+             };
+         }
 
-        function FBreplaceDancer(oldDancerUrl, first, last, gender, notes, picture){
-            var presences;
-            dancersRef.child(oldDancerUrl).once("value", function(snapshot){
-                presences = snapshot.val().formations;
-            });
-            FBremoveFromRoster(oldDancerUrl);
-            var newUrl = urlify(first, last);
-            FBnewDancer(first, last, gender, notes, picture);
-            for (i in presences){
-                FBaddDancerToFormationID(newUrl, i, presences[i].x, presences[i].y);
-            };
-        }
 
         function FBdeleteFormation(index){
             var ID = indexToID[index];
@@ -985,6 +986,7 @@
             FBaddNotesToFormation(snapshot.val())
         });
         function systemStateUpdate(snapshot){
+            console.log(indexToID)
 
             //get dancer list at main formation
             var selectedIndex = snapshot.selector;
