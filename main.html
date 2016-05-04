@@ -1038,7 +1038,6 @@
                 var dd;
                 if (ddr.gender == "boy"){
                     dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "circle", "");
-                    console.log(dd.notes);
                 } else {
                     dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "triangle", "");
                 }
@@ -1087,7 +1086,7 @@
 
 
             function populatePopupRow(dancer) {
-                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>')));
+                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes">'.concat(dancer.notes).concat('</textarea></td></tr>'))));
             }
 
             function makePopupTable() {
