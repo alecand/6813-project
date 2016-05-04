@@ -265,11 +265,20 @@
             topDID += 1;
             var url = urlify(first, last);
             mydancers.push(url);
+            var init = '';
+            if (first.length > 0){
+                init = first[0];
+            }
+            if (last.length > 0){
+                init = init.concat(last[0]);
+            }
+            init = init.toUpperCase();
+
             dancersRef.child(url).set({
                 
                 first_name: first,
                 last_name: last,
-                initials: first[0].concat(last[0]).toUpperCase(),
+                initials: init,
                 formations: {},
                 picture: picture,
                 dancerID: topDID,
@@ -523,8 +532,14 @@
                             var myItem = cols[c].childNodes[0];
                             if (myItem.getAttribute("class") == "firstname"){
                                 fn = $(myItem)[0].value;
+                                if (fn == null){
+                                    fn = '';
+                                }
                             } else if (myItem.getAttribute("class") == "lastname"){
                                 ln = $(myItem)[0].value;
+                                if (ln == null){
+                                    ln = '';
+                                }
                             } else if (myItem.getAttribute("class") == "selectgender"){
                                 gd = $(myItem)[0].value;
                             } else if (myItem.getAttribute("class") == "dancernotes"){
@@ -1044,9 +1059,9 @@
                 var ddr = snapshot.dancers[dancerUrl];
                 var dd;
                 if (ddr.gender == "boy"){
-                    dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "circle", "");
+                    dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./circle.png", ddr.notes, "circle", "");
                 } else {
-                    dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "triangle", "");
+                    dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./triangle.png", ddr.notes, "triangle", "");
                 }
                 lll.push(dd);
                 addDancerToRosterWindow(dd, count);
