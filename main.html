@@ -26,7 +26,10 @@
 <table id="mainMenu">
     <td>
         <ul class="drop_menu">
-        <li><a href='#' onClick="div_show()">Roster</a>
+        <li><a href='#'>Roster</a>
+            <ul>
+            <li><a href='#' onClick="div_show()">View/Edit Roster</a></li>
+            </ul>
         </li>
         <li><a href='#'>Formations</a>
             <ul>
@@ -34,9 +37,14 @@
             <li><a href='#' onClick="$('#btnDelete').click()">Delete Selected Formation</a></li>
             </ul>
         </li>
+        <li><a href='#'>Music</a>
+            <ul>
+            <li><a href='#' onClick="remove_song()">Remove Song</a></li>
+            </ul>
+        </li>
         </ul>
     <td style="padding-top:8px">
-        <span class="title" style="font-family: 'Josefin Sans', sans-serif, italic; float:center; position:relative; left:-5%;">eFormations</span>
+        <span class="title" style="font-family: 'Josefin Sans', sans-serif, italic; float:center; position:relative; left:-40%;">eFormations</span>
     </td>
     <td>
     <td align="right">
@@ -82,18 +90,24 @@
                     <input type="button" class="normalBtn-edit" value="Save Notes" onclick='FBstoreNotesFromFormation()' style="width: 75px; height: 18px; padding:0px; position:relative; left:45%;"></input>
                 </div>
             </div>
-            <div id = "rosterWindow" style = "overflow: hidden; height: 604px; overflow: auto;">
+            <div style = "height: 604px; overflow: auto; background-color: #616a7f">
                 <!-- Roster window here -->
+                <div id = "rosterWindow" style = "overflow: auto; height: 558px">
+                </div>
+                <div style="height: 40px; text-align: center">
+                    <button type="button" class="normalBtn-edit" onclick='div_show()' align="center" style="margin-top: 10px;"> Edit Dancers </button>
+                </div>
             </div>
         </div>
 </div>
 <table id="musicWindow" style="width: 100%; height: 150px;">
     <tr id="musicRow" style="text-align: center;">
         <td style="height: 100%;">
-            <a href="#" class="myButton" id="btnUpload">Upload Music File</a>
+            <a href="#" class="myButton" id="btnUpload" onClick="upload_song()">Upload Music File</a>
         </td>
     </tr>
 </table>
+
 
 <div id="abc" style="z-index: 99999999;">
 <!-- Popup Div Starts Here -->
@@ -141,6 +155,16 @@
 </div>
 <!-- END LOGIN PAGE -->
 
+<div id="confirm" style="z-index: 99999999;">
+<!-- Popup Div Starts Here -->
+<div id="popupContact3">
+
+<table id="confirmBox">
+
+</table>
+</div>
+<!-- Popup Div Ends Here -->
+</div>
 
 <!-- Load any supplemental Javascript libraries here -->
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
@@ -576,9 +600,9 @@
         var rowindex = document.getElementById('form').rows.length - 3;
         $('#form tr:last').remove();
         $('#form tr:last').remove();
-        $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>'));
-        $('#form').append('<tr> <td> <button type="button" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
-        $('#form').append('<tr><td></td><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button></td><td style="display: block; text-align: center; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td></tr>');
+        $('#form').append('<tr class="tabledancer" id="'.concat(rowindex).concat('"><td><input class="firstname" type="text"> </input></td><td><input class="lastname" type="text"> </input></td><td><select class="selectgender"><option>boy</option><option>girl</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>'));
+        $('#form').append('<tr> <td> <button type="button" class="normalBtn-edit" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
+        $('#form').append('<tr><td></td><td style="display: block; text-align: left; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; margin: auto; align: left;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
         }
 
     // FOR LOGIN POPUP
@@ -592,10 +616,29 @@
     document.getElementById('abc2').style.display = "none";
     }
 
+    function div_hide_confirm() {
+
+    document.getElementById('confirm').style.display = "none";
+    }
+
+    function div_show_confirm() {
+    document.getElementById('confirm').style.display = "block";   
+    }
+
+    function close_delete_popup_confirm() {
+        deleteFormation(selected);
+        div_hide_confirm();
+    }
+
+    function close_popup_confirm() {
+        div_hide_confirm();
+    }
+
     function close_popup2() {
         document.getElementById("userspace").value = "";
         document.getElementById("passspace").value = "";
         div_hide2();
+        e.stopPropagation();
     }
 
         function close_save_popup2() {
@@ -603,6 +646,7 @@
             $("#logname").html("Welcome, ".concat(document.getElementById("userspace").value).concat("!"));
             document.getElementById("userspace").value = "";
             document.getElementById("passspace").value = "";
+            e.stopPropagation();
             
 
         div_hide2();
@@ -610,11 +654,49 @@
 
     // END FOR LOGIN POPUP
 
+    $(document).on('click', '#abc2', function(e) {
+            var bounds = document.getElementById('form2').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide2();    
+            }
+            
+        });
+
+    $(document).on('click', '#abc', function(e) {
+            var bounds = document.getElementById('form').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide();    
+            }
+            
+        });
+
+    $(document).on('click', '#confirm', function(e) {
+            var bounds = document.getElementById('confirmBox').getBoundingClientRect();
+            if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
+                div_hide_confirm();    
+            }
+            
+        });
+
+    function remove_song() {
+            $('#musicRow').empty();
+            $('#musicRow').append('<td style="height: 100%;"><a href="#" class="myButton" id=btnUpload onClick=upload_song()>Upload Music File</a></td>')
+    }
+
+    function upload_song() {
+            console.log("in the function")
+            $('#musicRow').empty();
+            // $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/213359816&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+    }
+
     $(document).ready(function() {
         //document.getElementById("notes_text").addEventListener("onfocusout",FBstoreNotesFromFormation(selected))
         div_hide();
         div_hide2();
+        div_hide_confirm();
         var enabled;
+
 
         function disablebutton() {
             document.getElementById("btnDelete").style.cursor = "default";
@@ -635,9 +717,12 @@
             addFormation([]);
         });
         $("#btnDelete").click(function(evt) {
-            if (enabled) {
-                deleteFormation(selected);
-         }
+            if (enabled) {  
+                div_show_confirm();
+                // if (del) {
+                //     deleteFormation(selected);
+                // }
+            }
         });
         $("#btnGrid").click(function(evt) {
             if (gridLines == false) {
@@ -672,12 +757,13 @@
         //     $(rwbtn).prop('disabled', false);
         //     $(wv).prop('hidden', false);
         // });
-        // NEW FILE UPLOADING CODE
-        $("#btnUpload").click(function(evt) {
-            $('#musicRow').empty();
-            // $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
-            $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/213359816&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
-        });
+        // NEW FILE UPLOADING CODE -> DO NOT DELETE*******
+        // $("#btnUpload").click(function(evt) {
+        //     console.log("in the function")
+        //     $('#musicRow').empty();
+        //     // $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/91168184&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+        //     $('#musicRow').append('<iframe width="100%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/213359816&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>')
+        // });
         //audio.play();
         // Loads on page load
 
@@ -703,22 +789,11 @@
         
         //We will need to maintain some mapping of dancer names to their associated objects. 
 
-
-
-
-
-
-
-
-
-
-        
-
         
 
         //Formation sidebar code:
 
-        function deleteFormation(index){
+        window.deleteFormation = function(index){
             FBdeleteFormation(index);
             var del = formationsList[index];
             $(del).remove();
@@ -889,6 +964,7 @@
             var dancerList = [];
             // document.getElementById("notes_text").value = ""
             // FBaddNotesToFormation(selected);
+            if (mainFormation != undefined){
             if ('dancers' in mainFormation){
                 var dancerObjectList = mainFormation.dancers;
                 for (k in dancerObjectList){
@@ -906,6 +982,7 @@
 
                 }
             }
+        }
 
             formationFromList(dancerList);
             if (existingFormations > 1){
@@ -920,6 +997,7 @@
 
             for (l=0; l < existingFormations; l++){
                 var targetFormation = snapshot.formations[indexToID[l]];
+                if (targetFormation != undefined){
                 if ('dancers' in targetFormation){
                     var dancerObjectList2 = targetFormation.dancers;
                     var dancerList2 = [];
@@ -938,6 +1016,7 @@
                     }
                     editFormation(l, dancerList2);    
                 }
+            }
 
             }
 
@@ -1008,11 +1087,11 @@
 
 
             function populatePopupRow(dancer) {
-                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><button class="profilepic" type="button"> Choose Image </button></td><td><textarea class="dancernotes"></textarea></td></tr>')));
+                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>')));
             }
 
             function makePopupTable() {
-                $('#form').append('<tr><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Profile Picture </td><td> Notes </td></tr>');
+                $('#form').append('<tr style="font-size: small; text-align: center;"><td> First Name </td><td> Last Name </td> <td> Gender </td><td> Notes </td></tr>');
                 for (i=0; i<dancers.list.length; i++) {
                     // alert("going")
                     populatePopupRow(dancers.list[i]);
@@ -1021,20 +1100,28 @@
             makePopupTable();
             $('#form').append('<tr> <td> <button type="button" class="normalBtn-edit" onclick="makeEmptyPopupRow()"> + </button> </td> </tr>');
 
-            $('#form').append('<tr><td></td><td style="display: block; text-align: right; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; margin: auto;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
+            $('#form').append('<tr><td></td><td style="display: block; text-align: left; margin: auto;"><button id="close" class="normalBtn-edit" onclick="close_popup()"> Save </button><td></td><td style="display: block; align: left;"><button id="closeNoSave" class="normalBtn-edit" onclick="close_popup_no_save()"> Close </button></td><td></td></tr>');
 
 
             // FOR LOGIN POPUP
             $('#form2').html('');
             function makePopupTable2() {
-                $('#form2').append('<tr><td> Username </td><td> Password </td></tr>');
+                $('#form2').append('<tr style="font-size: small; text-align: center;"><td> Username </td><td> Password </td></tr>');
                 $('#form2').append('<tr><td><input id="userspace" type="text"></input></td><td><input id="passspace" type="password"> </input></td></tr>')
             }
             makePopupTable2();
 
             $('#form2').append('<tr><td><button id="close2" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_save_popup2()"> Save </button></td><td><button id="close2nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup2()"> Close </button></td></tr>');
             // END FOR LOGIN POPUP
-            
+
+            // For delete-formation confirmation box
+            $('#confirmBox').html('');
+            function makePopupTableConfirm() {
+                $('#confirmBox').append('<tr><td style="font-size: small; text-align: center; width:200px;"> Delete selected formation? </td></tr>');
+                $('#confirmBox').append('<tr><td><button id="close3" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_delete_popup_confirm()"> Ok </button></td></tr><tr><td><button id="close3nosave" style="display:block;margin:auto;" class="normalBtn-edit" onclick="close_popup_confirm()"> Cancel </button></td></tr>');
+                
+            }
+            makePopupTableConfirm();
         }
 
 
@@ -1287,7 +1374,7 @@
         /////////////////// DANCER WINDOW ////////////////
         function addDancerToRosterWindow(dancer, buttonNumber) {
             // var forDiv = '<div id=dancer1> <div style="float: left; width: 35%; text-align: left;"> Name </div> <div style="float: left; width: 45%;"> Picture </div> <div style="float: left; width: 20%;"> <button type="button"> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton> <button type="button"> Edit Info </button> </div>';
-            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:50px;height:50px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" /> <div id=editInfoButton > <button type="button" class="normalBtn-edit" onclick=div_show()> Edit Info </button> </div>');
+            var forDiv = '<div id=dancer1> <div style="float: left; width: 40%; text-align: left;">'.concat(dancer.firstName, " ", dancer.lastName).concat('</div> <div style="float: left; width: 35%;">').concat('<img src="' + dancer.profilePicture + '" style="width:50px;height:50px;">').concat('</div> <div style="float: left; width: 20%;"> <button type="button" style="width:40px; height: 40px;" class=plusBtn id=button').concat(buttonNumber).concat('> + </button> </div>  <br style="clear: left;" />');
             // var forDiv = "<div id=dancer1>
             //     </div>"
             $('#rosterWindow').append(forDiv);
@@ -1309,55 +1396,6 @@
             var dancers = new DancerList();
             var dancer1 = new Dancer("Alec", "Andie", "boy", "./profile.png", "total scrub", "circle", "")
             addDancerToRosterWindow(dancer1, 1);
-            //$('#button1').click(function() {
-                // if (dancer1.added == 0) {
-                    // dancer1.shapeObject = addDancerObject(dancer1.shapeOf, "AA","dicksmcgee")
-                    // // dancer1.added = 1
-                    // update();
-                    //FBaddDancerToFormation("alecandie", selected, 50, 50);
-                    //changeDancerButton("button1");
-                // }
-            //})
-            //
-            // var dancer2 = new Dancer("Alex", "Latham", "boy", "./profile.png", "total scrub", "triangle", "")
-            // addDancerToRosterWindow(dancer2, 2);
-            // $('#button2').click(function() {
-            //     // if (dancer2.added == 0) {
-            //         dancer2.shapeObject = addDancerObject(dancer2.shapeOf, "AL")
-            //         // dancer2.added = 1
-            //         update();
-            //     // }
-            // })
-            // // 
-            // var dancer3 = new Dancer("Uele", "Italian", "boy", "./profile.png", "total scrub", "circle", "")
-            // addDancerToRosterWindow(dancer3, 3);
-            // $('#button3').click(function() {
-            //     // if (dancer3.added == 0) {
-            //         dancer3.shapeObject = addDancerObject(dancer3.shapeOf, "UI")
-            //         // dancer3.added = 1
-            //         update();
-            //     // }
-            // })
-            // //
-            // var dancer4 = new Dancer("Vineel", "C.", "boy", "./profile.png", "total scrub", "triangle", "")
-            // addDancerToRosterWindow(dancer4, 4);
-            // $('#button4').click(function() {
-            //     // if (dancer4.added == 0) {
-            //         dancer4.shapeObject = addDancerObject(dancer4.shapeOf, "VC")
-            //         // dancer4.added = 1
-            //         update();
-            //     // }
-            // })
-            // //
-            // var dancer5 = new Dancer("Another", "One", "boy", "./profile.png", "total scrub", "circle", "")
-            // addDancerToRosterWindow(dancer5, 5);
-            // $('#button5').click(function() {
-            //     // if (dancer5.added == 0) {
-            //         dancer5.shapeObject = addDancerObject(dancer5.shapeOf, "AO")
-            //         // dancer5.added = 1
-            //         update();
-            //     // }
-            // })
 
             dancers.list = [dancer1];
 
