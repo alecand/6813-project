@@ -226,7 +226,7 @@
             sessionNumber = (Math.floor(100000000*Math.random())).toString();
             //sessionNumber = 1010101
 
-            sessionNumber = "trashVille";
+            sessionNumber = "trashCity";
             ref = refOriginal.child(sessionNumber);
 
             selectorRef = ref.child("selector");
@@ -1026,9 +1026,10 @@
             for (l=0; l < existingFormations; l++){
                 var targetFormation = snapshot.formations[indexToID[l]];
                 if (targetFormation != undefined){
+                var dancerList2 = [];
+
                 if ('dancers' in targetFormation){
                     var dancerObjectList2 = targetFormation.dancers;
-                    var dancerList2 = [];
                     for (k in dancerObjectList2){
                         var initials = dancerObjectList2[k].initials;
                         var gender = dancerObjectList2[k].gender;
@@ -1042,8 +1043,9 @@
                         }
 
                     }
-                    editFormation(l, dancerList2);    
                 }
+                editFormation(l, dancerList2);    
+
             }
 
             }
