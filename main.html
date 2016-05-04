@@ -657,7 +657,7 @@
     $(document).on('click', '#abc2', function(e) {
             var bounds = document.getElementById('form2').getBoundingClientRect();
             if ((e.clientX <= bounds['left'] || e.clientX >= bounds['right'] || e.clientY <= bounds['top'] || e.clientY >= bounds['bottom'])) {
-                div_hide2();    
+                div_hide2(); 
             }
             
         });
@@ -1045,7 +1045,6 @@
                 var dd;
                 if (ddr.gender == "boy"){
                     dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "circle", "");
-                    console.log(dd.notes);
                 } else {
                     dd = new Dancer(ddr.first_name, ddr.last_name, ddr.gender, "./profile.png", ddr.notes, "triangle", "");
                 }
@@ -1076,7 +1075,8 @@
             function plusBtnOnClick(buttonID, dancerUrl, formationIndex, x, y) {
                 
                 if (document.getElementById(buttonID).className == "plusBtn") {
-                    FBaddDancerToFormation(dancerUrl, formationIndex, 10, 10);    
+                    coords = generateRandIndices();
+                    FBaddDancerToFormation(dancerUrl, formationIndex, coords[0], coords[1]);    
                     document.getElementById(buttonID).className = "xBtn";
                     document.getElementById(buttonID).innerHTML = "x";
                 } else {
@@ -1084,6 +1084,12 @@
                     document.getElementById(buttonID).className = "plusBtn";
                     document.getElementById(buttonID).innerHTML = "+";
                 }
+            }
+
+            function generateRandIndices() {
+                var x = Math.floor((Math.random() * 85) + 1);
+                var y = Math.floor((Math.random() * 85) + 1);
+                return [x,y]
             }
             
 
@@ -1094,7 +1100,7 @@
 
 
             function populatePopupRow(dancer) {
-                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes"></textarea></td></tr>')));
+                $('#form').append('<tr class="tabledancer" id="'.concat(dancer.uid).concat('"><td><input class="firstname" type="text" value="'.concat(dancer.firstName).concat('"></input></td><td><input class="lastname" type="text" value="',dancer.lastName,'"> </input></td><td><select class="selectgender"><option>',dancer.gender,'</option><option>',other_gender(dancer),'</option></select></td><td><textarea class="dancernotes">'.concat(dancer.notes).concat('</textarea></td></tr>'))));
             }
 
             function makePopupTable() {
